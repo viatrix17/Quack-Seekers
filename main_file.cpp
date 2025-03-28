@@ -24,6 +24,19 @@ should I delete it? xDD
 #include "drawRoom.h"
 #include "drawFurniture.h"
 
+void key_callback(GLFWwindow* window, int key,
+	int scancode, int action, int mods) {
+	if (action == GLFW_PRESS) {
+		if (key == GLFW_KEY_LEFT) {
+			std::cout << "look to the left\n";
+		}
+		if (key == GLFW_KEY_RIGHT) {
+			std::cout << "look to the right\n";
+
+		}
+	}
+}
+
 
 // error handling
 void error_callback(int error, const char* description) {
@@ -34,6 +47,9 @@ void error_callback(int error, const char* description) {
 // initialization of the program
 void initOpenGLProgram(GLFWwindow* window) {
     initShaders();
+	glClearColor(0.58f, 0.88f, 0.92f, 0); //light blue/green for the sky/background
+	glEnable(GL_DEPTH_TEST); 
+	glfwSetKeyCallback(window, key_callback);
 }
 
 
@@ -46,9 +62,15 @@ void freeOpenGLProgram(GLFWwindow* window) {
 
 // drawing a scene
 void drawScene(GLFWwindow* window) {
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// camera movement - to add
+
 	//drawBackyard(); idk where to put this tbh xdd
 	drawRoom();
 	drawFurniture();
+
+	glfwSwapBuffers(window);
 }
 
 
@@ -63,7 +85,7 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	window = glfwCreateWindow(500, 500, "OpenGL", NULL, NULL);  
+	window = glfwCreateWindow(1600, 800, "OpenGL", NULL, NULL);  
 
 	if (!window) 
 	{
