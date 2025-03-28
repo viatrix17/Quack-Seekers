@@ -15,6 +15,8 @@ Z pewnością wraz z niniejszym programem otrzymałeś też egzemplarz
 Powszechnej Licencji Publicznej GNU(GNU General Public License);
 jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
 Place, Fifth Floor, Boston, MA  02110 - 1301  USA
+
+should I delete it? xDD
 */
 
 #include "config.h"
@@ -44,7 +46,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 
 // drawing a scene
 void drawScene(GLFWwindow* window) {
-	//drawBackyard();
+	//drawBackyard(); idk where to put this tbh xdd
 	drawRoom();
 	drawFurniture();
 }
@@ -52,44 +54,44 @@ void drawScene(GLFWwindow* window) {
 
 int main(void)
 {
-	GLFWwindow* window; //Wskaźnik na obiekt reprezentujący okno
+	GLFWwindow* window; 
 
-	glfwSetErrorCallback(error_callback);//Zarejestruj procedurę obsługi błędów
+	glfwSetErrorCallback(error_callback);
 
-	if (!glfwInit()) { //Zainicjuj bibliotekę GLFW
+	if (!glfwInit()) { // GLFW initialization
 		fprintf(stderr, "Nie można zainicjować GLFW.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	window = glfwCreateWindow(500, 500, "OpenGL", NULL, NULL);  //Utwórz okno 500x500 o tytule "OpenGL" i kontekst OpenGL.
+	window = glfwCreateWindow(500, 500, "OpenGL", NULL, NULL);  
 
-	if (!window) //Jeżeli okna nie udało się utworzyć, to zamknij program
+	if (!window) 
 	{
 		fprintf(stderr, "Nie można utworzyć okna.\n");
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
 
-	glfwMakeContextCurrent(window); //Od tego momentu kontekst okna staje się aktywny i polecenia OpenGL będą dotyczyć właśnie jego.
-	glfwSwapInterval(1); //Czekaj na 1 powrót plamki przed pokazaniem ukrytego bufora
+	glfwMakeContextCurrent(window); 
+	glfwSwapInterval(1); 
 
-	if (glewInit() != GLEW_OK) { //Zainicjuj bibliotekę GLEW
+	if (glewInit() != GLEW_OK) { // GLEW initialization
 		fprintf(stderr, "Nie można zainicjować GLEW.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	initOpenGLProgram(window); //Operacje inicjujące
+	initOpenGLProgram(window);
 
-	//Główna pętla	
-	while (!glfwWindowShouldClose(window)) //Tak długo jak okno nie powinno zostać zamknięte
+	// main game loop	
+	while (!glfwWindowShouldClose(window)) 
 	{		
 		drawScene(window); 
-		glfwPollEvents(); //Wykonaj procedury callback w zalezności od zdarzeń jakie zaszły.
+		glfwPollEvents(); 
 	}
 
 	freeOpenGLProgram(window);
 
-	glfwDestroyWindow(window); //Usuń kontekst OpenGL i okno
+	glfwDestroyWindow(window);
 	glfwTerminate(); // free the resources taken by GLFW
 	exit(EXIT_SUCCESS);
 }
