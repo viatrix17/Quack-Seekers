@@ -27,11 +27,14 @@ should I delete it? xDD
 bool turnRight = false, turnLeft = false; //turning around
 
 float cameraSpeed = 0.1f;
+float rotateSpeed = 0.001f;
 //int stepsCount = 0;
 bool stop = true;
 bool forward = false, back = false, goRight = false, goLeft = false; //movement
+
 glm::vec3 positionOffset;
 glm::vec3 viewOffset;
+float cameraAngle = 0;
 
 
 void key_callback(GLFWwindow* window, int key,
@@ -48,29 +51,18 @@ void key_callback(GLFWwindow* window, int key,
 		if (key == GLFW_KEY_W) {
 			forward = true;
 			std::cout << "go forward\t" << forward <<" \n";
-			std::cout << positionOffset.z << "\n";
-			positionOffset.z += cameraSpeed * glfwGetTime();
-			viewOffset.z += cameraSpeed * glfwGetTime();
 		}
 		if (key == GLFW_KEY_S) {
 			back = true;
 			std::cout << "go back\n";
-			std::cout << positionOffset.z << "\n";
-			positionOffset.z -= cameraSpeed * glfwGetTime();
-			viewOffset.z -= cameraSpeed * glfwGetTime();
-		
 		}
 		if (key == GLFW_KEY_D) {
 			goRight = true;
 			std::cout << "go right\n";
-			positionOffset.x -= cameraSpeed * glfwGetTime();
-			viewOffset.x -= cameraSpeed * glfwGetTime();
 		}
 		if (key == GLFW_KEY_A) {
 			goLeft = true;
 			std::cout << "go left\n";
-			positionOffset.x += cameraSpeed * glfwGetTime();
-			viewOffset.x += cameraSpeed * glfwGetTime();
 		}
 	}
 	if (action == GLFW_RELEASE) {
@@ -137,12 +129,42 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	/*if (!stop) {
 		
 	}*/
-	drawRoom(positionOffset, viewOffset);
+	drawRoom(positionOffset, viewOffset, cameraAngle);
 	//drawFurniture();
 
 	glfwSwapBuffers(window);
 }
 
+void cameraMovement() { //why is it getting faster??
+	glm::vec3 center = viewOffset;
+	if (forward) {
+		std::cout << positionOffset.z << "\n";
+		positionOffset.z += cameraSpeed * glfwGetTime();
+		viewOffset.z += cameraSpeed * glfwGetTime();
+	}
+	if (back) {
+		std::cout << positionOffset.z << "\n";
+		positionOffset.z -= cameraSpeed * glfwGetTime();
+		viewOffset.z -= cameraSpeed * glfwGetTime();
+	}
+	if (goLeft) {
+		positionOffset.x += cameraSpeed * glfwGetTime();
+		viewOffset.x += cameraSpeed * glfwGetTime();
+	}
+	if (goRight) {
+		positionOffset.x -= cameraSpeed * glfwGetTime();
+		viewOffset.x -= cameraSpeed * glfwGetTime();
+	}
+	// wykombinowac zeby nie przyspieszalo
+	if (turnLeft) {
+		cameraAngle -= rotateSpeed * glfwGetTime();
+		std::cout << cameraAngle << "\n";
+	}
+	if (turnRight) {
+		cameraAngle += rotateSpeed * glfwGetTime();
+	}
+	
+}
 
 int main(void)
 {
@@ -173,16 +195,13 @@ int main(void)
 	}
 
 	initOpenGLProgram(window);
-
-
 	
 	glfwSetTime(0);
-
-	
 
 	// main game loop	
 	while (!glfwWindowShouldClose(window)) 
 	{	
+		cameraMovement();
 		drawScene(window, positionOffset, viewOffset);
 		glfwPollEvents(); 
 	}
