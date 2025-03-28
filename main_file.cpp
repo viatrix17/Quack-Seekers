@@ -17,46 +17,36 @@ jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
 Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 */
 
-#define GLM_FORCE_RADIANS
+#include "config.h"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <stdlib.h>
-#include <stdio.h>
-#include "constants.h"
-#include "allmodels.h"
-#include "lodepng.h"
-#include "shaderprogram.h"
+#include "drawRoom.h"
+#include "drawFurniture.h"
 
 
-//Procedura obsługi błędów
+// error handling
 void error_callback(int error, const char* description) {
 	fputs(description, stderr);
 }
 
 
-//Procedura inicjująca
+// initialization of the program
 void initOpenGLProgram(GLFWwindow* window) {
     initShaders();
-	//************Tutaj umieszczaj kod, który należy wykonać raz, na początku programu************	
 }
 
 
-//Zwolnienie zasobów zajętych przez program
+// freeing the resources
 void freeOpenGLProgram(GLFWwindow* window) {
     freeShaders();
-    //************Tutaj umieszczaj kod, który należy wykonać po zakończeniu pętli głównej************	
 }
 
 
 
-//Procedura rysująca zawartość sceny
+// drawing a scene
 void drawScene(GLFWwindow* window) {
-	//************Tutaj umieszczaj kod rysujący obraz******************l
-	
+	//drawBackyard();
+	drawRoom();
+	drawFurniture();
 }
 
 
@@ -93,13 +83,13 @@ int main(void)
 	//Główna pętla	
 	while (!glfwWindowShouldClose(window)) //Tak długo jak okno nie powinno zostać zamknięte
 	{		
-		drawScene(window); //Wykonaj procedurę rysującą
+		drawScene(window); 
 		glfwPollEvents(); //Wykonaj procedury callback w zalezności od zdarzeń jakie zaszły.
 	}
 
 	freeOpenGLProgram(window);
 
 	glfwDestroyWindow(window); //Usuń kontekst OpenGL i okno
-	glfwTerminate(); //Zwolnij zasoby zajęte przez GLFW
+	glfwTerminate(); // free the resources taken by GLFW
 	exit(EXIT_SUCCESS);
 }
