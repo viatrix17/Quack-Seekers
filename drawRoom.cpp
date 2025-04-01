@@ -8,6 +8,41 @@
 //
 //}
 
+void drawWallWithHole(glm::mat4 wall) {
+	glm::mat4 leftPart = wall;
+	leftPart = glm::translate(leftPart, glm::vec3(200.0f, 0.0f, -140.0f));
+	leftPart = glm::rotate(leftPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	leftPart = glm::scale(leftPart, glm::vec3(60.0f, 125.0f, 5.0f));
+	
+	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(leftPart));
+	glUniform4f(spLambert->u("color"), 1.0f, 0.0f, 0.0f, 1);
+	Models::cube.drawSolid();
+
+	glm::mat4 rightPart = wall;
+	rightPart = glm::translate(rightPart, glm::vec3(200.0f, 0.0f, 140.0f));
+	rightPart = glm::rotate(rightPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	rightPart = glm::scale(rightPart, glm::vec3(60.0f, 125.0f, 5.0f));
+	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(rightPart));
+	glUniform4f(spLambert->u("color"), 1.0f, 0.0f, 0.0f, 1);
+	Models::cube.drawSolid();
+
+	glm::mat4 downPart = wall;
+	downPart = glm::translate(downPart, glm::vec3(200.0f, -90.0f, 0.0f));
+	downPart = glm::rotate(downPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	downPart = glm::scale(downPart, glm::vec3(200.0f, 35.0f, 5.0f));
+	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(downPart));
+	glUniform4f(spLambert->u("color"), 1.0f, 0.0f, 0.0f, 1);
+	Models::cube.drawSolid();
+
+	glm::mat4 upPart = wall;
+	upPart = glm::translate(upPart, glm::vec3(200.0f, 90.0f, 0.0f));
+	upPart = glm::rotate(upPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	upPart = glm::scale(upPart, glm::vec3(200.0f, 35.0f, 5.0f));
+	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(upPart));
+	glUniform4f(spLambert->u("color"), 1.0f, 0.0f, 0.0f, 1);
+	Models::cube.drawSolid();
+}
+
 void drawRoom(glm::vec3 cameraOffset, glm::vec3 viewOffset, float roomAngle) {
 
 	//std::cout << "drawing a room!\n";
@@ -56,6 +91,9 @@ void drawRoom(glm::vec3 cameraOffset, glm::vec3 viewOffset, float roomAngle) {
 	glUniform4f(spLambert->u("color"), 0.1f, 0.6f, 0.5f, 1); 
 	Models::cube.drawSolid();
 	//drawWall(rightWall);
+
+	glm::mat4 leftWall = room;
+	drawWallWithHole(leftWall);
 
 	// drawing the ceiling and the floor
 
