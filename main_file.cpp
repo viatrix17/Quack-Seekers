@@ -27,7 +27,7 @@ should I delete it? xDD
 bool turnRight = false, turnLeft = false; //turning around
 
 float cameraSpeed = 25.0f;
-float rotateSpeed = 0.1f;
+float rotateSpeed = 0.25f;
 //int stepsCount = 0;
 bool stop = true;
 bool forward = false, back = false, goRight = false, goLeft = false; //movement
@@ -122,7 +122,13 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// camera movement - to add
+	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
+	glm::mat4 V;
+	V = glm::lookAt(positionOffset, viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
+
+	spLambert->use();
+	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(V));
 
 	/*glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
 	glm::mat4 V = V = glm::lookAt(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));*/
