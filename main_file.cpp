@@ -26,8 +26,8 @@ should I delete it? xDD
 
 bool turnRight = false, turnLeft = false; //turning around
 
-float cameraSpeed = 0.1f;
-float rotateSpeed = 0.001f;
+float cameraSpeed = 25.0f;
+float rotateSpeed = 0.1f;
 //int stepsCount = 0;
 bool stop = true;
 bool forward = false, back = false, goRight = false, goLeft = false; //movement
@@ -36,6 +36,8 @@ glm::vec3 positionOffset;
 glm::vec3 viewOffset;
 float cameraAngle = 0;
 
+float lastFrameTime = 0.0f;  // Time of the last frame
+float deltaTime = 0.0f;      // Time difference between frames
 
 void key_callback(GLFWwindow* window, int key,
 	int scancode, int action, int mods) {
@@ -136,32 +138,40 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 }
 
 void cameraMovement() { //why is it getting faster??
-	glm::vec3 center = viewOffset;
+
+	float currentFrameTime = glfwGetTime();
+
+	// Calculate the time difference between this and the last frame
+	deltaTime = currentFrameTime - lastFrameTime;
+
+	// Update the time for the next frame
+	lastFrameTime = currentFrameTime;
+
 	if (forward) {
 		std::cout << positionOffset.z << "\n";
-		positionOffset.z += cameraSpeed * glfwGetTime();
-		viewOffset.z += cameraSpeed * glfwGetTime();
+		positionOffset.z += cameraSpeed * deltaTime;
+		viewOffset.z += cameraSpeed * deltaTime;
 	}
 	if (back) {
 		std::cout << positionOffset.z << "\n";
-		positionOffset.z -= cameraSpeed * glfwGetTime();
-		viewOffset.z -= cameraSpeed * glfwGetTime();
+		positionOffset.z -= cameraSpeed * deltaTime;
+		viewOffset.z -= cameraSpeed * deltaTime;
 	}
 	if (goLeft) {
-		positionOffset.x += cameraSpeed * glfwGetTime();
-		viewOffset.x += cameraSpeed * glfwGetTime();
+		positionOffset.x += cameraSpeed * deltaTime;
+		viewOffset.x += cameraSpeed * deltaTime;
 	}
 	if (goRight) {
-		positionOffset.x -= cameraSpeed * glfwGetTime();
-		viewOffset.x -= cameraSpeed * glfwGetTime();
+		positionOffset.x -= cameraSpeed * deltaTime;
+		viewOffset.x -= cameraSpeed * deltaTime;
 	}
 	// wykombinowac zeby nie przyspieszalo
 	if (turnLeft) {
-		cameraAngle -= rotateSpeed * glfwGetTime();
+		cameraAngle -= rotateSpeed * deltaTime;
 		std::cout << cameraAngle << "\n";
 	}
 	if (turnRight) {
-		cameraAngle += rotateSpeed * glfwGetTime();
+		cameraAngle += rotateSpeed * deltaTime;
 	}
 	
 }
