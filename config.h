@@ -17,3 +17,6 @@
 #include <iostream>
 #include <cmath>
 #include <tuple>
+
+#define WIDTH (1600.0f)
+#define HEIGHT (800.0f)
