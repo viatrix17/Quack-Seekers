@@ -171,7 +171,7 @@ void cameraMovement() { //why is it getting faster??
 		positionOffset.x -= cameraSpeed * deltaTime;
 		viewOffset.x -= cameraSpeed * deltaTime;
 	}
-	// wykombinowac zeby nie przyspieszalo
+	
 	if (turnLeft) {
 		cameraAngle -= rotateSpeed * deltaTime;
 		std::cout << cameraAngle << "\n";
