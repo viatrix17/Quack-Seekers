@@ -63,8 +63,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	yaw += offsetX * mouseSensitivity;
 	pitch += offsetY * mouseSensitivity;
 
-	if (pitch > 89.0f) pitch = 89.0f;
-	if (pitch < -89.0f) pitch = -89.0f;
+	/*if (pitch > 89.0f) pitch = 89.0f;
+	if (pitch < -89.0f) pitch = -89.0f;*/
 
 	glm::vec3 front;
 	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
@@ -89,6 +89,9 @@ void key_callback(GLFWwindow* window, int key,
 		}
 		if (key == GLFW_KEY_A) {
 			goLeft = true;
+		}
+		if (key == GLFW_KEY_ESCAPE) {
+			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 	}
 	if (action == GLFW_RELEASE) {
@@ -117,6 +120,7 @@ void error_callback(int error, const char* description) {
 // initialization of the program
 void initOpenGLProgram(GLFWwindow* window) {
     initShaders();
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glClearColor(0.58f, 0.88f, 0.92f, 0); //light blue/green for the sky/background
 	positionOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 	viewOffset = glm::vec3(0.0f, 0.0f, 100.0f);
