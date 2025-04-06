@@ -1,3 +1,3 @@
 #pragma once
 
-void drawFurniture(glm::mat4 room);
+void drawFurniture(glm::mat4 room, float openAngle);

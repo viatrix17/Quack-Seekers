@@ -44,6 +44,9 @@ float mouseSensitivity = 0.1f;
 float yaw = -90.0f;  // initial yaw (direction)
 float pitch = 0.0f;  // initial pitch (up/down)
 
+bool open = true;
+float openSpeed = 1.0f;
+
 // mouse handling
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 
@@ -93,6 +96,9 @@ void key_callback(GLFWwindow* window, int key,
 		if (key == GLFW_KEY_ESCAPE) {
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
+		if (key == GLFW_KEY_R) {
+			open = true;
+		}
 	}
 	if (action == GLFW_RELEASE) {
 		if (key == GLFW_KEY_W) {
@@ -137,15 +143,6 @@ void freeOpenGLProgram(GLFWwindow* window) {
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
-
-	float currentFrameTime = glfwGetTime();
-
-	// calculate the time difference between this and the last frame
-	deltaTime = currentFrameTime - lastFrameTime;
-
-	// update the time for the next frame
-	lastFrameTime = currentFrameTime;
-
 	if (forward) {
 		positionOffset += cameraSpeed * deltaTime * viewOffset;
 	}
@@ -164,7 +161,7 @@ void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pok�
 }
 
 // drawing a scene
-void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffset) {
+void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffset, float openAngle) {
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -176,11 +173,10 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(V));
 
-
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);
 	drawRoom(room);
-	drawFurniture(room);
+	drawFurniture(room,openAngle);
 
 	glfwSwapBuffers(window);
 }
@@ -218,11 +214,25 @@ int main(void)
 	
 	glfwSetTime(0);
 
+	float openAngle = 0.0f;
+
+	float currentFrameTime;
+
 	// main game loop	
-	while (!glfwWindowShouldClose(window)) 
+	while (!glfwWindowShouldClose(window))
 	{	
+		currentFrameTime = glfwGetTime();
+		deltaTime = currentFrameTime - lastFrameTime;
+		lastFrameTime = currentFrameTime;
+
+		if (open) {
+			openAngle += openSpeed * deltaTime; // Zwiększanie kąta rotacji
+		}
+		else {
+			openAngle -= openSpeed * deltaTime;
+		}
 		cameraMovement();
-		drawScene(window, positionOffset, viewOffset);
+		drawScene(window, positionOffset, viewOffset,openAngle);
 		glfwPollEvents(); 
 	}
 
