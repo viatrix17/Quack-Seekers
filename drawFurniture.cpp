@@ -30,14 +30,14 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 	rightSide = glm::rotate(rightSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 	drawCube(rightSide, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), color);
 
-	//// front aka door  maja sie obracac 
-	//glm::mat4 leftWing = room;
-	//leftWing = glm::translate(leftWing, glm::vec3(-130.0f + 20.0f, -27.0f, 200.0f - 20.0f));
-	//drawCube(leftWing, std::tuple<float, float, float>(70.0f, 100.0f, 1.0f), color);
-	//
-	//glm::mat4 rightWing = room;
-	//rightWing = glm::translate(rightWing, glm::vec3(-130.0f + 20.0f, -27.0f, 200.0f - 20.0f));
-	//drawCube(rightWing, std::tuple<float, float, float>(70.0f, 100.0f, 1.0f), color);
+	// front aka door  maja sie obracac 
+	glm::mat4 leftWing = wardrobe;
+	leftWing = glm::translate(leftWing, glm::vec3(34.5f, 0.0f, -25.0f));
+	drawCube(leftWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f), color);
+	
+	glm::mat4 rightWing = wardrobe;
+	rightWing = glm::translate(rightWing, glm::vec3(-34.5f, 0.0f, -25.0f));
+	drawCube(rightWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f), color);
 
 	//shelves
 	for (float i = 1; i < 5; i++) {
