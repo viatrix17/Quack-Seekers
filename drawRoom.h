@@ -1,4 +1,4 @@
 #pragma once
 
-void drawWallWithHole(glm::mat4 wall);
-void drawRoom(glm::vec3 cameraOffset, glm::vec3 viewOffset);
+void drawCube(glm::mat4 cube, std::tuple<float, float, float> scale, std::tuple<float, float, float> color);
+void drawRoom(glm::mat4 room);

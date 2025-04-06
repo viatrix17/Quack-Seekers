@@ -136,7 +136,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
     freeShaders();
 }
 
-void cameraMovement() { 
+void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
 
 	float currentFrameTime = glfwGetTime();
 
@@ -178,9 +178,9 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 
 
 	//drawBackyard(); idk where to put this tbh xdd
-	
-	drawRoom(positionOffset, viewOffset);
-	//drawFurniture();
+	glm::mat4 room = glm::mat4(1.0f);
+	drawRoom(room);
+	drawFurniture(room);
 
 	glfwSwapBuffers(window);
 }

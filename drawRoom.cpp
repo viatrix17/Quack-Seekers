@@ -32,18 +32,17 @@ void drawWallWithWindow(glm::mat4 wall, std::tuple<float, float, float> beige) {
 	drawCube(upPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f), beige);
 }
 
-void drawRoom(glm::vec3 cameraOffset, glm::vec3 viewOffset) {
+void drawRoom(glm::mat4 room) {
 
 	std::tuple<float, float, float> black(0.0f, 0.0f, 0.0f); //troche nie dosiega do konca jak sie zrobi z zewnatrz
 
 	// drawing the non-window walls
-	glm::mat4 room = glm::mat4(1.0f);
 
 	//scaling values
 	std::tuple<float, float, float> wallScale(200.0f, 125.0f, 5.0f);
 	std::tuple<float, float, float> wallColor(0.9f, 0.84f, 0.78f); //beige color for the walls
 
-	
+
 	glm::mat4 frontWall = room;
 	frontWall = glm::translate(frontWall, glm::vec3(0.0f,0.0f,200.0f));  
 	drawCube(frontWall, wallScale, wallColor);
