@@ -3,8 +3,9 @@
 
 extern bool open[10];
 extern bool close[10];
+extern float openAngle[10];
 
-void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color, float openAngle) {
+void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	glm::mat4 wardrobe = room;
 	wardrobe = glm::translate(wardrobe, glm::vec3(-130.0f + 20.0f, -23.0f, 200.0f - 20.0f - 25.0f));
@@ -23,32 +24,29 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color, float o
 	}
 
 	// sides
-	glm::mat4 leftSide = wardrobe;
-	leftSide = glm::translate(leftSide, glm::vec3(69.0f,0.0f,1.0f));
-	leftSide = glm::rotate(leftSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	drawCube(leftSide, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), color);
+	for (float i = -1; i <= 1; i += 2) {
+		glm::mat4 side = wardrobe;
+		side = glm::translate(side, glm::vec3(69.0f*i, 0.0f, 1.0f));
+		side = glm::rotate(side, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+		drawCube(side, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), color);
+	}
 
-	glm::mat4 rightSide = wardrobe;
+	/*glm::mat4 rightSide = wardrobe;
 	rightSide = glm::translate(rightSide, glm::vec3(-69.0f, 0.0f, 1.0f));
 	rightSide = glm::rotate(rightSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	drawCube(rightSide, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), color);
+	drawCube(rightSide, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), color);*/
 
 	// front aka door  maja sie obracac 
-	glm::mat4 leftWing = wardrobe;
-	leftWing = glm::translate(leftWing, glm::vec3(34.5f, 0.0f, -25.0f));
-	// animation
-	leftWing = glm::translate(leftWing, glm::vec3(34.5f, 0.0f, 0.0f));
-	leftWing = glm::rotate(leftWing, openAngle, glm::vec3(0.0f, -1.0f, 0.0f));
-	leftWing = glm::translate(leftWing, glm::vec3(-34.5f, 0.0f, 0.0f));
-	drawCube(leftWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f), color);
+	for (float i = -1; i <= 1; i += 2) {
+		glm::mat4 doorWing = wardrobe;
+		doorWing = glm::translate(doorWing, glm::vec3(34.5f*i, 0.0f, -25.0f));
+		// animation
+		doorWing = glm::translate(doorWing, glm::vec3(34.5f*i, 0.0f, 0.0f));
+		doorWing = glm::rotate(doorWing, openAngle[0]*i, glm::vec3(0.0f, -1.0f, 0.0f));
+		doorWing = glm::translate(doorWing, glm::vec3(-34.5f*i, 0.0f, 0.0f));
+		drawCube(doorWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f), color);
+	}
 	
-	glm::mat4 rightWing = wardrobe;
-	rightWing = glm::translate(rightWing, glm::vec3(-34.5f, 0.0f, -25.0f));
-	rightWing = glm::translate(rightWing, glm::vec3(-34.5f, 0.0f, 0.0f));
-	rightWing = glm::rotate(rightWing, -openAngle, glm::vec3(0.0f, -1.0f, 0.0f));
-	rightWing = glm::translate(rightWing, glm::vec3(34.5f, 0.0f, 0.0f));
-	drawCube(rightWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f), color);
-
 	//shelves
 	for (float i = 1; i < 5; i++) {
 		glm::mat4 shelf = wardrobe;
@@ -58,25 +56,25 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color, float o
 	}
 }
 
-void drawFurniture(glm::mat4 room, float openAngle) {
+void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
+
+}
+
+void drawFurniture(glm::mat4 room) {
 
 	std::tuple<float, float, float> furnitureColor(0.4f, 0.12f, 0.12f); //brown color for the furniture
 
 	if (open[0]) {
-		if (openAngle >= 90 * PI / 180) {
+		if (openAngle[0] >= 90 * PI / 180) {
 			open[0] = false;
 		}
 	}
 	else if (close[0]) {
-		if (openAngle <= 0 * PI / 180) {
+		if (openAngle[0] <= 0 * PI / 180) {
 			close[0] = false;
 		}
 
 	}
-	/*else {
-		if (openAngle <= 0 * PI / 180) {
-			open[0] = true;
-		}
-	}*/
-	drawWardrobe(room,furnitureColor, openAngle);
+	drawWardrobe(room, furnitureColor);
+	//drawDesk(room, furnitureColor);
 }

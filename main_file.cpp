@@ -47,6 +47,7 @@ float pitch = 0.0f;  // initial pitch (up/down)
 bool open[10]; //0 - wardrobe
 bool close[10];
 int openCount[10];
+float openAngle[10];
 
 float openSpeed = 1.0f;
 
@@ -149,6 +150,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 		open[i] = false;
 		close[i] = false;
 		openCount[i] = 0;
+		openAngle[i] = 0.0f;
 	}
 
 	glEnable(GL_DEPTH_TEST);
@@ -181,7 +183,7 @@ void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pok�
 }
 
 // drawing a scene
-void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffset, float openAngle) {
+void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffset) {
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -197,7 +199,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);
 	drawRoom(room);
-	drawFurniture(room,openAngle);
+	drawFurniture(room);
 
 	glfwSwapBuffers(window);
 }
@@ -235,8 +237,6 @@ int main(void)
 	
 	glfwSetTime(0);
 
-	float openAngle = 0.0f;
-
 	float currentFrameTime;
 
 	// main game loop	
@@ -247,14 +247,14 @@ int main(void)
 		lastFrameTime = currentFrameTime;
 		
 		if (open[0]) {
-			openAngle += openSpeed * deltaTime; // Zwiększanie kąta rotacji
+			openAngle[0] += openSpeed * deltaTime; // Zwiększanie kąta rotacji
 		}
 		else if (close[0]) {
-			openAngle -= openSpeed * deltaTime;
+			openAngle[0] -= openSpeed * deltaTime;
 		}
 		
 		cameraMovement();
-		drawScene(window, positionOffset, viewOffset,openAngle);
+		drawScene(window, positionOffset, viewOffset);
 		glfwPollEvents(); 
 	}
 
