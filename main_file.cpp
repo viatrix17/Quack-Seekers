@@ -44,6 +44,29 @@ float mouseSensitivity = 0.1f;
 float yaw = -90.0f;  // initial yaw (direction)
 float pitch = 0.0f;  // initial pitch (up/down)
 
+//GLuint tex1;
+GLuint tex2;
+
+// function from classes
+GLuint readTexture(const char* filename) { //Deklaracja globalna
+	GLuint tex;
+	glActiveTexture(GL_TEXTURE0);
+	//Wczytanie do pamięci komputera
+	std::vector<unsigned char> image; //Alokuj wektor do wczytania obrazka
+	unsigned width, height; //Zmienne do których wczytamy wymiary obrazka
+	//Wczytaj obrazek
+	unsigned error = lodepng::decode(image, width, height, filename);
+	//Import do pamięci karty graficznej
+	glGenTextures(1, &tex); //Zainicjuj jeden uchwyt
+	glBindTexture(GL_TEXTURE_2D, tex); //Uaktywnij uchwyt
+	//Wczytaj obrazek do pamięci KG skojarzonej z uchwytem
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+		GL_RGBA, GL_UNSIGNED_BYTE, (unsigned char*)image.data());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	return tex;
+}
+
 // mouse handling
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 
@@ -117,6 +140,7 @@ void error_callback(int error, const char* description) {
 }
 
 
+
 // initialization of the program
 void initOpenGLProgram(GLFWwindow* window) {
     initShaders();
@@ -128,12 +152,20 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
+	
+	//Then need to put all the loads into one file
+	//tex1 = readTexture("flowers.png");
+	tex2 = readTexture("brick.png");
+	loadPillow("pillow.obj");
+	
 }
 
 
 // freeing the resources
 void freeOpenGLProgram(GLFWwindow* window) {
     freeShaders();
+	//glDeleteTextures(1, &tex1);
+	glDeleteTextures(1, &tex2);
 }
 
 void cameraMovement() { 
@@ -176,11 +208,11 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(V));
 
-
 	//drawBackyard(); idk where to put this tbh xdd
 	
 	drawRoom(positionOffset, viewOffset);
-	//drawFurniture();
+	//P and V passes for texturing
+	drawFurniture(P, V, tex2); 
 
 	glfwSwapBuffers(window);
 }

@@ -18,5 +18,7 @@
 #include <cmath>
 #include <tuple>
 
+#include "objloader.hpp"
+
 #define WIDTH (1600.0f)
 #define HEIGHT (800.0f)
