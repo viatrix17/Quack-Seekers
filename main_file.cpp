@@ -44,7 +44,10 @@ float mouseSensitivity = 0.1f;
 float yaw = -90.0f;  // initial yaw (direction)
 float pitch = 0.0f;  // initial pitch (up/down)
 
-bool open = true;
+bool open[10]; //0 - wardrobe
+bool close[10];
+int openCount[10];
+
 float openSpeed = 1.0f;
 
 // mouse handling
@@ -96,8 +99,19 @@ void key_callback(GLFWwindow* window, int key,
 		if (key == GLFW_KEY_ESCAPE) {
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
-		if (key == GLFW_KEY_R) {
-			open = true;
+		if (key == GLFW_KEY_SPACE) {
+			if (positionOffset.x > -165.0f && positionOffset.x < -75.0f && positionOffset.z < 70.0f && positionOffset.z > 50.0f) {
+				if (openCount[0] == 0) {
+					close[0] = false;
+					open[0] = true;
+					openCount[0]++;
+				}
+				else if (openCount[0] == 1) {
+					open[0] = false;
+					close[0] = true;
+					openCount[0]--;
+				}
+			}
 		}
 	}
 	if (action == GLFW_RELEASE) {
@@ -130,6 +144,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glClearColor(0.58f, 0.88f, 0.92f, 0); //light blue/green for the sky/background
 	positionOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 	viewOffset = glm::vec3(0.0f, 0.0f, 100.0f);
+
+	for (int i = 0; i < 10; i++) {
+		open[i] = false;
+		close[i] = false;
+		openCount[i] = 0;
+	}
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -168,6 +188,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
 	glm::mat4 V;
 	V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
+	std::cout << positionOffset.x << " " << positionOffset.z << "\n";
 
 	spLambert->use();
 	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(P));
@@ -193,7 +214,7 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	window = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL", NULL, NULL);  //uwaga wszystkie wbudowane modele trzeba przeskalowac w wymiarze x /2 
+	window = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL", NULL, NULL);  
 
 	if (!window) 
 	{
@@ -224,13 +245,14 @@ int main(void)
 		currentFrameTime = glfwGetTime();
 		deltaTime = currentFrameTime - lastFrameTime;
 		lastFrameTime = currentFrameTime;
-
-		if (open) {
+		
+		if (open[0]) {
 			openAngle += openSpeed * deltaTime; // Zwiększanie kąta rotacji
 		}
-		else {
+		else if (close[0]) {
 			openAngle -= openSpeed * deltaTime;
 		}
+		
 		cameraMovement();
 		drawScene(window, positionOffset, viewOffset,openAngle);
 		glfwPollEvents(); 

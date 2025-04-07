@@ -1,7 +1,8 @@
 #include "config.h"
 #include "drawRoom.h"
 
-extern bool open;
+extern bool open[10];
+extern bool close[10];
 
 void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color, float openAngle) {
 
@@ -61,16 +62,21 @@ void drawFurniture(glm::mat4 room, float openAngle) {
 
 	std::tuple<float, float, float> furnitureColor(0.4f, 0.12f, 0.12f); //brown color for the furniture
 
-	std::cout << "drawing furniture!\n";
-	if (open) {
+	if (open[0]) {
 		if (openAngle >= 90 * PI / 180) {
-			open = false;
+			open[0] = false;
 		}
 	}
-	else {
+	else if (close[0]) {
 		if (openAngle <= 0 * PI / 180) {
-			open = true;
+			close[0] = false;
 		}
+
 	}
+	/*else {
+		if (openAngle <= 0 * PI / 180) {
+			open[0] = true;
+		}
+	}*/
 	drawWardrobe(room,furnitureColor, openAngle);
 }
