@@ -14,8 +14,7 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 	back = glm::translate(back, glm::vec3(0.0f, 0.0f, 25.0f));
 	drawCube(back, std::tuple<float, float, float> (68.0f, 100.0f, 1.0f), color);
 	
-	
-
+	// top and 
 	for (float i = -1; i <= 1; i += 2) {
 		glm::mat4 board = wardrobe;
 		board = glm::translate(board, glm::vec3(0.0f, 101.0f*i, 1.0f));
@@ -30,11 +29,6 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 		side = glm::rotate(side, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 		drawCube(side, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), color);
 	}
-
-	/*glm::mat4 rightSide = wardrobe;
-	rightSide = glm::translate(rightSide, glm::vec3(-69.0f, 0.0f, 1.0f));
-	rightSide = glm::rotate(rightSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	drawCube(rightSide, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), color);*/
 
 	// front aka door  maja sie obracac 
 	for (float i = -1; i <= 1; i += 2) {
@@ -58,6 +52,23 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 
 void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 
+	glm::mat4 desk = room;
+	desk = glm::translate(desk, glm::vec3(130.0f - 20.0f, -49.0f, 200.0f - 25.0f - 15.0f));
+
+	glm::mat4 board = desk;
+	desk = glm::rotate(desk, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+	drawCube(desk, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f), color);
+
+	//140cmx50cmx75cm
+	for (float i = -1; i <= 1; i += 2) {
+		glm::mat4 side = desk;
+		side = glm::translate(side, glm::vec3(69.0f * i, 0.0f, 38.5f));
+		side = glm::rotate(side, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+		side = glm::rotate(side, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+		drawCube(side, std::tuple<float, float, float>(25.0f, 37.5f, 1.0f), color);
+	}
+
+
 }
 
 void drawFurniture(glm::mat4 room) {
@@ -73,8 +84,7 @@ void drawFurniture(glm::mat4 room) {
 		if (openAngle[0] <= 0 * PI / 180) {
 			close[0] = false;
 		}
-
 	}
 	drawWardrobe(room, furnitureColor);
-	//drawDesk(room, furnitureColor);
+	drawDesk(room, furnitureColor);
 }
