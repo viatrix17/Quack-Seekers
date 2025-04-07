@@ -54,6 +54,12 @@
     <ClInclude Include="drawFurniture.h">
       <Filter>Pliki naglówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="pillowModel.h">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader.hpp">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -84,6 +90,12 @@
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
     <ClCompile Include="drawFurniture.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
+    <ClCompile Include="pillowModel.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
+    <ClCompile Include="objloader.cpp">
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
   </ItemGroup>

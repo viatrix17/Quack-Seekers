@@ -84,7 +84,7 @@ bool loadOBJ(
 		}
 		else {
 			// Probably a comment, eat up the rest of the line
-			
+
 		}
 
 	}

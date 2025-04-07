@@ -28,6 +28,8 @@
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="myCube.h" />
+    <ClInclude Include="objloader.hpp" />
+    <ClInclude Include="pillowModel.h" />
     <ClInclude Include="shaderprogram.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="teapot.h" />
@@ -40,6 +42,8 @@
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="objloader.cpp" />
+    <ClCompile Include="pillowModel.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="teapot.cpp" />

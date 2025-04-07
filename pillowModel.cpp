@@ -10,7 +10,7 @@ static int lengthVectors;
 
 void loadPillow(const char* filename) {
 	bool res = loadOBJ(filename, verticesP, texCoordsP, vertexNormalsP);
-	lengthVectors = verticesP.size()/3;
+	lengthVectors = verticesP.size() / 3;
 	return;
 }
 
