@@ -4,6 +4,7 @@
 extern bool open[10];
 extern bool close[10];
 extern float openAngle[10];
+extern float drawerOffset;
 
 void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 
@@ -56,18 +57,42 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 	desk = glm::translate(desk, glm::vec3(130.0f - 20.0f, -49.0f, 200.0f - 25.0f - 15.0f));
 
 	glm::mat4 board = desk;
-	desk = glm::rotate(desk, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-	drawCube(desk, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f), color);
+	board = glm::rotate(desk, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+	drawCube(board, std::tuple<float, float, float>(72.0f, 27.0f, 1.0f), color);
 
 	//140cmx50cmx75cm
+
+	//sides
 	for (float i = -1; i <= 1; i += 2) {
 		glm::mat4 side = desk;
-		side = glm::translate(side, glm::vec3(69.0f * i, 0.0f, 38.5f));
-		side = glm::rotate(side, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+		side = glm::translate(side, glm::vec3(69.0f * i, -38.5f, 0.0f));
 		side = glm::rotate(side, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 		drawCube(side, std::tuple<float, float, float>(25.0f, 37.5f, 1.0f), color);
 	}
 
+	//the drawer
+	glm::mat4 drawer = desk;
+	drawer = glm::translate(drawer, glm::vec3(-46.8f, 0.0f, 0.0f + drawerOffset));
+
+	for (float i = -1; i <= 1; i += 2) {
+		glm::mat4 drawerSide = drawer;
+		drawerSide = glm::translate(drawerSide, glm::vec3(20.0f*i, -11.0f, 0.0f));
+		drawerSide = glm::rotate(drawerSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+		drawCube(drawerSide, std::tuple<float, float, float>(23.0f, 10.0f, 1.0f), color);
+	}
+	
+	for (float i = -1; i <= 1; i += 2) {
+		glm::mat4 drawerFront = drawer;
+		drawerFront = glm::translate(drawerFront, glm::vec3(0.0f, -11.0f, 23.0f*i));
+		drawCube(drawerFront, std::tuple<float, float, float>(21.0f, 10.0f, 1.0f), color);
+	}
+	
+	glm::mat4 drawerBottom = drawer;
+	drawerBottom = glm::translate(drawerBottom, glm::vec3(0.0f, -22.0f, 0.0f));
+	drawerBottom = glm::rotate(drawerBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+	drawCube(drawerBottom, std::tuple<float, float, float>(21.0f, 24.0f, 1.0f), color);
+
+	//drawBoxes();
 
 }
 
@@ -85,6 +110,21 @@ void drawFurniture(glm::mat4 room) {
 			close[0] = false;
 		}
 	}
+	if (open[1]) {
+		std::cout << drawerOffset << " ";
+		if (drawerOffset <= -40.0f) {
+			drawerOffset = -40.0f;
+			open[1] = false;
+		}
+	}
+	else if (close[1]) {
+		if (drawerOffset >= 0.0f) {
+			drawerOffset = 0.0f;
+			close[1] = false;
+		}
+
+	}
+
 	drawWardrobe(room, furnitureColor);
 	drawDesk(room, furnitureColor);
 }

@@ -48,8 +48,10 @@ bool open[10]; //0 - wardrobe
 bool close[10];
 int openCount[10];
 float openAngle[10];
+float drawerOffset;
 
 float openSpeed = 1.0f;
+float drawSpeed = 15.0f;
 
 // mouse handling
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
@@ -113,6 +115,26 @@ void key_callback(GLFWwindow* window, int key,
 					openCount[0]--;
 				}
 			}
+			if (positionOffset.x > 24.0f && positionOffset.x < 95.0f && positionOffset.z > 60.0f && positionOffset.z < 110.0f
+				&& viewOffset.x < 0.7f && viewOffset.x > -0.79f
+				&& viewOffset.y < -0.150f && viewOffset.y > -0.750f
+				&& viewOffset.z < 0.90f && viewOffset.z > 0.48f) {
+				if (openCount[1] == 0) {
+					close[1] = false;
+					open[1] = true;
+					openCount[1]++;
+				}
+			}
+			if (positionOffset.x > 24.0f && positionOffset.x < 95.0f && positionOffset.z > 40.0f && positionOffset.z < 85.0f
+				&& viewOffset.x < 0.7f && viewOffset.x > -0.79f
+				&& viewOffset.y < -0.150f && viewOffset.y > -0.750f
+				&& viewOffset.z < 0.98f && viewOffset.z > -0.25f) {
+				if (openCount[1] == 1) {
+					open[1] = false;
+					close[1] = true;
+					openCount[1]--;
+				}
+			}
 		}
 	}
 	if (action == GLFW_RELEASE) {
@@ -152,6 +174,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 		openCount[i] = 0;
 		openAngle[i] = 0.0f;
 	}
+	drawerOffset = 0.0f;
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -190,7 +213,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
 	glm::mat4 V;
 	V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
-	std::cout << positionOffset.x << " " << positionOffset.z << "\n";
+	std::cout << viewOffset.x << " " << viewOffset.y << " " << viewOffset.z << "\n";
 
 	spLambert->use();
 	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(P));
@@ -251,6 +274,12 @@ int main(void)
 		}
 		else if (close[0]) {
 			openAngle[0] -= openSpeed * deltaTime;
+		}
+		if (open[1]) {
+			drawerOffset -= drawSpeed * deltaTime; // Zwiększanie kąta rotacji
+		}
+		else if (close[1]) {
+			drawerOffset += drawSpeed * deltaTime;
 		}
 		
 		cameraMovement();
