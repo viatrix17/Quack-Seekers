@@ -247,19 +247,6 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glfwSwapBuffers(window);
 }
 
-bool isCameraLookingAt(glm::vec3 cameraPos, glm::vec3 viewDir, glm::vec3 targetPos, float maxDistance, float maxViewAngleDegrees) {
-	glm::vec3 toTarget = targetPos - cameraPos;
-	float distance = glm::length(toTarget);
-
-	if (distance > maxDistance)
-		return false;
-
-	glm::vec3 toTargetNormalized = glm::normalize(toTarget);
-	float angle = glm::degrees(acos(glm::dot(glm::normalize(viewDir), toTargetNormalized)));
-
-	return angle < maxViewAngleDegrees;
-}
-
 int main(void)
 {
 	GLFWwindow* window; 
