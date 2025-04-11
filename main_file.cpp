@@ -48,7 +48,7 @@ bool open[10]; //0 - wardrobe
 bool close[10];
 int openCount[10];
 float openAngle[10];
-float drawerOffset;
+glm::vec3 drawerOffset;
 
 float openSpeed = 1.0f;
 float drawSpeed = 15.0f;
@@ -83,6 +83,21 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 
 }
 
+bool isCameraLookingAtBox(glm::vec3 cameraPos, glm::vec3 viewDirection, glm::vec3 boxMin, glm::vec3 boxMax, float maxDistance, float maxViewAngleDegrees) {
+	// First, find the closest point on the box to the camera
+	glm::vec3 closestPoint = glm::clamp(cameraPos, boxMin, boxMax);
+	glm::vec3 toClosestPoint = closestPoint - cameraPos;
+	float distance = glm::length(toClosestPoint);
+	std::cout << distance << " distance\n";
+	if (distance > maxDistance)
+		return false;
+
+	glm::vec3 toTargetNormalized = glm::normalize(toClosestPoint);
+	float angle = glm::degrees(acos(glm::dot(glm::normalize(viewDirection), toTargetNormalized)));
+	std::cout << angle << " angle\n";
+	return angle < maxViewAngleDegrees;
+}
+
 // keys handling
 void key_callback(GLFWwindow* window, int key,
 	int scancode, int action, int mods) {
@@ -103,33 +118,40 @@ void key_callback(GLFWwindow* window, int key,
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 		if (key == GLFW_KEY_SPACE) {
-			if (positionOffset.x > -165.0f && positionOffset.x < -75.0f && positionOffset.z < 70.0f && positionOffset.z > 50.0f) {
-				if (openCount[0] == 0) {
+			std::cout << positionOffset.x << " " << positionOffset.y << " " << positionOffset.z << "\n";
+
+			//wardrobe animation trigger
+			if (openCount[0] == 0) {
+				std::cout << (wardrobePos - wardrobeSize).x << "\n";
+				if (isCameraLookingAtBox(positionOffset, viewOffset, wardrobePos-wardrobeSize, wardrobePos+wardrobeSize, 120.0f, 70.0f)
+					&& positionOffset.x < -40.0f) {
 					close[0] = false;
 					open[0] = true;
 					openCount[0]++;
 				}
-				else if (openCount[0] == 1) {
+			}
+			else if (openCount[0] == 1) {
+				if (isCameraLookingAtBox(positionOffset, viewOffset, wardrobePos - wardrobeSize, wardrobePos + wardrobeSize, 180.0f, 90.0f)
+					&& positionOffset.x < -40.0f) {
 					open[0] = false;
 					close[0] = true;
 					openCount[0]--;
 				}
 			}
-			if (positionOffset.x > 24.0f && positionOffset.x < 95.0f && positionOffset.z > 60.0f && positionOffset.z < 110.0f
-				&& viewOffset.x < 0.7f && viewOffset.x > -0.79f
-				&& viewOffset.y < -0.150f && viewOffset.y > -0.750f
-				&& viewOffset.z < 0.90f && viewOffset.z > 0.48f) {
-				if (openCount[1] == 0) {
+
+			//drawer animation trigger 
+			if (openCount[1] == 0) {
+				if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos+drawerPos) - drawerSize, (deskPos+drawerPos) + drawerSize, 100.0f, 20.0f)) {
 					close[1] = false;
 					open[1] = true;
 					openCount[1]++;
 				}
 			}
-			if (positionOffset.x > 24.0f && positionOffset.x < 95.0f && positionOffset.z > 40.0f && positionOffset.z < 85.0f
-				&& viewOffset.x < 0.7f && viewOffset.x > -0.79f
-				&& viewOffset.y < -0.150f && viewOffset.y > -0.750f
-				&& viewOffset.z < 0.98f && viewOffset.z > -0.25f) {
-				if (openCount[1] == 1) {
+			else if (openCount[1] == 1) {
+				if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos+drawerPos) - drawerSize, (deskPos+drawerPos) + drawerSize, 140.0f, 20.0f)
+					&& positionOffset.x > 30.0f && positionOffset.x < 90.0f
+					|| (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 140.0f, 40.0f) 
+						&& (positionOffset.x >= 90.0f && positionOffset.x > 120.0f || positionOffset.x > -10.0f && positionOffset.x <= 30.0f))) {
 					open[1] = false;
 					close[1] = true;
 					openCount[1]--;
@@ -174,7 +196,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 		openCount[i] = 0;
 		openAngle[i] = 0.0f;
 	}
-	drawerOffset = 0.0f;
+	drawerOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -211,9 +233,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
-	glm::mat4 V;
-	V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
-	std::cout << viewOffset.x << " " << viewOffset.y << " " << viewOffset.z << "\n";
+	glm::mat4 V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	spLambert->use();
 	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(P));
@@ -227,6 +247,18 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glfwSwapBuffers(window);
 }
 
+bool isCameraLookingAt(glm::vec3 cameraPos, glm::vec3 viewDir, glm::vec3 targetPos, float maxDistance, float maxViewAngleDegrees) {
+	glm::vec3 toTarget = targetPos - cameraPos;
+	float distance = glm::length(toTarget);
+
+	if (distance > maxDistance)
+		return false;
+
+	glm::vec3 toTargetNormalized = glm::normalize(toTarget);
+	float angle = glm::degrees(acos(glm::dot(glm::normalize(viewDir), toTargetNormalized)));
+
+	return angle < maxViewAngleDegrees;
+}
 
 int main(void)
 {
@@ -276,10 +308,10 @@ int main(void)
 			openAngle[0] -= openSpeed * deltaTime;
 		}
 		if (open[1]) {
-			drawerOffset -= drawSpeed * deltaTime; // Zwiększanie kąta rotacji
+			drawerOffset.z -= drawSpeed * deltaTime; // Zwiększanie kąta rotacji
 		}
 		else if (close[1]) {
-			drawerOffset += drawSpeed * deltaTime;
+			drawerOffset.z += drawSpeed * deltaTime;
 		}
 		
 		cameraMovement();

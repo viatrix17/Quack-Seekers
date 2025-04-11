@@ -4,12 +4,12 @@
 extern bool open[10];
 extern bool close[10];
 extern float openAngle[10];
-extern float drawerOffset;
+extern glm::vec3 drawerOffset;
 
 void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	glm::mat4 wardrobe = room;
-	wardrobe = glm::translate(wardrobe, glm::vec3(-130.0f + 20.0f, -23.0f, 200.0f - 20.0f - 25.0f));
+	wardrobe = glm::translate(wardrobe, wardrobePos);
 
 	glm::mat4 back = wardrobe;
 	back = glm::translate(back, glm::vec3(0.0f, 0.0f, 25.0f));
@@ -54,7 +54,7 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	glm::mat4 desk = room;
-	desk = glm::translate(desk, glm::vec3(130.0f - 20.0f, -49.0f, 200.0f - 25.0f - 15.0f));
+	desk = glm::translate(desk, deskPos);
 
 	glm::mat4 board = desk;
 	board = glm::rotate(desk, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -72,7 +72,7 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	//the drawer
 	glm::mat4 drawer = desk;
-	drawer = glm::translate(drawer, glm::vec3(-46.8f, 0.0f, 0.0f + drawerOffset));
+	drawer = glm::translate(drawer, drawerPos + drawerOffset);
 
 	for (float i = -1; i <= 1; i += 2) {
 		glm::mat4 drawerSide = drawer;
@@ -111,15 +111,14 @@ void drawFurniture(glm::mat4 room) {
 		}
 	}
 	if (open[1]) {
-		std::cout << drawerOffset << " ";
-		if (drawerOffset <= -40.0f) {
-			drawerOffset = -40.0f;
+		if (drawerOffset.z <= -40.0f) {
+			drawerOffset.z = -40.0f;
 			open[1] = false;
 		}
 	}
 	else if (close[1]) {
-		if (drawerOffset >= 0.0f) {
-			drawerOffset = 0.0f;
+		if (drawerOffset.z >= 0.0f) {
+			drawerOffset.z = 0.0f;
 			close[1] = false;
 		}
 
