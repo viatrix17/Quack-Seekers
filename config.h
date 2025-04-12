@@ -30,3 +30,6 @@
 #define drawerPos (glm::vec3(-46.8f, -14.0f, 0.0f)) // relative to the desk
 #define cabinetSize (glm::vec3(42.0f/2, 50.0f/2, 50.0f/2.0f))
 #define cabinetPos (glm::vec3(0.0f, -35.0f, 0.0f)) // relative to the drawer
+
+#define boxSize (glm::vec3(30.0f/2.0f, 10.0f/2.0f, 20.0f/2.0f))
+#define boxPos (glm::vec3(10.0f, 6.5f, 15.0f)) // relative to the desk

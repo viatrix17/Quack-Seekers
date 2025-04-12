@@ -44,7 +44,7 @@ float mouseSensitivity = 0.1f;
 float yaw = -90.0f;  // initial yaw (direction)
 float pitch = 0.0f;  // initial pitch (up/down)
 
-bool open[10]; //0 - wardrobe, 1 - drawer, 2 - cabinet
+bool open[10]; //0 - wardrobe, 1 - drawer, 2 - cabinet, 3 - box1, 4 - box2
 bool close[10];
 int openCount[10];
 float openAngle[10];

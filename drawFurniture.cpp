@@ -51,6 +51,50 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 	}
 }
 
+void drawBoxes(glm::mat4 desk) {
+
+	for (int i = 0; i < 2; i++) {
+		glm::mat4 lowerPart = desk;
+		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
+		glm::mat4 upperPart = desk;
+		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.1f, boxPos.z));
+		//animation
+		upperPart = glm::translate(upperPart, glm::vec3(-boxSize.z, 0.0f, 0.0f));
+		upperPart = glm::rotate(upperPart, openAngle[3+i], glm::vec3(0.0f, 1.0f, 0.0f));
+		upperPart = glm::translate(upperPart, glm::vec3(boxSize.z, 0.0f, 0.0f));
+		
+		for (int i = -1; i <= 1; i+=2) {
+			glm::mat4 lowerVer = lowerPart;
+			lowerVer = glm::translate(lowerVer, glm::vec3(0.0f, 0.0f, i * boxSize.z));
+			drawCube(lowerVer, std::tuple<float, float, float>(boxSize.x, boxSize.y, 0.25f), std::tuple<float, float, float>(0.5f, 0.12f, 0.8f));
+		
+			glm::mat4 lowerSide = lowerPart;
+			lowerSide = glm::translate(lowerSide, glm::vec3((boxSize.x-0.25f)*i, 0.0f, 0.0f));
+			lowerSide = glm::rotate(lowerSide, 90*PI/180, glm::vec3(0.0f, 1.0f, 0.0f));
+			drawCube(lowerSide, std::tuple<float, float, float>(boxSize.z-0.25f, boxSize.y, 0.25f), std::tuple<float, float, float>(0.5f, 0.12f, 0.8f));
+
+			glm::mat4 upperVer = upperPart;
+			upperVer = glm::translate(upperVer, glm::vec3(0.0f, 0.0f, i * boxSize.z));
+			drawCube(upperVer, std::tuple<float, float, float>(boxSize.x, 2.0f, 0.25f), std::tuple<float, float, float>(0.5f, 0.12f, 0.8f));
+
+			glm::mat4 upperSide = upperPart;
+			upperSide = glm::translate(upperSide, glm::vec3((boxSize.x - 0.25f) * i, 0.0f, 0.0f));
+			upperSide = glm::rotate(upperSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+			drawCube(upperSide, std::tuple<float, float, float>(boxSize.z - 0.25f, 2.0f, 0.25f), std::tuple<float, float, float>(0.5f, 0.12f, 0.8f));
+
+		}
+
+		glm::mat4 bottom = lowerPart;
+		bottom = glm::translate(bottom, glm::vec3(0.0f, -5.0f, 0.0f));
+		bottom = glm::rotate(bottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+		drawCube(bottom, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), std::tuple<float, float, float>(0.5f, 0.12f, 0.8f));
+
+		glm::mat4 top = upperPart;
+		top = glm::translate(top, glm::vec3(0.0f, 2.0f, 0.0f));
+		top = glm::rotate(top, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+		drawCube(top, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), std::tuple<float, float, float>(0.5f, 0.12f, 0.8f));
+	}
+}
 void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	glm::mat4 desk = room;
@@ -122,8 +166,7 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 		drawCube(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f), color);
 	}
 
-	//drawBoxes();
-
+	drawBoxes(desk);
 }
 
 void drawFurniture(glm::mat4 room) {
