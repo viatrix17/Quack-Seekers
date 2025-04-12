@@ -27,6 +27,6 @@
 #define deskSize (glm::vec3(140.0f/2.0f, 50.0f/2.0f, 50.0f/2.0f))
 #define deskPos (glm::vec3(110.0f, -49.0f, 155.0f))
 #define drawerSize (glm::vec3(42.0f/2, 20.0f/2, 50.0f/2))
-#define drawerPos (glm::vec3(-46.8f, -11.0f, 0.0f)) // relative to the desk
+#define drawerPos (glm::vec3(-46.8f, -14.0f, 0.0f)) // relative to the desk
 #define cabinetSize (glm::vec3(42.0f/2, 50.0f/2, 50.0f/2.0f))
-#define cabinetPos (glm::vec3(0.0f, -37.0f, 0.0f)) // relative to the drawer
+#define cabinetPos (glm::vec3(0.0f, -35.0f, 0.0f)) // relative to the drawer

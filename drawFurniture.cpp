@@ -76,49 +76,50 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	for (float i = -1; i <= 1; i += 2) {
 		glm::mat4 drawerSide = drawer;
-		drawerSide = glm::translate(drawerSide, glm::vec3(20.0f*i, 0.0f, 0.0f));
+		drawerSide = glm::translate(drawerSide, glm::vec3(17.0f*i, 0.0f, -1.0f));
 		drawerSide = glm::rotate(drawerSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-		drawCube(drawerSide, std::tuple<float, float, float>(23.0f, 10.0f, 1.0f), color);
+		drawCube(drawerSide, std::tuple<float, float, float>(20.0f, 10.0f, 1.0f), color);
 	}
 	
-	for (float i = -1; i <= 1; i += 2) {
-		glm::mat4 drawerFront = drawer;
-		drawerFront = glm::translate(drawerFront, glm::vec3(0.0f, 0.0f, 23.0f*i));
-		drawCube(drawerFront, std::tuple<float, float, float>(21.0f, 10.0f, 1.0f), color);
-	}
+	glm::mat4 drawerFront = drawer;
+	drawerFront = glm::translate(drawerFront, glm::vec3(0.0f, 0.0f, -22.0f));
+	drawCube(drawerFront, std::tuple<float, float, float>(21.0f, 12.0f, 1.0f), color);
+
+	glm::mat4 drawerBack = drawer;
+	drawerBack = glm::translate(drawerBack, glm::vec3(0.0f, 0.0f, 20.0f));
+	drawCube(drawerBack, std::tuple<float, float, float>(18.0f, 10.0f, 1.0f), color);
 	
 	glm::mat4 drawerBottom = drawer;
 	drawerBottom = glm::translate(drawerBottom, glm::vec3(0.0f, -11.0f, 0.0f));
 	drawerBottom = glm::rotate(drawerBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-	drawCube(drawerBottom, std::tuple<float, float, float>(21.0f, 24.0f, 1.0f), color);
+	drawCube(drawerBottom, std::tuple<float, float, float>(18.0f, 21.0f, 1.0f), color);
 
 	//the cabinet
 	glm::mat4 cabinet = desk;
 	cabinet = glm::translate(cabinet, drawerPos + cabinetPos);
-	//cabinet = glm::translate(cabinet, glm::vec3(0.0f, -37.0f, 0.0f));
 
 	glm::mat4 cabinetSide = cabinet;
-	cabinetSide = glm::translate(cabinetSide, glm::vec3(20.0f, 0.0f, 0.0f));
+	cabinetSide = glm::translate(cabinetSide, glm::vec3(20.0f, 12.0f, 0.0f));
 	cabinetSide = glm::rotate(cabinetSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	drawCube(cabinetSide, std::tuple<float, float, float>(23.0f, 25.0f, 1.0f), color);
+	drawCube(cabinetSide, std::tuple<float, float, float>(21.0f, 35.0f, 1.0f), color);
 	
+	glm::mat4 cabinetFront = cabinet;
+	cabinetFront = glm::translate(cabinetFront, glm::vec3(0.0f, -1.0f, -22.0f));
+	//animation
+	cabinetFront = glm::translate(cabinetFront, glm::vec3(-21.0f, 0.0f, 0.0f));
+	cabinetFront = glm::rotate(cabinetFront, openAngle[1], glm::vec3(0.0f, 1.0f, 0.0f));
+	cabinetFront = glm::translate(cabinetFront, glm::vec3(21.f, 0.0f, 0.0f));
+	drawCube(cabinetFront, std::tuple<float, float, float>(21.0f, 23.0f, 1.0f), color);
 
-	for (float i = -1; i <= 1; i += 2) {
-		glm::mat4 cabinetFront = cabinet;
-		cabinetFront = glm::translate(cabinetFront, glm::vec3(0.0f, 0.0-((1+-i)/2)*1.0f, 23.0f * i));
-		if (i == -1) {
-			cabinetFront = glm::translate(cabinetFront, glm::vec3(-21.0f, 0.0f, 0.0f));
-			cabinetFront = glm::rotate(cabinetFront, openAngle[1], glm::vec3(0.0f, 1.0f, 0.0f));
-			cabinetFront = glm::translate(cabinetFront, glm::vec3(21.f, 0.0f, 0.0f));
-		}
-		drawCube(cabinetFront, std::tuple<float, float, float>(21.0f, 25.0f-0.25 * ((1 + -i) / 2), 1.0f), color);
-	}
+	glm::mat4 cabinetBack = cabinet;
+	cabinetBack = glm::translate(cabinetBack, glm::vec3(-0.2f, 12.0f, 22.0f));
+	drawCube(cabinetBack, std::tuple<float, float, float>(21.1f, 36.0f, 1.0f), color);
 
 	for (float i = 0; i <= 1; i++) {
 		glm::mat4 cabinetBottom = cabinet;
-		cabinetBottom = glm::translate(cabinetBottom, glm::vec3(0.0f, 0.0f - i * (26.0f), 0.0f));
+		cabinetBottom = glm::translate(cabinetBottom, glm::vec3(0.0f-2.0f*(1-i), 0.0f - i * (23.0f), 0.0f));
 		cabinetBottom = glm::rotate(cabinetBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		drawCube(cabinetBottom, std::tuple<float, float, float>(21.0f - (1-i)*(1.0f), 23.0f, 1.0f), color);
+		drawCube(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f), color);
 	}
 
 	//drawBoxes();

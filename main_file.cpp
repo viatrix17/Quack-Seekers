@@ -145,9 +145,9 @@ void key_callback(GLFWwindow* window, int key,
 			else if (openCount[2] == 1 && !triggered) {
 				if ( (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 180.0f, 7.0f, 20.0f) 
 				|| isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 60.0f, 7.0f, 70.0f)
-					&& positionOffset.x > 30.0f && positionOffset.x < 100.0f) 
+					&& positionOffset.x > 30.0f && positionOffset.x < 900.0f) 
 					|| (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 180.0f, 5.0f, 30.0f) 
-						&& (positionOffset.x >= 100.0f && positionOffset.x < 140.0f || positionOffset.x > -10.0f && positionOffset.x <= 30.0f))) {
+						&& (positionOffset.x >= 90.0f && positionOffset.x < 140.0f || positionOffset.x > -10.0f && positionOffset.x <= 30.0f))) {
 					open[2] = false;
 					close[2] = true;
 					openCount[2]--;
