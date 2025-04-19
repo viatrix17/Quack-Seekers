@@ -57,11 +57,11 @@ void drawBoxes(glm::mat4 desk) {
 		glm::mat4 lowerPart = desk;
 		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
 		glm::mat4 upperPart = desk;
-		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.1f, boxPos.z));
+		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.05f, boxPos.z));
 		//animation
-		upperPart = glm::translate(upperPart, glm::vec3(-boxSize.z, 0.0f, 0.0f));
-		upperPart = glm::rotate(upperPart, openAngle[3+i], glm::vec3(0.0f, 1.0f, 0.0f));
-		upperPart = glm::translate(upperPart, glm::vec3(boxSize.z, 0.0f, 0.0f));
+		upperPart = glm::translate(upperPart, glm::vec3(0.0f, -1.0f, boxSize.z+0.5f));
+		upperPart = glm::rotate(upperPart, openAngle[2+i], glm::vec3(1.0f, 0.0f, 0.0f));
+		upperPart = glm::translate(upperPart, glm::vec3(0.0f, 1.0f, -(boxSize.z+0.5f)));
 		
 		for (int i = -1; i <= 1; i+=2) {
 			glm::mat4 lowerVer = lowerPart;
@@ -95,6 +95,7 @@ void drawBoxes(glm::mat4 desk) {
 		drawCube(top, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), std::tuple<float, float, float>(0.5f, 0.12f, 0.8f));
 	}
 }
+
 void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	glm::mat4 desk = room;
@@ -173,36 +174,29 @@ void drawFurniture(glm::mat4 room) {
 
 	std::tuple<float, float, float> furnitureColor(0.4f, 0.12f, 0.12f); //brown color for the furniture
 
-	if (open[0]) {
-		if (openAngle[0] >= 90 * PI / 180) {
-			open[0] = false;
+	for (int i = 0; i < 4; i++) {
+		if (open[i]) {
+			if (openAngle[i] >= 90 * PI / 180) {
+				open[i] = false;
+			}
+		}
+		else if (close[i]) {
+			if (openAngle[i] <= 0 * PI / 180) {
+				close[i] = false;
+			}
 		}
 	}
-	else if (close[0]) {
-		if (openAngle[0] <= 0 * PI / 180) {
-			close[0] = false;
-		}
-	}
-	if (open[1]) {
+	
+	if (open[4]) {
 		if (drawerOffset.z <= -40.0f) {
 			drawerOffset.z = -40.0f;
-			open[1] = false;
+			open[4] = false;
 		}
 	}
-	else if (close[1]) {
+	else if (close[4]) {
 		if (drawerOffset.z >= 0.0f) {
 			drawerOffset.z = 0.0f;
-			close[1] = false;
-		}
-	}
-	if (open[2]) {
-		if (openAngle[1] >= 90 * PI / 180) {
-			open[2] = false;
-		}
-	}
-	else if (close[2]) {
-		if (openAngle[1] <= 0 * PI / 180) {
-			close[2] = false;
+			close[4] = false;
 		}
 	}
 
