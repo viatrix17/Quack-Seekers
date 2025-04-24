@@ -33,3 +33,6 @@
 
 #define boxSize (glm::vec3(30.0f/2.0f, 10.0f/2.0f, 20.0f/2.0f))
 #define boxPos (glm::vec3(10.0f, 6.5f, 15.0f)) // relative to the desk
+
+#define bedSize (glm::vec3(200.0f/2.0f, 0.0f, 80.0f/2.0f))
+#define bedPos (glm::vec3(80.0f, -95.0f, -140.0f))

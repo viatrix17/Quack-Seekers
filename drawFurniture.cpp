@@ -170,9 +170,43 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 	drawBoxes(desk);
 }
 
+void drawBed(glm::mat4 room, std::tuple<float, float, float> color) {
+	
+	glm::mat4 bed = room;
+	bed = glm::translate(bed, bedPos);
+	//drawCube(bed, std::tuple<float, float, float>(100.0f, 5.0f, 40.0f), color);
+
+	// frames
+	glm::mat4 frame = bed;
+	frame = glm::translate(frame, glm::vec3(0.0f, 0.0f, 38.0f));
+	drawCube(frame, std::tuple<float, float, float>(bedSize.x, 5.0f, 1.0f), color);
+
+	for (float i = 0; i < 2; i++) {
+		glm::mat4 backFrame = bed;
+		backFrame = glm::translate(backFrame, glm::vec3(0.0f, i*20.0f, -38.0f));
+		drawCube(backFrame, std::tuple<float, float, float>(bedSize.x, 5.0f, 1.0f), color);
+	}
+	for (float i = -1; i <= 1; i+=2) {
+		for (float j = 0; j < 2; j++) {
+			glm::mat4 frame = bed;
+			frame = glm::translate(frame, glm::vec3(102.0f * i, j*20.0f, 0.0f));
+			frame = glm::rotate(frame, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+			drawCube(frame, std::tuple<float, float, float>(33.0f, 5.0f, 1.0f), color);
+		}
+	}
+
+	// legs
+	for (float i = -1; i <= 1; i+=2) {
+		for (float j = -1; j <= 1; j+=2) {
+			glm::mat4 leg = bed;
+			leg = glm::translate(leg, glm::vec3(105.0f*i, 0.0f, 38.0f*j));
+			drawCube(leg, std::tuple<float, float, float>(5.0f, 30.0f, 5.0f), color);
+		}
+	}
+}
 void drawFurniture(glm::mat4 room) {
 
-	std::tuple<float, float, float> furnitureColor(0.4f, 0.12f, 0.12f); //brown color for the furniture
+	std::tuple<float, float, float> furnitureColor(0.3f, 0.17f, 0.12f); //brown color for the furniture
 
 	for (int i = 0; i < 4; i++) {
 		if (open[i]) {
@@ -202,4 +236,5 @@ void drawFurniture(glm::mat4 room) {
 
 	drawWardrobe(room, furnitureColor);
 	drawDesk(room, furnitureColor);
+	drawBed(room, furnitureColor);
 }
