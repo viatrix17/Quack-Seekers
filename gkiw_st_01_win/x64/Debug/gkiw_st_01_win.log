@@ -1,48 +1,13 @@
-﻿  drawFurniture.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244: "inicjowanie": konwersja z "_Ty" do "_Ty", możliwa utrata danych
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:         with
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:         [
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:             _Ty=double
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:         ]
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:         and
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:         [
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:             _Ty=float
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47): warning C4244:         ]
-  (kompilowanie pliku źródłowego „drawFurniture.cpp”)
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(132,47):
-      kontekst tworzenia wystąpienia szablonu (najpierw najstarszy) to
-          C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\drawFurniture.cpp(90,51):
-          zobacz odwołanie do kompilowanego tworzenia wystąpienia „std::tuple<float,float,float>::tuple<T,double,float,0>(_This2 &&,double &&,float &&) noexcept” funkcji szablon
-          with
-          [
-              T=float,
-              _This2=float
-          ]
-              C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\drawFurniture.cpp(90,11):
-              zobacz pierwsze odwołanie do elementu „std::tuple<float,float,float>::tuple” w „drawBoxes”
-          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(349,16):
-          zobacz odwołanie do kompilowanego tworzenia wystąpienia „std::tuple<float,float,float>::tuple<std::_Exact_args_t,_Ty,double,_Ty,0>(_Tag,_This2 &&,double &&,_Ty &&)” funkcji szablon
-          with
-          [
-              _Ty=float,
-              _Tag=std::_Exact_args_t,
-              _This2=float
-          ]
-          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(301,18):
-          zobacz odwołanie do kompilowanego tworzenia wystąpienia „std::tuple<float,float>::tuple<std::_Exact_args_t,_Ty,float,0>(_Tag,_This2 &&,float &&)” funkcji szablon
-          with
-          [
-              _Ty=double,
-              _Tag=std::_Exact_args_t,
-              _This2=double
-          ]
-          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\tuple(301,102):
-          zobacz odwołanie do kompilowanego tworzenia wystąpienia „std::_Tuple_val<_This>::_Tuple_val<_Ty>(_Other &&)” funkcji szablon
-          with
-          [
-              _This=float,
-              _Ty=double,
-              _Other=double
-          ]
-  
+﻿  drawRoom.cpp
+  main_file.cpp
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(227,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(228,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(233,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(234,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(235,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(236,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(364,35): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(364,28): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(390,33): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+  Generowanie kodu...
   gkiw_st_01_win.vcxproj -> C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\x64\Debug\gkiw_st_01_win.exe

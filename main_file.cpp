@@ -24,6 +24,13 @@ should I delete it? xDD
 #include "drawRoom.h"
 #include "drawFurniture.h"
 
+
+GLuint tex0;
+
+ShaderProgram* spWood; //woodish??
+ShaderProgram* spMarble;
+
+
 float cameraSpeed = 25.0f;
 float rotateSpeed = 0.25f;
 bool forward = false, back = false, goRight = false, goLeft = false; //movement
@@ -249,9 +256,28 @@ void error_callback(int error, const char* description) {
 }
 
 
+GLuint readTexture(const char* filename) {
+	GLuint tex;
+	glActiveTexture(GL_TEXTURE0);
+	//Wczytanie do pamięci komputera
+	std::vector<unsigned char> image; //Alokuj wektor do wczytania obrazka
+	unsigned width, height; //Zmienne do których wczytamy wymiary obrazka
+	//Wczytaj obrazek
+	unsigned error = lodepng::decode(image, width, height, filename);
+	//Import do pamięci karty graficznej
+	glGenTextures(1, &tex); //Zainicjuj jeden uchwyt
+	glBindTexture(GL_TEXTURE_2D, tex); //Uaktywnij uchwyt
+	//Wczytaj obrazek do pamięci KG skojarzonej z uchwytem
+	glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0,
+		GL_RGBA, GL_UNSIGNED_BYTE, (unsigned char*)image.data());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	return tex;
+}
+
 // initialization of the program
 void initOpenGLProgram(GLFWwindow* window) {
-    initShaders();
+    
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glClearColor(0.58f, 0.88f, 0.92f, 0); //light blue/green for the sky/background
 	positionOffset = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -265,6 +291,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 	}
 	drawerOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 
+	tex0 = readTexture("wood.png");
+
+	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
+	//spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
+
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
@@ -273,7 +304,13 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 // freeing the resources
 void freeOpenGLProgram(GLFWwindow* window) {
-    freeShaders();
+  
+
+	for (int i = 0; i < 1; i++) {
+		glDeleteTextures(1, &tex0);
+	}
+
+	delete spWood;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
@@ -302,9 +339,9 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
 	glm::mat4 V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
 
-	spLambert->use();
-	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(P));
-	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(V));
+	spWood->use();
+	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
 
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);
