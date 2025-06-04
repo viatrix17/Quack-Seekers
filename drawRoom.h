@@ -1,5 +1,5 @@
 #pragma once
 
-//void drawCube(glm::mat4 cube, std::tuple<float, float, float> scale, std::tuple<float, float, float> color);
-void drawCubeWood(glm::mat4 cube, std::tuple<float, float, float> scale, std::tuple<float, float, float> color);
+void drawCubeWood(glm::mat4 cube, std::tuple<float, float, float> scale);
+void drawCubeMarble(glm::mat4 cube, std::tuple<float, float, float> scale);
 void drawRoom(glm::mat4 room);

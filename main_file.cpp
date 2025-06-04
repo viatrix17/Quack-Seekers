@@ -27,6 +27,8 @@ should I delete it? xDD
 
 GLuint tex0;
 GLuint tex1;
+GLuint tex2;
+GLuint tex3;
 
 ShaderProgram* spWood; //woodish??
 ShaderProgram* spMarble;
@@ -292,11 +294,13 @@ void initOpenGLProgram(GLFWwindow* window) {
 	}
 	drawerOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	tex0 = readTexture("textures/wood.png");
-	tex1 = readTexture("textures/marble.png");
+	tex0 = readTexture("textures/wood_small.png");
+	
+	tex1 = readTexture("textures/marble2.png");
+	tex2 = readTexture("textures/marble2_specular.png");
 
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
-	//spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
+	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -308,11 +312,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 void freeOpenGLProgram(GLFWwindow* window) {
   
 
-	for (int i = 0; i < 1; i++) {
-		glDeleteTextures(1, &tex0);
-	}
+	glDeleteTextures(1, &tex0);
+	glDeleteTextures(1, &tex1);
+	glDeleteTextures(1, &tex2);
+	
 
-	delete spWood;
+	delete spWood, spMarble;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
@@ -344,7 +349,10 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	spWood->use();
 	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
-	glUniform4f(spWood->u("lp"), 0, 200, -100, 1);
+	glm::vec4 lightPosWorld = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // ustalona pozycja światła w świecie
+	glm::vec4 lightPosEye = V * lightPosWorld; // przekształcenie do przestrzeni oka
+	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lightPosEye));
+
 
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);

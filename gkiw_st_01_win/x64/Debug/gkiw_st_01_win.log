@@ -1,11 +1,11 @@
 ﻿  main_file.cpp
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(228,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(229,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(234,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(235,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(236,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(237,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(368,35): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(368,28): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(394,33): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(230,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(231,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(236,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(237,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(238,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(239,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(376,35): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(376,28): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(402,33): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
   gkiw_st_01_win.vcxproj -> C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\x64\Debug\gkiw_st_01_win.exe

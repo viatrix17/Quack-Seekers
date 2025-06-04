@@ -37,6 +37,8 @@
   <ItemGroup>
     <None Include="f_wood.glsl" />
     <None Include="v_wood.glsl" />
+    <None Include="f_marble.glsl" />
+    <None Include="v_marble.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
