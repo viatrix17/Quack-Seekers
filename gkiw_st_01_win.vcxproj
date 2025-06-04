@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="boxLock.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="drawFurniture.h" />
@@ -28,6 +29,9 @@
     <ClInclude Include="shaderprogram.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="boxLock.cpp">
+      <DeploymentContent>false</DeploymentContent>
+    </ClCompile>
     <ClCompile Include="drawFurniture.cpp" />
     <ClCompile Include="drawRoom.cpp" />
     <ClCompile Include="lodepng.cpp" />

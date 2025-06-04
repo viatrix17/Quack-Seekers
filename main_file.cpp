@@ -23,16 +23,18 @@ should I delete it? xDD
 
 #include "drawRoom.h"
 #include "drawFurniture.h"
+#include "boxLock.h"
 
 
 GLuint tex0;
 GLuint tex1;
 GLuint tex2;
 GLuint tex3;
+GLuint texBoxLock;
 
 ShaderProgram* spWood; //woodish??
 ShaderProgram* spMarble;
-
+//ShaderProgram* spMetal;
 
 float cameraSpeed = 25.0f;
 float rotateSpeed = 0.25f;
@@ -298,9 +300,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 	
 	tex1 = readTexture("textures/marble2.png");
 	tex2 = readTexture("textures/marble2_specular.png");
+	texBoxLock = readTexture("textures/metal.png");
 
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
+	//spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -315,7 +319,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex0);
 	glDeleteTextures(1, &tex1);
 	glDeleteTextures(1, &tex2);
-	
+	glDeleteTextures(1, &texBoxLock);
 
 	delete spWood, spMarble;
 }
@@ -346,6 +350,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
 	glm::mat4 V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
 
+	//spMetal->use();
 	spWood->use();
 	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
@@ -358,7 +363,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::mat4 room = glm::mat4(1.0f);
 	drawRoom(room);
 	drawFurniture(room);
-
+	
 	glfwSwapBuffers(window);
 }
 

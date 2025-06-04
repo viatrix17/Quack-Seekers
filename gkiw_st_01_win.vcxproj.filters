@@ -15,28 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="allmodels.h">
-      <Filter>Pliki naglówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Pliki naglówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="cube.h">
-      <Filter>Pliki naglówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="lodepng.h">
-      <Filter>Pliki naglówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>Pliki naglówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="sphere.h">
-      <Filter>Pliki naglówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="teapot.h">
-      <Filter>Pliki naglówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="torus.h">
       <Filter>Pliki naglówkowe</Filter>
     </ClInclude>
     <ClInclude Include="shaderprogram.h">
@@ -54,30 +36,18 @@
     <ClInclude Include="drawFurniture.h">
       <Filter>Pliki naglówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="boxLock.h">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cube.cpp">
-      <Filter>Pliki zródlowe</Filter>
-    </ClCompile>
     <ClCompile Include="lodepng.cpp">
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
     <ClCompile Include="main_file.cpp">
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>Pliki zródlowe</Filter>
-    </ClCompile>
     <ClCompile Include="shaderprogram.cpp">
-      <Filter>Pliki zródlowe</Filter>
-    </ClCompile>
-    <ClCompile Include="sphere.cpp">
-      <Filter>Pliki zródlowe</Filter>
-    </ClCompile>
-    <ClCompile Include="teapot.cpp">
-      <Filter>Pliki zródlowe</Filter>
-    </ClCompile>
-    <ClCompile Include="torus.cpp">
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
     <ClCompile Include="drawRoom.cpp">
@@ -86,37 +56,14 @@
     <ClCompile Include="drawFurniture.cpp">
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
+    <ClCompile Include="boxLock.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="f_constant.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="f_colored.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="f_lambert.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="f_lamberttextured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="f_textured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_constant.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_colored.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_lambert.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_lamberttextured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_textured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
+    <None Include="f_wood.glsl" />
+    <None Include="v_wood.glsl" />
+    <None Include="f_marble.glsl" />
+    <None Include="v_marble.glsl" />
   </ItemGroup>
 </Project>
