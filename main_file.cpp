@@ -26,6 +26,7 @@ should I delete it? xDD
 
 
 GLuint tex0;
+GLuint tex1;
 
 ShaderProgram* spWood; //woodish??
 ShaderProgram* spMarble;
@@ -291,7 +292,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 	}
 	drawerOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	tex0 = readTexture("wood.png");
+	tex0 = readTexture("textures/wood.png");
+	tex1 = readTexture("textures/marble.png");
 
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	//spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
@@ -342,6 +344,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	spWood->use();
 	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
+	glUniform4f(spWood->u("lp"), 0, 200, -100, 1);
 
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);

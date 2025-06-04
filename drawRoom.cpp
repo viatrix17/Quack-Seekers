@@ -8,6 +8,7 @@ extern GLuint tex0;
 extern GLuint tex1;
 
 
+
 float* vertices = myCubeVertices;
 float* normals = myCubeNormals;
 float* texCoords = myCubeTexCoords;
