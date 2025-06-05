@@ -348,10 +348,11 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 
 	spWood->use();
 	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
+	glm::vec4 lightPosWorld = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
-	glm::vec4 lightPosWorld = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // ustalona pozycja światła w świecie
-	glm::vec4 lightPosEye = V * lightPosWorld; // przekształcenie do przestrzeni oka
-	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lightPosEye));
+	 // ustalona pozycja światła w świecie
+	//glm::vec4 lightPosEye = V * lightPosWorld; // przekształcenie do przestrzeni oka
+	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lightPosWorld));
 
 
 	//drawBackyard(); idk where to put this tbh xdd
