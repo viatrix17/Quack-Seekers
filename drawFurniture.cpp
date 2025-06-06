@@ -1,6 +1,10 @@
 #include "config.h"
 #include "drawRoom.h"
 #include "boxLock.h"
+#include "flower.h"
+#include "lamp.h"
+#include "hinge.h"
+#include "key.h"
 
 extern bool open[10];
 extern bool close[10];
@@ -58,7 +62,7 @@ void drawBoxes(glm::mat4 desk) {
 		glm::mat4 lowerPart = desk;
 		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
 		drawBoxLockPartDown(lowerPart);
-
+		drawHingeDown(lowerPart);
 		
 		glm::mat4 upperPart = desk;
 		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.05f, boxPos.z));
@@ -143,6 +147,7 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 	drawerBottom = glm::translate(drawerBottom, glm::vec3(0.0f, -11.0f, 0.0f));
 	drawerBottom = glm::rotate(drawerBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 	drawCubeWood(drawerBottom, std::tuple<float, float, float>(18.0f, 21.0f, 1.0f));
+	drawKey(drawerBottom);
 
 	//the cabinet
 	glm::mat4 cabinet = desk;
@@ -173,6 +178,7 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 	}
 
 	drawBoxes(desk);
+	drawLamp(desk);
 }
 
 void drawBed(glm::mat4 room, std::tuple<float, float, float> color) {
@@ -242,4 +248,5 @@ void drawFurniture(glm::mat4 room) {
 	drawWardrobe(room, furnitureColor);
 	drawDesk(room, furnitureColor);
 	drawBed(room, furnitureColor);
+	drawFlower(room);
 }

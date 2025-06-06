@@ -2,6 +2,10 @@
 #include<iostream>
 #include "config.h"
 
+extern GLuint texBoxLock;
+
+extern ShaderProgram* spMetal;
+
 unsigned int vertexCountKey0 = 3939;
 
 float vertices_Key0[]={
@@ -28074,3 +28078,83 @@ float texCoords_Key4[]={
 0.313381, 0.561619, 
 };
 
+void drawKey(glm::mat4 sth) {
+	glm::mat4 key = sth;
+	// data for drawer
+	key = glm::translate(key, glm::vec3(0.0f, 0.0f, -5.0f));
+	key = glm::rotate(key, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+	
+	key = glm::scale(key, glm::vec3(5.0f, 5.0f, 5.0f));
+
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(key));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Key0);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Key0);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key0);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey0);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Key1);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Key1);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key1);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey1);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Key2);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Key2);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key2);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey2);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Key3);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Key3);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key3);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey3);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Key4);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Key4);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key4);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey4);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}

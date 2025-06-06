@@ -24,7 +24,8 @@ should I delete it? xDD
 #include "drawRoom.h"
 #include "drawFurniture.h"
 #include "boxLock.h"
-
+#include "flower.h"
+#include "lamp.h"
 
 GLuint tex0;
 GLuint tex1;
@@ -321,7 +322,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex2);
 	glDeleteTextures(1, &texBoxLock);
 
-	delete spWood, spMarble;
+	delete spWood, spMarble, spMetal;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD

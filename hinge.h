@@ -1,3 +1,5 @@
 #pragma once
 
-void drawHinge();
+#include "config.h"
+
+void drawHingeDown(glm::mat4 box);

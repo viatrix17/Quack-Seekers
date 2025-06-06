@@ -24,6 +24,10 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="drawFurniture.h" />
     <ClInclude Include="drawRoom.h" />
+    <ClInclude Include="flower.h" />
+    <ClInclude Include="hinge.h" />
+    <ClInclude Include="key.h" />
+    <ClInclude Include="lamp.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="myCube.h" />
     <ClInclude Include="shaderprogram.h" />
@@ -34,6 +38,10 @@
     </ClCompile>
     <ClCompile Include="drawFurniture.cpp" />
     <ClCompile Include="drawRoom.cpp" />
+    <ClCompile Include="flower.cpp" />
+    <ClCompile Include="hinge.cpp" />
+    <ClCompile Include="key.cpp" />
+    <ClCompile Include="lamp.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
     <ClCompile Include="shaderprogram.cpp" />

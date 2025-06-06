@@ -2,6 +2,10 @@
 #include<iostream>
 #include "config.h"
 
+extern GLuint texBoxLock;
+
+extern ShaderProgram* spMetal;
+
 unsigned int vertexCountMainRoller = 3078;
 
 float vertices_MainRoller[]={
@@ -28082,4 +28086,79 @@ float texCoords_RollerR[]={
 0.658156, 0.471731, 
 0.703178, 0.485388, 
 };
+
+void drawHinge(glm::mat4 partDown) {
+
+	partDown = glm::rotate(partDown, 180 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	partDown = glm::scale(partDown, glm::vec3(4.0f, 4.0f, 4.0f));
+
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(partDown));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_MainRoller);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_MainRoller);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_MainRoller);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountMainRoller);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_RollerR);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_RollerR);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_RollerR);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountRollerR);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_RollerL);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_RollerL);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_RollerL);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountRollerL);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_RectangleR);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_RectangleR);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_RectangleR);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountRectangleR);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawHingeDown(glm::mat4 box) {
+	glm::mat4 partDown = box;
+	partDown = glm::translate(partDown, glm::vec3(0.0f, 3.5f, 10.0f));
+	glm::mat4 partDown2 = partDown;
+	
+	partDown = glm::translate(partDown, glm::vec3(8.0f, 0.0f, 0.0f));
+	partDown2 = glm::translate(partDown, glm::vec3(-16.0f, 0.0f, 0.0f));
+	drawHinge(partDown);
+	drawHinge(partDown2);
+}
 

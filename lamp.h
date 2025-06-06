@@ -1,3 +1,5 @@
 #pragma once
 
-void drawLamp();
+#include "config.h"
+
+void drawLamp(glm::mat4 desk);
