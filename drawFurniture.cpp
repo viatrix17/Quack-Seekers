@@ -1,12 +1,17 @@
 #include "config.h"
 #include "drawRoom.h"
 
+extern ShaderProgram* spWood; //woodish??
+extern ShaderProgram* spMarble;
+
+extern glm::vec4 lampLightPos;
+
 extern bool open[10];
 extern bool close[10];
 extern float openAngle[10];
 extern glm::vec3 drawerOffset;
 
-void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
+void drawWardrobe(glm::mat4 room) { //lekko do przesuniecia
 
 	glm::mat4 wardrobe = room;
 	wardrobe = glm::translate(wardrobe, wardrobePos);
@@ -51,7 +56,7 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 	}
 }
 
-void drawBoxes(glm::mat4 desk) {
+void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 
 	for (int i = 0; i < 2; i++) {
 		glm::mat4 lowerPart = desk;
@@ -96,7 +101,7 @@ void drawBoxes(glm::mat4 desk) {
 	}
 }
 
-void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
+void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 
 	glm::mat4 desk = room;
 	desk = glm::translate(desk, deskPos);
@@ -166,11 +171,14 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 		cabinetBottom = glm::rotate(cabinetBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 		drawCubeWood(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f));
 	}
-
-	drawBoxes(desk);
+	spMarble->use();
+	glUniformMatrix4fv(spMarble->u("P"), 1, false, glm::value_ptr(P));;
+	glUniformMatrix4fv(spMarble->u("V"), 1, false, glm::value_ptr(V));
+	glUniform4fv(spMarble->u("lp"), 1, glm::value_ptr(lampLightPos));
+	drawBoxes(desk, P, V);
 }
 
-void drawBed(glm::mat4 room, std::tuple<float, float, float> color) {
+void drawBed(glm::mat4 room) {
 	
 	glm::mat4 bed = room;
 	bed = glm::translate(bed, bedPos);
@@ -204,7 +212,8 @@ void drawBed(glm::mat4 room, std::tuple<float, float, float> color) {
 		}
 	}
 }
-void drawFurniture(glm::mat4 room) {
+
+void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 
 	std::tuple<float, float, float> furnitureColor(0.3f, 0.17f, 0.12f); //brown color for the furniture
 
@@ -234,7 +243,10 @@ void drawFurniture(glm::mat4 room) {
 		}
 	}
 
-	drawWardrobe(room, furnitureColor);
-	drawDesk(room, furnitureColor);
-	drawBed(room, furnitureColor);
+	
+	drawBed(room);
+	drawWardrobe(room);
+	drawDesk(room, P, V);
+
+	
 }

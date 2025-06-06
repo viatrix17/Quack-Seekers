@@ -8,7 +8,6 @@ uniform vec4 lp;
 
 //Atrybuty
 in vec4 vertex; //wspolrzedne wierzcholka w przestrzeni modelu
-in vec4 color; //kolor wierzchołka
 in vec4 normal; //wektor normalny wierzchołka w przestrzeni modelu
 in vec2 texCoord0;
 
@@ -27,7 +26,6 @@ void main(void) {
     v = normalize(vec4(0, 0, 0, 1) - M * vertex); //Wektor do obserwatora w przestrzeni swiata
 
     iTexCoord0=texCoord0;
-
 
     gl_Position=P*V*M*vertex;
 }

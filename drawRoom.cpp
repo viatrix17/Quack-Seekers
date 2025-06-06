@@ -21,19 +21,23 @@ void drawCubeWood(glm::mat4 cube, std::tuple<float, float, float> scale) {
 	glEnableVertexAttribArray(spWood->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices); //Wska¿ tablicê z danymi dla atrybutu vertex
 
+	glEnableVertexAttribArray(spWood->a("normal"));  //W³¹cz przesy³anie danych do atrybutu normal
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, normals); //Wska¿ tablicê z danymi dla atrybutu normal
+
 	glEnableVertexAttribArray(spWood->a("texCoord0"));  //W³¹cz przesy³anie danych do atrybutu texCoord
 	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords); //Wska¿ tablicê z danymi dla atrybutu texCoord
 
-	glUniform1i(spWood->u("textureMap0"), 0);
+	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex0);
+	glUniform1i(spWood->u("textureMap0"), 0);
 
 
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount); //Narysuj obiekt
 
 	glDisableVertexAttribArray(spWood->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 	glDisableVertexAttribArray(spWood->a("texCoord0"));  //Wy³¹cz przesy³anie danych do atrybutu texCoord0
-
+	glDisableVertexAttribArray(spWood->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu normal
 }
 
 void drawCubeMarble(glm::mat4 cube, std::tuple<float, float, float> scale) {
@@ -43,21 +47,27 @@ void drawCubeMarble(glm::mat4 cube, std::tuple<float, float, float> scale) {
 	glEnableVertexAttribArray(spMarble->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(spMarble->a("vertex"), 4, GL_FLOAT, false, 0, vertices); //Wska¿ tablicê z danymi dla atrybutu vertex
 
+	glEnableVertexAttribArray(spMarble->a("normal"));  //W³¹cz przesy³anie danych do atrybutu normal
+	glVertexAttribPointer(spMarble->a("normal"), 4, GL_FLOAT, false, 0, normals); //Wska¿ tablicê z danymi dla atrybutu normal
+
 	glEnableVertexAttribArray(spMarble->a("texCoord0"));  //W³¹cz przesy³anie danych do atrybutu texCoord
 	glVertexAttribPointer(spMarble->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords); //Wska¿ tablicê z danymi dla atrybutu texCoord
 
-	glUniform1i(spMarble->u("textureMap0"), 0);
+	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex1);
-	glUniform1i(spMarble->u("textureMap1"), 0);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex2);
+	glUniform1i(spMarble->u("textureMap0"), 0);
+	/*glUniform1i(spMarble->u("textureMap1"), 0);
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, tex2);*/
+
 	
 
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount); //Narysuj obiekt
 
 	glDisableVertexAttribArray(spMarble->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 	glDisableVertexAttribArray(spMarble->a("texCoord0"));  //Wy³¹cz przesy³anie danych do atrybutu texCoord0
+	glDisableVertexAttribArray(spMarble->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu normal
 
 }
 
@@ -85,7 +95,7 @@ void drawWallWithWindow(glm::mat4 wall, std::tuple<float, float, float> ) {
 	drawCubeWood(upPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f));
 }
 
-void drawRoom(glm::mat4 room) {
+void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 
 	std::tuple<float, float, float> black(0.0f, 0.0f, 0.0f); //troche nie dosiega do konca jak sie zrobi z zewnatrz
 

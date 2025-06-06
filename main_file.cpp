@@ -33,6 +33,7 @@ GLuint tex3;
 ShaderProgram* spWood; //woodish??
 ShaderProgram* spMarble;
 
+glm::vec4 lampLightPos; 
 
 float cameraSpeed = 25.0f;
 float rotateSpeed = 0.25f;
@@ -302,6 +303,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 
+	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
+
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
@@ -346,19 +349,18 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
 	glm::mat4 V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
 
-	spWood->use();
-	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
-	glm::vec4 lightPosWorld = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
-	 // ustalona pozycja światła w świecie
-	//glm::vec4 lightPosEye = V * lightPosWorld; // przekształcenie do przestrzeni oka
-	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lightPosWorld));
-
 
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);
-	drawRoom(room);
-	drawFurniture(room);
+
+	spWood->use();
+	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
+	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lampLightPos));
+
+	drawRoom(room, P, V);
+	drawFurniture(room, P, V);
+	
 
 	glfwSwapBuffers(window);
 }

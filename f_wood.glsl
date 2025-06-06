@@ -18,9 +18,8 @@ void main(void) {
 	vec4 mr = reflect(-ml,mn); //Wektor odbity
 	vec4 kd = texture(textureMap0,iTexCoord0);
 	vec4 ks = kd*0.3;
-
 	float distance = length(l);  // Odleg³oœæ od œwiat³a
-	float attenuation = 1.0;// / (1.0 + 0.1 * distance + 0.0001 * distance * distance);
+	float attenuation = 1.0;// / (1.0 + 0.1 * distance + 0.005 * distance * distance);
 
 	vec4 ambientColor = vec4(0.3,0.3,0.3,1);
 	float nl = clamp(dot(mn, ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.
