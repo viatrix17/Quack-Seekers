@@ -65,5 +65,7 @@
     <None Include="v_wood.glsl" />
     <None Include="f_marble.glsl" />
     <None Include="v_marble.glsl" />
+    <None Include="f_metal.glsl" />
+    <None Include="v_metal.glsl" />
   </ItemGroup>
 </Project>

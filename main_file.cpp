@@ -34,7 +34,7 @@ GLuint texBoxLock;
 
 ShaderProgram* spWood; //woodish??
 ShaderProgram* spMarble;
-//ShaderProgram* spMetal;
+ShaderProgram* spMetal;
 
 float cameraSpeed = 25.0f;
 float rotateSpeed = 0.25f;
@@ -304,7 +304,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
-	//spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
+	spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -361,8 +361,10 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);
+
 	drawRoom(room);
 	drawFurniture(room);
+	
 	
 	glfwSwapBuffers(window);
 }

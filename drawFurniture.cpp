@@ -57,14 +57,16 @@ void drawBoxes(glm::mat4 desk) {
 	for (int i = 0; i < 2; i++) {
 		glm::mat4 lowerPart = desk;
 		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
+		drawBoxLockPartDown(lowerPart);
 
+		
 		glm::mat4 upperPart = desk;
 		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.05f, boxPos.z));
 		//animation
 		upperPart = glm::translate(upperPart, glm::vec3(0.0f, -1.0f, boxSize.z+0.5f));
 		upperPart = glm::rotate(upperPart, openAngle[2+i], glm::vec3(1.0f, 0.0f, 0.0f));
 		upperPart = glm::translate(upperPart, glm::vec3(0.0f, 1.0f, -(boxSize.z+0.5f)));
-		
+		drawBoxLockPartUp(upperPart);
 		
 		for (int i = -1; i <= 1; i+=2) {
 			glm::mat4 lowerVer = lowerPart;

@@ -2,6 +2,6 @@
 
 #include "config.h"
 
-void drawBoxLockPartDown();
+void drawBoxLockPartDown(glm::mat4 room);
 
-void drawBoxLockPartUp();
+void drawBoxLockPartUp(glm::mat4 room);
