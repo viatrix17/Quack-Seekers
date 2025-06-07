@@ -2,6 +2,10 @@
 #include<iostream>
 #include "config.h"
 
+extern GLuint texBoxLock;
+
+extern ShaderProgram* spMetal;
+
 unsigned int vertexCountBody = 4224;
 
 float vertices_Body[]={
@@ -273834,3 +273838,406 @@ float texCoords_BowR[]={
 0.59375, 0.25, 
 };
 
+void drawDuckBody(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Body);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Body);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Body);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountBody);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckHead(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Head);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Head);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Head);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountHead);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Beak);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Beak);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Beak);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountBeak);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_EyeWr);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyeWr);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyeWr);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountEyeWr);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_EyeWl);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyeWl);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyeWl);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountEyeWl);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_EyeBr);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyeBr);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyeBr);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountEyeBr);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_EyeBl);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyeBl);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyeBl);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountEyeBl);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash1L);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash1L);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash1L);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash1L);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash2L);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash2L);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash2L);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash2L);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash3L);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash3L);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash3L);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash3L);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash4L);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash4L);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash4L);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash4L);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash1R);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash1R);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash1R);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash1R);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash2R);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash2R);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash2R);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash2R);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash3R);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash3R);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash3R);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash3R);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Lash4R);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lash4R);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lash4R);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLash4R);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_BowM);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_BowM);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_BowM);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountBowM);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_BowL);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_BowL);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_BowL);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountBowL);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_BowR);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_BowR);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_BowR);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountBowR);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckWingRight(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_WingR);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_WingR);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_WingR);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountWingR);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckWingLeft(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_WingL);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_WingL);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_WingL);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountWingL);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckLegLeftUp(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Leg2L);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg2L);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg2L);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg2L);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckLegLeftDown(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Leg1L);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg1L);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg1L);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg1L);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckFootLeft(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_FootL);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_FootL);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_FootL);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountFootL);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckLegRightUp(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Leg2R);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg2R);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg2R);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg2R);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckLegRightDown(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Leg1R);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg1R);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg1R);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg1R);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawDuckFootRight(glm::mat4 duck) {
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_FootR);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_FootR);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_FootR);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountFootR);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}

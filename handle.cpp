@@ -2,6 +2,10 @@
 #include<iostream>
 #include "config.h"
 
+extern GLuint texBoxLock;
+
+extern ShaderProgram* spMetal;
+
 unsigned int vertexCountSurfCylinder = 1344;
 
 float vertices_SurfCylinder[]={
@@ -4045,9 +4049,9 @@ float texCoords_SurfCylinder[]={
 0.96875, 0.857143, 
 };
 
-unsigned int vertexCountPowKula = 3648;
+unsigned int vertexCountPowKula0 = 3648;
 
-float vertices_PowKula[]={
+float vertices_PowKula0[]={
 0, -0.278162, 2.08279, 
 -0.012675, -0.274663, 2.07944, 
 0, -0.278162, 2.08279, 
@@ -7698,7 +7702,7 @@ float vertices_PowKula[]={
 -0.011985, 0.315093, 2.07602, 
 };
 
-float vertexNormals_PowKula[]={
+float vertexNormals_PowKula0[]={
 -0.0167, 0.9999, -0.0011, 0, 
 -0.4879, -0.8705, -0.0643, 0, 
 -0.0171, 0.9998, -0.0035, 0, 
@@ -11349,7 +11353,7 @@ float vertexNormals_PowKula[]={
 -0.4648, 0.8759, -0.1297, 0, 
 };
 
-float texCoords_PowKula[]={
+float texCoords_PowKula0[]={
 0, 1, 
 0.052632, 0.96875, 
 0, 0.96875, 
@@ -15000,9 +15004,9 @@ float texCoords_PowKula[]={
 0.947368, 0.9375, 
 };
 
-unsigned int vertexCountPowKula.001 = 3648;
+unsigned int vertexCountPowKula1 = 3648;
 
-float vertices_PowKula.001[]={
+float vertices_PowKula1[]={
 0, -0.278162, -2.09886, 
 -0.012675, -0.274663, -2.1022, 
 0, -0.278162, -2.09886, 
@@ -18653,7 +18657,7 @@ float vertices_PowKula.001[]={
 -0.011985, 0.315093, -2.10563, 
 };
 
-float vertexNormals_PowKula.001[]={
+float vertexNormals_PowKula1[]={
 -0.0167, 0.9999, -0.0011, 0, 
 -0.4879, -0.8705, -0.0643, 0, 
 -0.0171, 0.9998, -0.0035, 0, 
@@ -22304,7 +22308,7 @@ float vertexNormals_PowKula.001[]={
 -0.4648, 0.8759, -0.1297, 0, 
 };
 
-float texCoords_PowKula.001[]={
+float texCoords_PowKula1[]={
 0, 1, 
 0.052632, 0.96875, 
 0, 0.96875, 
@@ -25955,9 +25959,9 @@ float texCoords_PowKula.001[]={
 0.947368, 0.9375, 
 };
 
-unsigned int vertexCountWalec = 372;
+unsigned int vertexCountWalec0 = 372;
 
-float vertices_Walec[]={
+float vertices_Walec0[]={
 -0.027972, 0.001115, -1.48893, 
 -1.19998, -0.013015, -1.4878, 
 -1.20001, -0.001115, -1.48893, 
@@ -26332,7 +26336,7 @@ float vertices_Walec[]={
 -1.19998, -0.013015, -1.37212, 
 };
 
-float vertexNormals_Walec[]={
+float vertexNormals_Walec0[]={
 0.0002, -0.0948, -0.9955, 0, 
 0.0002, -0.0948, -0.9955, 0, 
 0.0002, -0.0948, -0.9955, 0, 
@@ -26707,7 +26711,7 @@ float vertexNormals_Walec[]={
 -1, -0.0019, -0, 0, 
 };
 
-float texCoords_Walec[]={
+float texCoords_Walec0[]={
 1, 1, 
 0.96875, 0.5, 
 1, 0.5, 
@@ -27082,9 +27086,9 @@ float texCoords_Walec[]={
 0.796822, 0.014612, 
 };
 
-unsigned int vertexCountWalec.001 = 372;
+unsigned int vertexCountWalec1 = 372;
 
-float vertices_Walec.001[]={
+float vertices_Walec1[]={
 -0.027972, 0.001115, 1.37253, 
 -1.19998, -0.013015, 1.37367, 
 -1.20001, -0.001115, 1.37253, 
@@ -27459,7 +27463,7 @@ float vertices_Walec.001[]={
 -1.19998, -0.013015, 1.48935, 
 };
 
-float vertexNormals_Walec.001[]={
+float vertexNormals_Walec1[]={
 0.0002, -0.0948, -0.9955, 0, 
 0.0002, -0.0948, -0.9955, 0, 
 0.0002, -0.0948, -0.9955, 0, 
@@ -27834,7 +27838,7 @@ float vertexNormals_Walec.001[]={
 -1, -0.0019, -0, 0, 
 };
 
-float texCoords_Walec.001[]={
+float texCoords_Walec1[]={
 1, 1, 
 0.96875, 0.5, 
 1, 0.5, 
@@ -28209,3 +28213,105 @@ float texCoords_Walec.001[]={
 0.796822, 0.014612, 
 };
 
+void drawHandle(glm::mat4 handle) {
+	
+	handle = glm::scale(handle, glm::vec3(4.0f, 4.0f, 4.0f));
+
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(handle));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_SurfCylinder);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_SurfCylinder);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_SurfCylinder);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountSurfCylinder);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_PowKula0);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_PowKula0);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_PowKula0);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountPowKula0);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_PowKula1);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_PowKula1);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_PowKula1);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountPowKula1);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Walec0);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Walec0);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Walec0);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountWalec0);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 3, GL_FLOAT, false, 0, vertices_Walec1);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Walec1);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Walec1);
+	glUniform1i(spMetal->u("textureMap0"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCountWalec1);
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+}
+
+void drawHandleWardrobe(glm::mat4 desk, int whichDoor) {
+	glm::mat4 handle = desk;
+	handle = glm::translate(handle, glm::vec3(-20.0f * whichDoor, 0.0f, -5.5f));
+	handle = glm::rotate(handle, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	handle = glm::rotate(handle, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	drawHandle(handle);
+}
+
+void drawHandleDeskDrawer(glm::mat4 desk) {
+	glm::mat4 handle = desk;
+	handle = glm::translate(handle, glm::vec3(0.0f, 7.0f, -5.5f));
+	handle = glm::rotate(handle, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+
+	drawHandle(handle);
+}
+
+void drawHandleDeskCabinet(glm::mat4 desk) {
+	glm::mat4 handle = desk;
+	handle = glm::translate(handle, glm::vec3(15.0f, 0.0f, -5.5f));
+	handle = glm::rotate(handle, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	handle = glm::rotate(handle, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	drawHandle(handle);
+}

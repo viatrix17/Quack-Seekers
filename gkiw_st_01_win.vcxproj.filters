@@ -51,6 +51,15 @@
     <ClInclude Include="key.h">
       <Filter>Pliki naglówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="handle.h">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="safe.h">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="duck.h">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lodepng.cpp">
@@ -81,6 +90,15 @@
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
     <ClCompile Include="key.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
+    <ClCompile Include="handle.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
+    <ClCompile Include="safe.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
+    <ClCompile Include="duck.cpp">
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
   </ItemGroup>

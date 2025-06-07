@@ -5,6 +5,9 @@
 #include "lamp.h"
 #include "hinge.h"
 #include "key.h"
+#include "handle.h"
+#include "safe.h"
+#include "duck.h"
 
 extern bool open[10];
 extern bool close[10];
@@ -15,7 +18,7 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 
 	glm::mat4 wardrobe = room;
 	wardrobe = glm::translate(wardrobe, wardrobePos);
-
+	
 	glm::mat4 back = wardrobe;
 	back = glm::translate(back, glm::vec3(0.0f, 0.0f, 25.0f));
 	drawCubeWood(back, std::tuple<float, float, float> (68.0f, 100.0f, 1.0f));
@@ -35,7 +38,7 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 		side = glm::rotate(side, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 		drawCubeWood(side, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f));
 	}
-
+	
 	// front aka door  maja sie obracac 
 	for (float i = -1; i <= 1; i += 2) {
 		glm::mat4 doorWing = wardrobe;
@@ -45,6 +48,7 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 		doorWing = glm::rotate(doorWing, openAngle[0]*i, glm::vec3(0.0f, -1.0f, 0.0f));
 		doorWing = glm::translate(doorWing, glm::vec3(-34.5f*i, 0.0f, 0.0f));
 		drawCubeWood(doorWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f));
+		drawHandleWardrobe(doorWing, i);
 	}
 	
 	//shelves
@@ -54,6 +58,39 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 		shelf = glm::rotate(shelf, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 		drawCubeWood(shelf, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f));
 	}
+
+	glm::mat4 safe = wardrobe;
+	safe = glm::translate(safe, glm::vec3(50.0f, -101.5f, 0.0f));
+	safe = glm::rotate(safe, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	drawSafe(safe);
+
+	glm::mat4 safeDoor = safe;
+	safeDoor = glm::rotate(safeDoor, openAngle[0], glm::vec3(0.0f, -1.0f, 0.0f));
+	drawSafeDoor(safeDoor);
+
+	glm::mat4 duck0 = safe;
+	duck0 = glm::translate(duck0, glm::vec3(0.0f, 5.0f, 0.0f));
+	duck0 = glm::rotate(duck0, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	duck0 = glm::scale(duck0, glm::vec3(4.0f, 4.0f, 4.0f));
+	glm::mat4 duck1 = duck0;
+	glm::mat4 duck2 = duck1;
+	glm::mat4 duck3 = duck2;
+	glm::mat4 duck4 = duck3;
+	glm::mat4 duck5 = duck4;
+	glm::mat4 duck6 = duck5;
+	glm::mat4 duck7 = duck6;
+	glm::mat4 duck8 = duck7;
+	glm::mat4 duck9 = duck8;
+	drawDuckBody(duck0);
+	drawDuckHead(duck1);
+	drawDuckLegLeftUp(duck2);
+	drawDuckLegLeftDown(duck3);
+	drawDuckLegRightUp(duck4);
+	drawDuckLegRightDown(duck5);
+	drawDuckFootLeft(duck6);
+	drawDuckFootRight(duck7);
+	drawDuckWingLeft(duck8);
+	drawDuckWingRight(duck9);
 }
 
 void drawBoxes(glm::mat4 desk) {
@@ -133,11 +170,13 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 		drawerSide = glm::translate(drawerSide, glm::vec3(17.0f*i, 0.0f, -1.0f));
 		drawerSide = glm::rotate(drawerSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 		drawCubeWood(drawerSide, std::tuple<float, float, float>(20.0f, 10.0f, 1.0f));
+		
 	}
 	
 	glm::mat4 drawerFront = drawer;
 	drawerFront = glm::translate(drawerFront, glm::vec3(0.0f, 0.0f, -22.0f));
 	drawCubeWood(drawerFront, std::tuple<float, float, float>(21.0f, 12.0f, 1.0f));
+	drawHandleDeskDrawer(drawerFront);
 
 	glm::mat4 drawerBack = drawer;
 	drawerBack = glm::translate(drawerBack, glm::vec3(0.0f, 0.0f, 20.0f));
@@ -165,6 +204,7 @@ void drawDesk(glm::mat4 room, std::tuple<float, float, float> color) {
 	cabinetFront = glm::rotate(cabinetFront, openAngle[1], glm::vec3(0.0f, 1.0f, 0.0f));
 	cabinetFront = glm::translate(cabinetFront, glm::vec3(21.f, 0.0f, 0.0f));
 	drawCubeWood(cabinetFront, std::tuple<float, float, float>(21.0f, 23.0f, 1.0f));
+	drawHandleDeskCabinet(cabinetFront);
 
 	glm::mat4 cabinetBack = cabinet;
 	cabinetBack = glm::translate(cabinetBack, glm::vec3(-0.2f, 12.0f, 22.0f));
