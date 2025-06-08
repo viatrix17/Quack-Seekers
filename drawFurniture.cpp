@@ -1,10 +1,22 @@
 #include "config.h"
 #include "drawRoom.h"
+#include "shaderprogram.h"
+#include "renderer.h"
 
 extern ShaderProgram* spWood; //woodish??
 extern ShaderProgram* spMarble;
 
+extern GLuint tex[6];
+
 extern glm::vec4 lampLightPos;
+
+extern glm::vec3 positionOffset;
+
+extern float* vertices;
+extern float* normals;
+extern float* texCoords;
+extern float* colors;
+extern int vertexCount;
 
 extern bool open[10];
 extern bool close[10];
@@ -58,6 +70,14 @@ void drawWardrobe(glm::mat4 room) { //lekko do przesuniecia
 
 void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 
+	spMarble->use();
+	spMarble->setUniforms(P, V, lampLightPos);
+	spMarble->bindTexture(GL_TEXTURE0, tex[1], "textureMap0");
+	spMarble->bindTexture(GL_TEXTURE1, tex[2], "textureMap1");
+
+	Renderer marbleRenderer(spMarble, vertices, normals, texCoords, vertexCount);
+	
+
 	for (int i = 0; i < 2; i++) {
 		glm::mat4 lowerPart = desk;
 		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
@@ -71,33 +91,33 @@ void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 		for (int i = -1; i <= 1; i+=2) {
 			glm::mat4 lowerVer = lowerPart;
 			lowerVer = glm::translate(lowerVer, glm::vec3(0.0f, 0.0f, i * boxSize.z));
-			drawCubeMarble(lowerVer, std::tuple<float, float, float>(boxSize.x, boxSize.y, 0.25f));
-		
+			marbleRenderer.draw(lowerVer, std::tuple<float, float, float>(boxSize.x, boxSize.y, 0.25f), positionOffset);
+
 			glm::mat4 lowerSide = lowerPart;
 			lowerSide = glm::translate(lowerSide, glm::vec3((boxSize.x-0.25f)*i, 0.0f, 0.0f));
 			lowerSide = glm::rotate(lowerSide, 90*PI/180, glm::vec3(0.0f, 1.0f, 0.0f));
-			drawCubeMarble(lowerSide, std::tuple<float, float, float>(boxSize.z-0.25f, boxSize.y, 0.25f));
+			marbleRenderer.draw(lowerSide, std::tuple<float, float, float>(boxSize.z-0.25f, boxSize.y, 0.25f), positionOffset);
 
 			glm::mat4 upperVer = upperPart;
 			upperVer = glm::translate(upperVer, glm::vec3(0.0f, 0.0f, i * boxSize.z));
-			drawCubeMarble(upperVer, std::tuple<float, float, float>(boxSize.x, 2.0f, 0.25f));
+			marbleRenderer.draw(upperVer, std::tuple<float, float, float>(boxSize.x, 2.0f, 0.25f), positionOffset);
 
 			glm::mat4 upperSide = upperPart;
 			upperSide = glm::translate(upperSide, glm::vec3((boxSize.x - 0.25f) * i, 0.0f, 0.0f));
 			upperSide = glm::rotate(upperSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-			drawCubeMarble(upperSide, std::tuple<float, float, float>(boxSize.z - 0.25f, 2.0f, 0.25f));
+			marbleRenderer.draw(upperSide, std::tuple<float, float, float>(boxSize.z - 0.25f, 2.0f, 0.25f), positionOffset);
 
 		}
 
 		glm::mat4 bottom = lowerPart;
 		bottom = glm::translate(bottom, glm::vec3(0.0f, -5.0f, 0.0f));
 		bottom = glm::rotate(bottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		drawCubeMarble(bottom, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f));
+		marbleRenderer.draw(bottom, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), positionOffset);
 
 		glm::mat4 top = upperPart;
 		top = glm::translate(top, glm::vec3(0.0f, 2.0f, 0.0f));
 		top = glm::rotate(top, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		drawCubeMarble(top, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f));
+		marbleRenderer.draw(top, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), positionOffset);
 	}
 }
 
@@ -172,11 +192,6 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 		drawCubeWood(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f));
 	}
 
-	spMarble->use();
-	glUniformMatrix4fv(spMarble->u("P"), 1, false, glm::value_ptr(P));;
-	glUniformMatrix4fv(spMarble->u("V"), 1, false, glm::value_ptr(V));
-	glUniform4fv(spMarble->u("lp"), 1, glm::value_ptr(lampLightPos));
-
 	drawBoxes(desk, P, V);
 }
 
@@ -245,7 +260,8 @@ void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 		}
 	}
 
-	
+	//spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+		
 	drawBed(room);
 	drawWardrobe(room);
 	drawDesk(room, P, V);

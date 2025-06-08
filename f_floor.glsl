@@ -20,14 +20,14 @@ void main(void) {
 	vec4 kd = texture(textureMap0, iTexCoord0);
 	vec4 ks = texture(textureMap1, iTexCoord0);
 
-	float shininess = 1.0;
+	float shininess = 0.25;
 	vec4 ambientColor = vec4(0.3, 0.3, 0.3, 1);
 
 	float nl = clamp(dot(mn, ml), 0, 1);
 	float rv = pow(clamp(dot(mr, mv), 0.0, 1.0), shininess);
 	rv = max(rv - 0.1, 0.0); // cut off small highlights
 
-	float specIntensity = rv * ks.r * 0.1;
+	float specIntensity = rv * ks.r * 0.05;
 
 	vec3 specular = vec3(1.0) * specIntensity; // neutral white specular
 

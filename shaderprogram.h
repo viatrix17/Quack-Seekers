@@ -21,10 +21,7 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 #ifndef SHADERPROGRAM_H
 #define SHADERPROGRAM_H
 
-
-#include <GL/glew.h>
-#include "stdio.h"
-
+#include "config.h"
 
 
 class ShaderProgram {
@@ -41,17 +38,12 @@ public:
 	void use(); //Włącza wykorzystywanie programu cieniującego
 	GLuint u(const char* variableName); //Pobiera numer slotu związanego z daną zmienną jednorodną
 	GLuint a(const char* variableName); //Pobiera numer slotu związanego z danym atrybutem
+
+	void bindTexture(GLenum textureUnit, GLuint textureID, const std::string& uniformName);
+	void setUniforms(const glm::mat4& P, const glm::mat4& V, const glm::vec4& lampLightPos);
 };
 
 
 
-extern ShaderProgram* spConstant;
-extern ShaderProgram* spLambert;
-extern ShaderProgram* spTextured;
-extern ShaderProgram* spColored;
-extern ShaderProgram* spLambertTextured;
-
-void initShaders();
-void freeShaders();
 
 #endif

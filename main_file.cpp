@@ -21,13 +21,16 @@ should I delete it? xDD
 
 #include "config.h"
 
+#include "shaderprogram.h"
+
 #include "drawRoom.h"
 #include "drawFurniture.h"
+#include "myCube.h"
 
 
-GLuint tex[5];
+GLuint tex[6];
 
-ShaderProgram *spWood, *spMarble, *spFloor;
+ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling;
 
 glm::vec4 lampLightPos; 
 
@@ -50,6 +53,12 @@ float mouseSensitivity = 0.1f;
 
 float yaw = -90.0f;  // initial yaw (direction)
 float pitch = 0.0f;  // initial pitch (up/down)
+
+float* vertices = myCubeVertices;
+float* normals = myCubeNormals;
+float* texCoords = myCubeTexCoords;
+float* colors = myCubeColors;
+int vertexCount = myCubeVertexCount;
 
 bool open[5]; //0 - wardrobe,  1- cabinet, 2 - box1, 3 - box2, 4 - drawer,
 bool close[5];
@@ -299,7 +308,10 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[3] = readTexture("textures/floor.png");
 	tex[4] = readTexture("textures/floor_specular.png");
 
+	tex[5] = readTexture("textures/ceiling.png");
+
 	spFloor = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
+	spCeiling = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 
@@ -350,16 +362,10 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::mat4 V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
 	
 	glm::mat4 room = glm::mat4(1.0f);
-
-
-	spFloor->use();
-	glUniformMatrix4fv(spFloor->u("P"), 1, false, glm::value_ptr(P));
-	glUniformMatrix4fv(spFloor->u("V"), 1, false, glm::value_ptr(V));
-	glUniform4fv(spFloor->u("lp"), 1, glm::value_ptr(lampLightPos));
+	
 
 	drawRoom(room, P, V);
-
-	//drawFurniture(room, P, V);
+	drawFurniture(room, P, V);
 	
 
 	glfwSwapBuffers(window);

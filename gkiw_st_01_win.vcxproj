@@ -25,6 +25,7 @@
     <ClInclude Include="drawRoom.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="myCube.h" />
+    <ClInclude Include="renderer.h" />
     <ClInclude Include="shaderprogram.h" />
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +33,8 @@
     <ClCompile Include="drawRoom.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
+    <ClCompile Include="myCube.cpp" />
+    <ClCompile Include="renderer.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +44,8 @@
     <None Include="v_marble.glsl" />
     <None Include="v_floor.glsl" />
     <None Include="f_floor.glsl" />
+    <None Include="w_ceiling.glsl" />
+    <None Include="f_ceiling.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include "constants.h"
 #include "lodepng.h"
-#include "shaderprogram.h"
 
 #include <iostream>
 #include <cmath>
