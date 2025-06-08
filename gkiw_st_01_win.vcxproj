@@ -39,6 +39,7 @@
     <None Include="v_wood.glsl" />
     <None Include="f_marble.glsl" />
     <None Include="v_marble.glsl" />
+    <None Include="v_floor.glsl" />
     <None Include="f_floor.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

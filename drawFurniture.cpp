@@ -171,10 +171,12 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 		cabinetBottom = glm::rotate(cabinetBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 		drawCubeWood(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f));
 	}
+
 	spMarble->use();
 	glUniformMatrix4fv(spMarble->u("P"), 1, false, glm::value_ptr(P));;
 	glUniformMatrix4fv(spMarble->u("V"), 1, false, glm::value_ptr(V));
 	glUniform4fv(spMarble->u("lp"), 1, glm::value_ptr(lampLightPos));
+
 	drawBoxes(desk, P, V);
 }
 

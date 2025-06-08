@@ -5,7 +5,9 @@ extern ShaderProgram* spWood;
 extern ShaderProgram* spMarble;
 extern ShaderProgram* spFloor;
 
-extern GLuint tex[4];
+extern GLuint tex[5];
+
+extern glm::vec4 lampLightPos;
 
 extern glm::vec3 positionOffset;
 
@@ -32,7 +34,7 @@ void drawCubeWood(glm::mat4 cube, std::tuple<float, float, float> scale) {
 
 	
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex0);
+	glBindTexture(GL_TEXTURE_2D, tex[0]);
 	glUniform1i(spWood->u("textureMap0"), 0);
 
 
@@ -62,12 +64,11 @@ void drawCubeMarble(glm::mat4 cube, std::tuple<float, float, float> scale) {
 
 	
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex1);
+	glBindTexture(GL_TEXTURE_2D, tex[1]);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, tex[2]);
 	glUniform1i(spMarble->u("textureMap0"), 0);
-	/*glUniform1i(spMarble->u("textureMap1"), 0);
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, tex2);*/
-
+	glUniform1i(spMarble->u("textureMap1"), 1);
 	
 
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount); //Narysuj obiekt
@@ -79,6 +80,7 @@ void drawCubeMarble(glm::mat4 cube, std::tuple<float, float, float> scale) {
 }
 
 void drawCubeFloor(glm::mat4 cube, std::tuple<float, float, float> scale) {
+
 	cube = glm::scale(cube, glm::vec3(std::get<0>(scale), std::get<1>(scale), std::get<2>(scale)));
 	glUniformMatrix4fv(spFloor->u("M"), 1, false, glm::value_ptr(cube));
 
@@ -97,7 +99,10 @@ void drawCubeFloor(glm::mat4 cube, std::tuple<float, float, float> scale) {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex[3]);
 	glUniform1i(spFloor->u("textureMap0"), 0);
-
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, tex[4]);
+	glUniform1i(spFloor->u("textureMap1"), 1);
+	
 
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount); //Narysuj obiekt
 
@@ -140,42 +145,38 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	//scaling values
 	std::tuple<float, float, float> wallScale(200.0f, 125.0f, 5.0f);
 	std::tuple<float, float, float> wallColor(0.9f, 0.84f, 0.78f); // color for the walls
+	std::tuple<float, float, float> floorAndCeilingScale(200.0f, 200.0f, 5.0f); //troche nie dosiega do konca jak sie zrobi z zewnatrz
 
+	// drawing the ceiling and the floor
+	glm::mat4 floor = room;
+	floor = glm::translate(floor, glm::vec3(0.0f, -150.0f + 20.0f, 0.0f));
+	floor = glm::rotate(floor, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+	drawCubeFloor(floor, floorAndCeilingScale);
+
+	glm::mat4 ceiling = room;
+	ceiling = glm::translate(ceiling, glm::vec3(0.0f, 150.0f, 0.0f));
+	ceiling = glm::rotate(ceiling, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+	drawCubeFloor(ceiling, floorAndCeilingScale);
+
+	/*spWood->use();
+	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
+	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lampLightPos));*/
 
 	glm::mat4 frontWall = room;
-	frontWall = glm::translate(frontWall, glm::vec3(0.0f,0.0f,200.0f));  
-	drawCubeWood(frontWall, wallScale);
-	
+	frontWall = glm::translate(frontWall, glm::vec3(0.0f, 0.0f, 200.0f));
+	//drawCubeWood(frontWall, wallScale);
+
 	glm::mat4 backWall = room; //with the door??
 	backWall = glm::translate(backWall, glm::vec3(0.0f, 0.0f, -200.0f));
-	drawCubeWood(backWall, wallScale);
+	//drawCubeWood(backWall, wallScale);
 
 
 	glm::mat4 rightWall = room;
-	rightWall = glm::translate(rightWall, glm::vec3(-200.0f+10.0f, 0.0f, 0.0f));
+	rightWall = glm::translate(rightWall, glm::vec3(-200.0f + 10.0f, 0.0f, 0.0f));
 	rightWall = glm::rotate(rightWall, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	drawCubeWood(rightWall, wallScale);
+	//drawCubeWood(rightWall, wallScale);
 
 	glm::mat4 leftWall = room;
-	drawWallWithWindow(leftWall, wallColor);
-
-	// drawing the ceiling and the floor
-
-	std::tuple<float, float, float> floorAndCeilingScale(200.0f, 200.0f, 5.0f); //troche nie dosiega do konca jak sie zrobi z zewnatrz
-
-	glm::mat4 floor = room;
-	floor = glm::translate(floor, glm::vec3(0.0f, -150.0f+20.0f, 0.0f));
-	floor = glm::rotate(floor, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-	drawCubeWood(floor, floorAndCeilingScale);
-	
-	// dodac na koncu, jak sie zrobi oswietlenie w srodku
-	/*glm::mat4 ceiling = room;
-	ceiling = glm::translate(ceiling, glm::vec3(0.0f, -150.0f, 0.0f));
-	ceiling = glm::rotate(ceiling, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-	drawCube(rightWall, wallScale, wallColor);
-
-	ceiling = glm::scale(ceiling, glm::vec3(200.0f, 200.0f, 5.0f)); 
-	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(ceiling));
-	glUniform4f(spLambert->u("color"), 0.0f, 0.0f, 0.0f, 1);
-	Models::cube.drawSolid();*/
+	//drawWallWithWindow(leftWall, wallColor);
 }

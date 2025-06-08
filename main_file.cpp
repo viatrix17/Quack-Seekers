@@ -25,7 +25,7 @@ should I delete it? xDD
 #include "drawFurniture.h"
 
 
-GLuint tex[4];
+GLuint tex[5];
 
 ShaderProgram *spWood, *spMarble, *spFloor;
 
@@ -297,10 +297,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[2] = readTexture("textures/marble2_specular.png");
 
 	tex[3] = readTexture("textures/floor.png");
+	tex[4] = readTexture("textures/floor_specular.png");
 
+	spFloor = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
-	spMarble = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
 
 	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
 
@@ -314,12 +315,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 void freeOpenGLProgram(GLFWwindow* window) {
   
 	// free textures
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		glDeleteTextures(1, &tex[i]);
 	}
 
 	// free shaders
-	delete spWood, spMarble;
+	delete spWood, spMarble, spFloor;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
@@ -350,6 +351,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	
 	glm::mat4 room = glm::mat4(1.0f);
 
+
 	spFloor->use();
 	glUniformMatrix4fv(spFloor->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spFloor->u("V"), 1, false, glm::value_ptr(V));
@@ -357,12 +359,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 
 	drawRoom(room, P, V);
 
-	spWood->use();
-	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
-	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
-	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lampLightPos));
-
-	drawFurniture(room, P, V);
+	//drawFurniture(room, P, V);
 	
 
 	glfwSwapBuffers(window);
