@@ -31,7 +31,9 @@
     <ClInclude Include="key.h" />
     <ClInclude Include="lamp.h" />
     <ClInclude Include="lodepng.h" />
+    <ClInclude Include="mattress.h" />
     <ClInclude Include="myCube.h" />
+    <ClInclude Include="pillow.h" />
     <ClInclude Include="safe.h" />
     <ClInclude Include="shaderprogram.h" />
   </ItemGroup>
@@ -49,6 +51,8 @@
     <ClCompile Include="lamp.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
+    <ClCompile Include="mattress.cpp" />
+    <ClCompile Include="pillow.cpp" />
     <ClCompile Include="safe.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
   </ItemGroup>

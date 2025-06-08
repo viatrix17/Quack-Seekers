@@ -60,6 +60,12 @@
     <ClInclude Include="duck.h">
       <Filter>Pliki naglówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="mattress.h">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="pillow.h">
+      <Filter>Pliki naglówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lodepng.cpp">
@@ -99,6 +105,12 @@
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
     <ClCompile Include="duck.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
+    <ClCompile Include="mattress.cpp">
+      <Filter>Pliki zródlowe</Filter>
+    </ClCompile>
+    <ClCompile Include="pillow.cpp">
       <Filter>Pliki zródlowe</Filter>
     </ClCompile>
   </ItemGroup>

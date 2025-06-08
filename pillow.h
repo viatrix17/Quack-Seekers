@@ -1,3 +1,5 @@
 #pragma once
 
-void drawPillow();
+#include "config.h"
+
+void drawPillow(glm::mat4 bed);

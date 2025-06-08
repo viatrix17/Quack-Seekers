@@ -8,6 +8,8 @@
 #include "handle.h"
 #include "safe.h"
 #include "duck.h"
+#include "mattress.h"
+#include "pillow.h"
 
 extern bool open[10];
 extern bool close[10];
@@ -254,6 +256,9 @@ void drawBed(glm::mat4 room, std::tuple<float, float, float> color) {
 			drawCubeWood(leg, std::tuple<float, float, float>(5.0f, 30.0f, 5.0f));
 		}
 	}
+
+	drawMattress(bed);
+	drawPillow(bed);
 }
 void drawFurniture(glm::mat4 room) {
 
