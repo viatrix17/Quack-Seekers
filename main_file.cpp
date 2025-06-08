@@ -31,7 +31,7 @@ GLuint tex0;
 GLuint tex1;
 GLuint tex2;
 GLuint tex3;
-GLuint texBoxLock;
+GLuint texKey;
 GLuint texBlackEye;
 GLuint texBlanket;
 GLuint texBlanketInterior;
@@ -315,11 +315,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 	
 	tex1 = readTexture("textures/marble2.png");
 	tex2 = readTexture("textures/marble2_specular.png");
-	texBoxLock = readTexture("textures/metal.png");
+	texKey = readTexture("textures/metal.png");
 
-	//texBlackEye = readTexture("textures/marble2.png");
+	texBlackEye = readTexture("textures/black-eye.png");
 	texBlanket = readTexture("textures/blanket.png");
-	//texBlanketInterior = readTexture("textures/marble2.png");
+	texBlanketInterior = readTexture("textures/blanket-interior.png");
 	texBlueWalls = readTexture("textures/blue-walls.png");
 	texMarblePot = readTexture("textures/marble-pot.png");
 	texOrangeBeak = readTexture("textures/orange-beak.png");
@@ -327,7 +327,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	texRedFlower = readTexture("textures/red-flower.png");
 	texSilver = readTexture("textures/silver.png");
 	texSoil = readTexture("textures/soil.png");
-	//texWhiteEye = readTexture("textures/marble2.png");
+	texWhiteEye = readTexture("textures/white-eye.png");
 	texYellowDuck = readTexture("textures/yellow-duck.png");
 	//texBackground = readTexture("textures/marble2.png");
 	texGreenFlower = readTexture("textures/green-flower.png");
@@ -350,7 +350,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex0);
 	glDeleteTextures(1, &tex1);
 	glDeleteTextures(1, &tex2);
-	glDeleteTextures(1, &texBoxLock);
+	glDeleteTextures(1, &texKey);
 	glDeleteTextures(1, &texBlanket);
 	glDeleteTextures(1, &texBlueWalls);
 	glDeleteTextures(1, &texMarblePot);
@@ -361,6 +361,9 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &texSoil);
 	glDeleteTextures(1, &texYellowDuck);
 	glDeleteTextures(1, &texGreenFlower);
+	glDeleteTextures(1, &texWhiteEye);
+	glDeleteTextures(1, &texBlackEye);
+	glDeleteTextures(1, &texBlanketInterior);
 
 	delete spWood, spMarble, spMetal;
 }

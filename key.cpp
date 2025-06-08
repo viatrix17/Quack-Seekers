@@ -2,7 +2,7 @@
 #include<iostream>
 #include "config.h"
 
-extern GLuint texBoxLock;
+extern GLuint texKey;
 
 extern ShaderProgram* spMetal;
 
@@ -28096,7 +28096,7 @@ void drawKey(glm::mat4 sth) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key0);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texKey);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey0);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -28110,7 +28110,7 @@ void drawKey(glm::mat4 sth) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key1);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texKey);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey1);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -28124,7 +28124,7 @@ void drawKey(glm::mat4 sth) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key2);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texKey);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey2);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -28138,7 +28138,7 @@ void drawKey(glm::mat4 sth) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key3);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texKey);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey3);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -28152,7 +28152,7 @@ void drawKey(glm::mat4 sth) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key4);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texKey);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey4);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));

@@ -2,7 +2,8 @@
 #include<iostream>
 #include "config.h"
 
-extern GLuint texBoxLock;
+extern GLuint texMarblePot;
+extern GLuint texWhiteEye;
 
 extern ShaderProgram* spMetal;
 
@@ -11431,7 +11432,7 @@ void drawLamp(glm::mat4 desk) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Base);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texMarblePot);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountBase);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -11445,7 +11446,7 @@ void drawLamp(glm::mat4 desk) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Shade);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texWhiteEye);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountShade);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -11459,7 +11460,7 @@ void drawLamp(glm::mat4 desk) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Coupler);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texWhiteEye);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountCoupler);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
