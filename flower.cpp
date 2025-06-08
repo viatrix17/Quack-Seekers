@@ -2,7 +2,11 @@
 #include<iostream>
 #include "config.h"
 
-extern GLuint texBoxLock;
+extern GLuint texYellowDuck;
+extern GLuint texRedFlower;
+extern GLuint texGreenFlower;
+extern GLuint texSoil;
+extern GLuint texMarblePot;
 
 extern ShaderProgram* spMetal;
 
@@ -289150,7 +289154,7 @@ void drawFlower(glm::mat4 room) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Pot);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texMarblePot);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountPot);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -289164,7 +289168,7 @@ void drawFlower(glm::mat4 room) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Soil);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texSoil);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountSoil);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -289178,7 +289182,7 @@ void drawFlower(glm::mat4 room) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Stems);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texGreenFlower);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountStems);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -289192,7 +289196,7 @@ void drawFlower(glm::mat4 room) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leaves);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texGreenFlower);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeaves);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -289206,7 +289210,7 @@ void drawFlower(glm::mat4 room) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_MiddleFlowers);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texYellowDuck);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountMiddleFlowers);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));
@@ -289220,7 +289224,7 @@ void drawFlower(glm::mat4 room) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Petals);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texRedFlower);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountPetals);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));

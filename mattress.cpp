@@ -3,6 +3,8 @@
 #include "config.h"
 
 extern GLuint texBoxLock;
+extern GLuint texBlanket;
+extern GLuint tex0;
 
 extern ShaderProgram* spMetal;
 
@@ -29391,7 +29393,7 @@ void drawMattress(glm::mat4 bed) {
 	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Blanket);
 	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texBoxLock);
+	glBindTexture(GL_TEXTURE_2D, texBlanket);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountBlanket);
 	glDisableVertexAttribArray(spMetal->a("vertex"));
 	glDisableVertexAttribArray(spMetal->a("normal"));

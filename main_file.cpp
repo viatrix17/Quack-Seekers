@@ -32,6 +32,20 @@ GLuint tex1;
 GLuint tex2;
 GLuint tex3;
 GLuint texBoxLock;
+GLuint texBlackEye;
+GLuint texBlanket;
+GLuint texBlanketInterior;
+GLuint texBlueWalls;
+GLuint texMarblePot;
+GLuint texOrangeBeak;
+GLuint texPinkBow;
+GLuint texRedFlower;
+GLuint texSilver;
+GLuint texSoil;
+GLuint texWhiteEye;
+GLuint texYellowDuck;
+GLuint texBackground;
+GLuint texGreenFlower;
 
 ShaderProgram* spWood; //woodish??
 ShaderProgram* spMarble;
@@ -303,6 +317,22 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex2 = readTexture("textures/marble2_specular.png");
 	texBoxLock = readTexture("textures/metal.png");
 
+	//texBlackEye = readTexture("textures/marble2.png");
+	texBlanket = readTexture("textures/blanket.png");
+	//texBlanketInterior = readTexture("textures/marble2.png");
+	texBlueWalls = readTexture("textures/blue-walls.png");
+	texMarblePot = readTexture("textures/marble-pot.png");
+	texOrangeBeak = readTexture("textures/orange-beak.png");
+	texPinkBow = readTexture("textures/pink-bow.png");
+	texRedFlower = readTexture("textures/red-flower.png");
+	texSilver = readTexture("textures/silver.png");
+	texSoil = readTexture("textures/soil.png");
+	//texWhiteEye = readTexture("textures/marble2.png");
+	texYellowDuck = readTexture("textures/yellow-duck.png");
+	//texBackground = readTexture("textures/marble2.png");
+	texGreenFlower = readTexture("textures/green-flower.png");
+
+
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 	spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
@@ -321,6 +351,16 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex1);
 	glDeleteTextures(1, &tex2);
 	glDeleteTextures(1, &texBoxLock);
+	glDeleteTextures(1, &texBlanket);
+	glDeleteTextures(1, &texBlueWalls);
+	glDeleteTextures(1, &texMarblePot);
+	glDeleteTextures(1, &texOrangeBeak);
+	glDeleteTextures(1, &texPinkBow);
+	glDeleteTextures(1, &texRedFlower);
+	glDeleteTextures(1, &texSilver);
+	glDeleteTextures(1, &texSoil);
+	glDeleteTextures(1, &texYellowDuck);
+	glDeleteTextures(1, &texGreenFlower);
 
 	delete spWood, spMarble, spMetal;
 }
