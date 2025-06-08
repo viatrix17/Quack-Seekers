@@ -25,13 +25,9 @@ should I delete it? xDD
 #include "drawFurniture.h"
 
 
-GLuint tex0;
-GLuint tex1;
-GLuint tex2;
-GLuint tex3;
+GLuint tex[4];
 
-ShaderProgram* spWood; //woodish??
-ShaderProgram* spMarble;
+ShaderProgram *spWood, *spMarble, *spFloor;
 
 glm::vec4 lampLightPos; 
 
@@ -295,13 +291,16 @@ void initOpenGLProgram(GLFWwindow* window) {
 	}
 	drawerOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	tex0 = readTexture("textures/wood_small.png");
+	tex[0] = readTexture("textures/wood_small.png");
 	
-	tex1 = readTexture("textures/marble2.png");
-	tex2 = readTexture("textures/marble2_specular.png");
+	tex[1] = readTexture("textures/marble2.png");
+	tex[2] = readTexture("textures/marble2_specular.png");
+
+	tex[3] = readTexture("textures/floor.png");
 
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
+	spMarble = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
 
 	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
 
@@ -314,12 +313,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 // freeing the resources
 void freeOpenGLProgram(GLFWwindow* window) {
   
+	// free textures
+	for (int i = 0; i < 4; i++) {
+		glDeleteTextures(1, &tex[i]);
+	}
 
-	glDeleteTextures(1, &tex0);
-	glDeleteTextures(1, &tex1);
-	glDeleteTextures(1, &tex2);
-	
-
+	// free shaders
 	delete spWood, spMarble;
 }
 
@@ -348,17 +347,21 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 2.0f, 1.0f, 1000.0f);
 	glm::mat4 V = glm::lookAt(positionOffset, positionOffset + viewOffset, glm::vec3(0.0f, 1.0f, 0.0f));
-
-
-	//drawBackyard(); idk where to put this tbh xdd
+	
 	glm::mat4 room = glm::mat4(1.0f);
+
+	spFloor->use();
+	glUniformMatrix4fv(spFloor->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spFloor->u("V"), 1, false, glm::value_ptr(V));
+	glUniform4fv(spFloor->u("lp"), 1, glm::value_ptr(lampLightPos));
+
+	drawRoom(room, P, V);
 
 	spWood->use();
 	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
 	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lampLightPos));
 
-	drawRoom(room, P, V);
 	drawFurniture(room, P, V);
 	
 

@@ -3,10 +3,9 @@
 
 extern ShaderProgram* spWood;
 extern ShaderProgram* spMarble;
+extern ShaderProgram* spFloor;
 
-extern GLuint tex0;
-extern GLuint tex1;
-extern GLuint tex2;
+extern GLuint tex[4];
 
 extern glm::vec3 positionOffset;
 
@@ -78,6 +77,35 @@ void drawCubeMarble(glm::mat4 cube, std::tuple<float, float, float> scale) {
 	glDisableVertexAttribArray(spMarble->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu normal
 
 }
+
+void drawCubeFloor(glm::mat4 cube, std::tuple<float, float, float> scale) {
+	cube = glm::scale(cube, glm::vec3(std::get<0>(scale), std::get<1>(scale), std::get<2>(scale)));
+	glUniformMatrix4fv(spFloor->u("M"), 1, false, glm::value_ptr(cube));
+
+	glUniform3fv(spFloor->u("cameraWorldPos"), 1, glm::value_ptr(positionOffset));
+
+	glEnableVertexAttribArray(spFloor->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
+	glVertexAttribPointer(spFloor->a("vertex"), 4, GL_FLOAT, false, 0, vertices); //Wska¿ tablicê z danymi dla atrybutu vertex
+
+	glEnableVertexAttribArray(spFloor->a("normal"));  //W³¹cz przesy³anie danych do atrybutu normal
+	glVertexAttribPointer(spFloor->a("normal"), 4, GL_FLOAT, false, 0, normals); //Wska¿ tablicê z danymi dla atrybutu normal
+
+	glEnableVertexAttribArray(spFloor->a("texCoord0"));  //W³¹cz przesy³anie danych do atrybutu texCoord
+	glVertexAttribPointer(spFloor->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords); //Wska¿ tablicê z danymi dla atrybutu texCoord
+
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, tex[3]);
+	glUniform1i(spFloor->u("textureMap0"), 0);
+
+
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount); //Narysuj obiekt
+
+	glDisableVertexAttribArray(spFloor->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
+	glDisableVertexAttribArray(spFloor->a("texCoord0"));  //Wy³¹cz przesy³anie danych do atrybutu texCoord0
+	glDisableVertexAttribArray(spFloor->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu normal
+}
+
 
 void drawWallWithWindow(glm::mat4 wall, std::tuple<float, float, float> ) {
 
