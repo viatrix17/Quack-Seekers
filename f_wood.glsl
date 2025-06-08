@@ -5,17 +5,17 @@ uniform sampler2D textureMap0;
 
 out vec4 pixelColor; //Zmienna wyjsciowa fragment shadera. Zapisuje sie do niej ostateczny (prawie) kolor piksela
 
-in vec4 l;
-in vec4 n;
-in vec4 v;
+in vec3 l;
+in vec3 n;
+in vec3 v;
 in vec2 iTexCoord0;
 
 void main(void) {
 
-	vec4 ml = normalize(l);
-	vec4 mn = normalize(n);
-	vec4 mv = normalize(v);
-	vec4 mr = reflect(-ml,mn); //Wektor odbity
+	vec3 ml = normalize(l);
+	vec3 mn = normalize(n);
+	vec3 mv = normalize(v);
+	vec3 mr = reflect(-ml,mn); //Wektor odbity
 	vec4 kd = texture(textureMap0,iTexCoord0);
 	vec4 ks = kd*0.3;
 	float distance = length(l);  // Odleg³oœæ od œwiat³a

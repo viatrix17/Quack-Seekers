@@ -6,7 +6,9 @@ extern ShaderProgram* spMarble;
 
 extern GLuint tex0;
 extern GLuint tex1;
-extern GLuint tex2;;
+extern GLuint tex2;
+
+extern glm::vec3 positionOffset;
 
 float* vertices = myCubeVertices;
 float* normals = myCubeNormals;
@@ -17,6 +19,8 @@ int vertexCount = myCubeVertexCount;
 void drawCubeWood(glm::mat4 cube, std::tuple<float, float, float> scale) {
 	cube = glm::scale(cube, glm::vec3(std::get<0>(scale),std::get<1>(scale),std::get<2>(scale)));
 	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(cube));
+
+	glUniform3fv(spWood->u("cameraWorldPos"), 1, glm::value_ptr(positionOffset));
 
 	glEnableVertexAttribArray(spWood->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices); //Wska¿ tablicê z danymi dla atrybutu vertex
@@ -44,11 +48,15 @@ void drawCubeMarble(glm::mat4 cube, std::tuple<float, float, float> scale) {
 	cube = glm::scale(cube, glm::vec3(std::get<0>(scale), std::get<1>(scale), std::get<2>(scale)));
 	glUniformMatrix4fv(spMarble->u("M"), 1, false, glm::value_ptr(cube));
 
+	glUniform3fv(spMarble->u("cameraWorldPos"), 1, glm::value_ptr(positionOffset));
+
+
 	glEnableVertexAttribArray(spMarble->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(spMarble->a("vertex"), 4, GL_FLOAT, false, 0, vertices); //Wska¿ tablicê z danymi dla atrybutu vertex
 
 	glEnableVertexAttribArray(spMarble->a("normal"));  //W³¹cz przesy³anie danych do atrybutu normal
 	glVertexAttribPointer(spMarble->a("normal"), 4, GL_FLOAT, false, 0, normals); //Wska¿ tablicê z danymi dla atrybutu normal
+
 
 	glEnableVertexAttribArray(spMarble->a("texCoord0"));  //W³¹cz przesy³anie danych do atrybutu texCoord
 	glVertexAttribPointer(spMarble->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords); //Wska¿ tablicê z danymi dla atrybutu texCoord

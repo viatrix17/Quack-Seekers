@@ -1,31 +1,32 @@
 #version 330
 
-//Zmienne jednorodne
 uniform mat4 P;
 uniform mat4 V;
 uniform mat4 M;
 uniform vec4 lp;
+uniform vec3 cameraWorldPos;
 
-//Atrybuty
-in vec4 vertex; //wspolrzedne wierzcholka w przestrzeni modelu
-in vec4 normal; //wektor normalny wierzchołka w przestrzeni modelu
+in vec4 vertex;
+in vec4 normal;
 in vec2 texCoord0;
 
-out vec4 iC;
-out vec4 l;
-out vec4 n;
-out vec4 v;
+out vec3 l;
+out vec3 n;
+out vec3 v;
 
 out vec2 iTexCoord0;
 
 void main(void) {
+    vec4 fragPos =  M * vertex;
+    // Correct normal transformation
+    mat3 normalMatrix = mat3(transpose(inverse(M))); // or mat3(V*M);
+    vec3 fragNorm = normalMatrix * normal.xyz;
 
-    vec4 normNormal = normalize(normal);
-    l = normalize(lp - M * vertex);//znormalizowany wektor do światła w przestrzeni oka
-    n = normalize(M * normNormal);//znormalizowany wektor normalny w przestrzeni oka
-    v = normalize(vec4(0, 0, 0, 1) - M * vertex); //Wektor do obserwatora w przestrzeni oka
+    // Vectors in eye space
+    l = normalize(vec3( lp) - fragPos.xyz); // light direction
+    n = normalize(fragNorm);                   // normal
+    v = normalize(cameraWorldPos-fragPos.xyz);               // view direction
 
-    iTexCoord0=texCoord0;
-   
-    gl_Position=P*V*M*vertex;
+    iTexCoord0 = texCoord0;
+    gl_Position = P * V* fragPos;
 }
