@@ -12,14 +12,16 @@ in vec2 iTexCoord0;
 
 void main(void) {
 
+	float distance = length(l);  // Odleg³oœæ od œwiat³a
+	float attenuation = 1.0 / (1.0 + 0.1 * distance + 0.5 * distance * distance);
+
 	vec3 ml = normalize(l);
 	vec3 mn = normalize(n);
 	vec3 mv = normalize(v);
 	vec3 mr = reflect(-ml,mn); //Wektor odbity
 	vec4 kd = texture(textureMap0,iTexCoord0);
 	vec4 ks = texture(textureMap1,iTexCoord0);
-	float distance = length(l);  // Odleg³oœæ od œwiat³a
-	float attenuation = 1.0 / (1.0 + 0.1 * distance + 0.5 * distance * distance);
+	
 
 	vec4 ambientColor = vec4(0.3,0.3,0.3,1);
 	float nl = clamp(dot(mn, ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.

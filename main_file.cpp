@@ -328,9 +328,10 @@ void initOpenGLProgram(GLFWwindow* window) {
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 	std::cout << "4\n";
 
-	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
-	sunLightPos = glm::vec4(100.0f, 10.0f, 0.0f, 0.0f); //kierunek, bez pozycji
-	sunLightColor = glm::vec3(0.7, 0.4, 0.2);
+	lampLightPos = glm::vec4(52.0f, -20.0f, 157.0f, 1.0f);
+	sunLightPos = glm::vec4(-0.6f, -0.9f, 0.0f, 0.0f);
+
+	sunLightColor = glm::vec3(0.7f, 0.7f, 0.7f);
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -352,6 +353,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
+
 	if (forward) {
 		positionOffset += cameraspeed * deltaTime * viewOffset;
 	}
@@ -366,6 +368,8 @@ void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pok�
 	if (goRight) {
 		positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
 	}
+	//std::cout << positionOffset.x << " " << positionOffset.y << " " << positionOffset.y << "\n\n";
+
 	
 }
 

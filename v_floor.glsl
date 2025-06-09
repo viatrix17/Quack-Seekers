@@ -26,7 +26,7 @@ void main(void) {
 
     // Vectors in eye space
     lamp_l = normalize(vec3(lamp) - fragPos.xyz); // lamp light direction
-    sun_l = normalize(vec3(sun) - fragPos.xyz); // syn light direction
+    sun_l = normalize(-vec3(sun)); // sun light direction
     n = normalize(fragNorm);                   // normal
     v = normalize(cameraWorldPos-fragPos.xyz);               // view direction
 
