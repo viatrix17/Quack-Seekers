@@ -44,7 +44,7 @@
     <None Include="v_marble.glsl" />
     <None Include="v_floor.glsl" />
     <None Include="f_floor.glsl" />
-    <None Include="w_ceiling.glsl" />
+    <None Include="v_ceiling.glsl" />
     <None Include="f_ceiling.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

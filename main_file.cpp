@@ -28,11 +28,11 @@ should I delete it? xDD
 #include "myCube.h"
 
 
-GLuint tex[6];
+GLuint tex[9];
 
 ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling;
 
-glm::vec4 lampLightPos; 
+glm::vec4 lampLightPos, sunLightPos; 
 
 float cameraSpeed = 25.0f;
 float rotateSpeed = 0.25f;
@@ -59,6 +59,10 @@ float* normals = myCubeNormals;
 float* texCoords = myCubeTexCoords;
 float* colors = myCubeColors;
 int vertexCount = myCubeVertexCount;
+
+float* c1 = myCubeC1;
+float* c2 = myCubeC2;
+float* c3 = myCubeC3;
 
 bool open[5]; //0 - wardrobe,  1- cabinet, 2 - box1, 3 - box2, 4 - drawer,
 bool close[5];
@@ -308,14 +312,18 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[3] = readTexture("textures/floor.png");
 	tex[4] = readTexture("textures/floor_specular.png");
 
-	tex[5] = readTexture("textures/ceiling.png");
+	tex[5] = readTexture("textures/ceiling_diffuse.png");
+	tex[6] = readTexture("textures/ceiling_normal.png");
+	tex[7] = readTexture("textures/ceiling_height.png");
+	//tex[8] = readTexture("textures/ceiling_roughness.png");
 
 	spFloor = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
-	spCeiling = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
+	spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 
 	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
+	sunLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 0.0f); //kierunek, bez pozycji
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -327,7 +335,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 void freeOpenGLProgram(GLFWwindow* window) {
   
 	// free textures
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 9; i++) {
 		glDeleteTextures(1, &tex[i]);
 	}
 

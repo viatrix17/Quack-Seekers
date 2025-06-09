@@ -1,7 +1,20 @@
 #include "renderer.h"
 
+void Renderer::parallax() {
 
-void Renderer::draw(glm::mat4 modelMatrix, std::tuple<float, float, float> scale, glm::vec3 positionOffset) {
+	std::cout << "1\n";
+
+	glEnableVertexAttribArray(sp->a("c1"));  //W³¹cz przesy³anie danych do atrybutu normal
+	glVertexAttribPointer(sp->a("c1"), 4, GL_FLOAT, false, 0, c1); //Wska¿ tablicê z danymi dla atrybutu normal
+
+	glEnableVertexAttribArray(sp->a("c2"));  //W³¹cz przesy³anie danych do atrybutu normal
+	glVertexAttribPointer(sp->a("c2"), 4, GL_FLOAT, false, 0, c2); //Wska¿ tablicê z danymi dla atrybutu normal
+
+	glEnableVertexAttribArray(sp->a("c3"));  //W³¹cz przesy³anie danych do atrybutu normal
+	glVertexAttribPointer(sp->a("c3"), 4, GL_FLOAT, false, 0, c3); //Wska¿ tablicê z danymi dla atrybutu normal
+}
+
+void Renderer::draw(glm::mat4 modelMatrix, std::tuple<float, float, float> scale, glm::vec3 positionOffset, bool p) {
 
 	modelMatrix = glm::scale(modelMatrix, glm::vec3(std::get<0>(scale), std::get<1>(scale), std::get<2>(scale)));
 
@@ -12,16 +25,30 @@ void Renderer::draw(glm::mat4 modelMatrix, std::tuple<float, float, float> scale
 	glEnableVertexAttribArray(sp->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(sp->a("vertex"), 4, GL_FLOAT, false, 0, vertices); //Wska¿ tablicê z danymi dla atrybutu vertex
 
-	glEnableVertexAttribArray(sp->a("normal"));  //W³¹cz przesy³anie danych do atrybutu normal
-	glVertexAttribPointer(sp->a("normal"), 4, GL_FLOAT, false, 0, normals); //Wska¿ tablicê z danymi dla atrybutu normal
 
 	glEnableVertexAttribArray(sp->a("texCoord0"));  //W³¹cz przesy³anie danych do atrybutu texCoord
 	glVertexAttribPointer(sp->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords); //Wska¿ tablicê z danymi dla atrybutu texCoord
 
+	if (p) {
+		parallax();
+	}
+	else {
+		glEnableVertexAttribArray(sp->a("normal"));  //W³¹cz przesy³anie danych do atrybutu normal
+		glVertexAttribPointer(sp->a("normal"), 4, GL_FLOAT, false, 0, normals); //Wska¿ tablicê z danymi dla atrybutu normal
+	}
 
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount); //Narysuj obiekt
 
 	glDisableVertexAttribArray(sp->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 	glDisableVertexAttribArray(sp->a("texCoord0"));  //Wy³¹cz przesy³anie danych do atrybutu texCoord0
-	glDisableVertexAttribArray(sp->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu normal
+
+	if (p) {
+		glDisableVertexAttribArray(sp->a("c1"));  //Wy³¹cz przesy³anie danych do atrybutu normal
+		glDisableVertexAttribArray(sp->a("c2"));  //Wy³¹cz przesy³anie danych do atrybutu normal
+		glDisableVertexAttribArray(sp->a("c3"));  //Wy³¹cz przesy³anie danych do atrybutu normal
+	}
+	else {
+		glDisableVertexAttribArray(sp->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu normal
+	}
+
 }

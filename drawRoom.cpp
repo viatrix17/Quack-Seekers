@@ -8,7 +8,7 @@ extern ShaderProgram* spMarble;
 extern ShaderProgram* spFloor;
 extern ShaderProgram* spCeiling;
 
-extern GLuint tex[6];
+extern GLuint tex[9];
 
 extern glm::vec4 lampLightPos;
 
@@ -19,6 +19,10 @@ extern float* normals;
 extern float* texCoords;
 extern float* colors;
 extern int vertexCount;
+
+extern float* c1;
+extern float* c2;
+extern float* c3;
 
 void drawCubeWood(glm::mat4 cube, std::tuple<float, float, float> scale) {
 	cube = glm::scale(cube, glm::vec3(std::get<0>(scale),std::get<1>(scale),std::get<2>(scale)));
@@ -50,22 +54,22 @@ void drawWallWithWindow(glm::mat4 wall, std::tuple<float, float, float>, Rendere
 	glm::mat4 leftPart = wall;
 	leftPart = glm::translate(leftPart, glm::vec3(200.0f, 0.0f, -140.0f));
 	leftPart = glm::rotate(leftPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	renderer.draw(leftPart, std::tuple <float, float, float>(60.0f, 125.0f, 5.0f), positionOffset);
+	renderer.draw(leftPart, std::tuple <float, float, float>(60.0f, 125.0f, 5.0f), positionOffset,0);
 
 	glm::mat4 rightPart = wall;
 	rightPart = glm::translate(rightPart, glm::vec3(200.0f, 0.0f, 140.0f));
 	rightPart = glm::rotate(rightPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	renderer.draw(rightPart, std::tuple <float, float, float>(60.0f, 125.0f, 5.0f), positionOffset);
+	renderer.draw(rightPart, std::tuple <float, float, float>(60.0f, 125.0f, 5.0f), positionOffset,0);
 
 	glm::mat4 downPart = wall;
 	downPart = glm::translate(downPart, glm::vec3(200.0f, -90.0f, 0.0f));
 	downPart = glm::rotate(downPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	renderer.draw(downPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f), positionOffset);
+	renderer.draw(downPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f), positionOffset,0);
 
 	glm::mat4 upPart = wall;
 	upPart = glm::translate(upPart, glm::vec3(200.0f, 90.0f, 0.0f));
 	upPart = glm::rotate(upPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	renderer.draw(upPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f), positionOffset);
+	renderer.draw(upPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f), positionOffset,0);
 }
 
 void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
@@ -90,16 +94,21 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	spFloor->bindTexture(GL_TEXTURE0, tex[3], "textureMap0");
 	spFloor->bindTexture(GL_TEXTURE1, tex[4], "textureMap1");
 	Renderer floorRenderer(spFloor, vertices, normals, texCoords, vertexCount);
-	floorRenderer.draw(floor, floorAndCeilingScale, positionOffset);
+	floorRenderer.draw(floor, floorAndCeilingScale, positionOffset,0);
 
 	// innym shaderem sufit
 	glm::mat4 ceiling = room;
-	ceiling = glm::translate(ceiling, glm::vec3(0.0f, 150.0f, 0.0f));
+	ceiling = glm::translate(ceiling, glm::vec3(0.0f, 132.0f, 0.0f));
 	ceiling = glm::rotate(ceiling, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	spCeiling->use();
-	
+	spCeiling->setUniforms(P, V, lampLightPos);
 	spCeiling->bindTexture(GL_TEXTURE0, tex[5], "textureMap0");
+	spCeiling->bindTexture(GL_TEXTURE1, tex[6], "textureMap1");
+	spCeiling->bindTexture(GL_TEXTURE2, tex[7], "textureMap2");
+	//spCeiling->bindTexture(GL_TEXTURE3, tex[8], "textureMap3");
+	Renderer ceilingRenderer(spCeiling, vertices, normals, texCoords, vertexCount, c1, c2, c3);
+	ceilingRenderer.draw(ceiling, floorAndCeilingScale, positionOffset,1);
 
 
 	//tu na sciany teksture dac
@@ -112,16 +121,16 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 
 	glm::mat4 frontWall = room;
 	frontWall = glm::translate(frontWall, glm::vec3(0.0f, 0.0f, 200.0f));
-	woodRenderer.draw(frontWall, wallScale, positionOffset);
+	woodRenderer.draw(frontWall, wallScale, positionOffset,0);
 
 	glm::mat4 backWall = room; //with the door??
 	backWall = glm::translate(backWall, glm::vec3(0.0f, 0.0f, -200.0f));
-	woodRenderer.draw(backWall, wallScale, positionOffset);
+	woodRenderer.draw(backWall, wallScale, positionOffset,0);
 
 	glm::mat4 rightWall = room;
 	rightWall = glm::translate(rightWall, glm::vec3(-200.0f + 10.0f, 0.0f, 0.0f));
 	rightWall = glm::rotate(rightWall, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	woodRenderer.draw(rightWall, wallScale, positionOffset);
+	woodRenderer.draw(rightWall, wallScale, positionOffset,0);
 
 	glm::mat4 leftWall = room;
 	drawWallWithWindow(leftWall, wallColor, woodRenderer);

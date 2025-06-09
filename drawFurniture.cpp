@@ -6,7 +6,7 @@
 extern ShaderProgram* spWood; //woodish??
 extern ShaderProgram* spMarble;
 
-extern GLuint tex[6];
+extern GLuint tex[9];
 
 extern glm::vec4 lampLightPos;
 
@@ -91,33 +91,33 @@ void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 		for (int i = -1; i <= 1; i+=2) {
 			glm::mat4 lowerVer = lowerPart;
 			lowerVer = glm::translate(lowerVer, glm::vec3(0.0f, 0.0f, i * boxSize.z));
-			marbleRenderer.draw(lowerVer, std::tuple<float, float, float>(boxSize.x, boxSize.y, 0.25f), positionOffset);
+			marbleRenderer.draw(lowerVer, std::tuple<float, float, float>(boxSize.x, boxSize.y, 0.25f), positionOffset,0);
 
 			glm::mat4 lowerSide = lowerPart;
 			lowerSide = glm::translate(lowerSide, glm::vec3((boxSize.x-0.25f)*i, 0.0f, 0.0f));
 			lowerSide = glm::rotate(lowerSide, 90*PI/180, glm::vec3(0.0f, 1.0f, 0.0f));
-			marbleRenderer.draw(lowerSide, std::tuple<float, float, float>(boxSize.z-0.25f, boxSize.y, 0.25f), positionOffset);
+			marbleRenderer.draw(lowerSide, std::tuple<float, float, float>(boxSize.z-0.25f, boxSize.y, 0.25f), positionOffset,0);
 
 			glm::mat4 upperVer = upperPart;
 			upperVer = glm::translate(upperVer, glm::vec3(0.0f, 0.0f, i * boxSize.z));
-			marbleRenderer.draw(upperVer, std::tuple<float, float, float>(boxSize.x, 2.0f, 0.25f), positionOffset);
+			marbleRenderer.draw(upperVer, std::tuple<float, float, float>(boxSize.x, 2.0f, 0.25f), positionOffset,0);
 
 			glm::mat4 upperSide = upperPart;
 			upperSide = glm::translate(upperSide, glm::vec3((boxSize.x - 0.25f) * i, 0.0f, 0.0f));
 			upperSide = glm::rotate(upperSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-			marbleRenderer.draw(upperSide, std::tuple<float, float, float>(boxSize.z - 0.25f, 2.0f, 0.25f), positionOffset);
+			marbleRenderer.draw(upperSide, std::tuple<float, float, float>(boxSize.z - 0.25f, 2.0f, 0.25f), positionOffset,0);
 
 		}
 
 		glm::mat4 bottom = lowerPart;
 		bottom = glm::translate(bottom, glm::vec3(0.0f, -5.0f, 0.0f));
 		bottom = glm::rotate(bottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		marbleRenderer.draw(bottom, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), positionOffset);
+		marbleRenderer.draw(bottom, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), positionOffset,0);
 
 		glm::mat4 top = upperPart;
 		top = glm::translate(top, glm::vec3(0.0f, 2.0f, 0.0f));
 		top = glm::rotate(top, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		marbleRenderer.draw(top, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), positionOffset);
+		marbleRenderer.draw(top, std::tuple<float, float, float>(boxSize.x, boxSize.z+0.25, 0.25f), positionOffset,0);
 	}
 }
 

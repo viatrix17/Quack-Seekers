@@ -2,27 +2,59 @@
 
 uniform sampler2D textureMap0;
 uniform sampler2D textureMap1;
+uniform sampler2D textureMap2;
 
 out vec4 pixelColor; //Zmienna wyjsciowa fragment shadera. Zapisuje sie do niej ostateczny (prawie) kolor piksela
 
-in vec3 l;
-in vec3 n;
-in vec3 v;
+in vec4 l;
+in vec4 v;
 in vec2 iTexCoord0;
+
+vec2 parallaxTexCoords(vec4 v, vec2 t, float h, float s) {
+
+	vec2 ti = -v.xy/s; // obliczamy przyrosty
+	float hi = -v.z / s; // analogicznie obliczamy przyrost dla wysokoscoi
+
+	// deklarujemy zmienne robocze prechowujace zmienne teksturowania
+	// oraz aktualna wysokosc - jak gleboko przeszlismy pod powierzchnie
+	vec2 tc = t;
+	float hc = h;
+
+	float ht = h*texture(textureMap2, tc).r;
+
+	if (v.z <= 0) discard;
+	while (hc > ht) {
+		tc = tc+ti;
+		if (tc.x < 0 || tc.x > 1 || tc.y < 0 || tc.y > 1) discard;
+		hc = hc+hi; //krok w g³¹b
+		ht = h*texture(textureMap2,tc).r;
+	}
+	
+	return tc; 
+}
 
 void main(void) {
 
-	vec3 ml = normalize(l);
-	vec3 mn = normalize(n);
-	vec3 mv = normalize(v);
-	vec3 mr = reflect(-ml,mn); //Wektor odbity
-	vec4 kd = texture(textureMap0,iTexCoord0);
-	vec4 ks = texture(textureMap1,iTexCoord0);
+	vec4 ml = normalize(l);
+	vec4 mv = normalize(v);
+	vec2 nt = parallaxTexCoords(mv, iTexCoord0, 0.1,10); // ewentualnie potem zmieniæ
+
+	//Znormalizowane interpolowane wektory
+	vec4 mn = normalize(vec4(texture(textureMap1, nt).rgb*2-1,0));
+
+	//Wektor odbity
+	vec4 mr = reflect(-ml, mn);
+
+	//Parametry powierzchni
+	vec4 kd = texture(textureMap0, iTexCoord0); 
+	vec4 ks = texture(textureMap1, iTexCoord0);
 
 	vec4 ambientColor = vec4(0.3,0.3,0.3,1);
-	float nl = clamp(dot(mn, ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.
-	float rv = pow(clamp(dot(mr, mv), 0, 1), 5); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
 
-	pixelColor = vec4(nl * kd.rgb, kd.a) + vec4(ks.rgb*rv,0) + vec4(kd.rgb*ambientColor.rgb,kd.a);
-	
+	//Obliczenie modelu oœwietlenia
+	float nl = clamp(dot(mn, ml), 0, 1);
+	float rv = pow(clamp(dot(mr, mv), 0, 1),25);
+	pixelColor= vec4(kd.rgb * nl, kd.a);// + vec4(kd.rgb*ambientColor.rgb,kd.a);// + vec4(ks.rgb*rv, 0);
 }
+
+
