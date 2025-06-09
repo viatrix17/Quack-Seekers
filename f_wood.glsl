@@ -26,7 +26,7 @@ void main(void) {
 	vec4 ks = kd*0.3;
 	
 
-	vec4 ambientColor = vec4(0.1,0.1,0.1,1);
+	vec4 ambientColor = vec4(0.3,0.3,0.3,1);
 	float lamp_nl = clamp(dot(mn, lamp_ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.
 	float sun_nl = clamp(dot(mn, sun_ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.
 	float lamp_rv = pow(clamp(dot(lamp_mr, mv), 0, 1), 25); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
