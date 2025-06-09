@@ -1,10 +1,10 @@
 #include "key.h"
+#include<iostream>
 #include "config.h"
-#include "shaderprogram.h"
 
 extern GLuint texKey;
 
-extern ShaderProgram* spWood;
+extern ShaderProgram* spMetal;
 
 unsigned int vertexCountKey = 6072;
 
@@ -18241,19 +18241,19 @@ void drawKey(glm::mat4 sth) {
 	
 	key = glm::scale(key, glm::vec3(5.0f, 5.0f, 5.0f));
 
-	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(key));
+	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(key));
 
-	glEnableVertexAttribArray(spWood->a("vertex"));
-	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Key);
-	glEnableVertexAttribArray(spWood->a("normal"));
-	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Key);
-	glEnableVertexAttribArray(spWood->a("texCoord0"));
-	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key);
-	glUniform1i(spWood->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spMetal->a("vertex"));
+	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Key);
+	glEnableVertexAttribArray(spMetal->a("normal"));
+	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Key);
+	glEnableVertexAttribArray(spMetal->a("texCoord0"));
+	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Key);
+	glUniform1i(spMetal->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texKey);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountKey);
-	glDisableVertexAttribArray(spWood->a("vertex"));
-	glDisableVertexAttribArray(spWood->a("normal"));
-	glDisableVertexAttribArray(spWood->a("texCoord0"));
+	glDisableVertexAttribArray(spMetal->a("vertex"));
+	glDisableVertexAttribArray(spMetal->a("normal"));
+	glDisableVertexAttribArray(spMetal->a("texCoord0"));
 }

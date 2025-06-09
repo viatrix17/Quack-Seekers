@@ -26,25 +26,38 @@ should I delete it? xDD
 #include "drawRoom.h"
 #include "drawFurniture.h"
 #include "myCube.h"
+#include "boxLock.h"
+#include "flower.h"
+#include "lamp.h"
 
 
 GLuint tex[9];
 
-ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling;
+ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling, *spFur;
 
 glm::vec4 lampLightPos, sunLightPos; 
 glm::vec3 sunLightColor;
 
+GLuint texKey;
+GLuint texBlackEye;
+GLuint texBlanket;
+GLuint texBlanketInterior;
+GLuint texBlueWalls;
+GLuint texMarblePot;
+GLuint texOrangeBeak;
+GLuint texPinkBow;
+GLuint texRedFlower;
+GLuint texSilver;
+GLuint texSoil;
+GLuint texWhiteEye;
+GLuint texYellowDuck;
+GLuint texBackground;
+GLuint texGreenFlower;
+GLuint texFur;
 
 float cameraspeed = 25.0f;
 float rotatespeed = 0.25f;
 bool forward = false, back = false, goRight = false, goLeft = false; //movement
-
-bool visibleKey = true;
-bool openSafe = false;
-bool end = false;
-
-float openSafeAnimation = 0.0f;
 
 glm::vec3 positionOffset;
 glm::vec3 viewOffset;
@@ -102,142 +115,126 @@ bool isCameraLookingAtBox(glm::vec3 cameraPos, glm::vec3 viewDirection, glm::vec
 void key_callback(GLFWwindow* window, int key,
 	int scancode, int action, int mods) {
 	if (action == GLFW_PRESS) {
-
+		if (key == GLFW_KEY_W) {
+			forward = true;
+		}
+		if (key == GLFW_KEY_S) {
+			back = true;
+		}
+		if (key == GLFW_KEY_D) {
+			goRight = true;
+		}
+		if (key == GLFW_KEY_A) {
+			goLeft = true;
+		}
 		if (key == GLFW_KEY_ESCAPE) {
 			glfwDestroyWindow(window);
 			glfwTerminate(); // free the resources taken by GLFW
 			exit(EXIT_SUCCESS);
 		}
-		if (!end) {
-			if (key == GLFW_KEY_W) {
-				forward = true;
+		if (key == GLFW_KEY_SPACE) {
+			/*if (!open[2]) {
+				close[2] = false;
+				open[2] = true;
 			}
-			if (key == GLFW_KEY_S) {
-				back = true;
+			else {
+				open[2] = false;
+				close[2] = true;
+			}*/
+
+			std::cout << positionOffset.x << " " << positionOffset.y << " " << positionOffset.z << "\n";
+
+			//wardrobe animation trigger
+			if (openCount[0] == 0) {
+				if (isCameraLookingAtBox(positionOffset, viewOffset, wardrobePos - wardrobeSize, wardrobePos + wardrobeSize, 120.0f, 0.0f, 70.0f)
+					&& positionOffset.x < -30.0f) {
+					close[0] = false;
+					open[0] = true;
+					openCount[0]++;
+
+				}
 			}
-			if (key == GLFW_KEY_D) {
-				goRight = true;
+			else if (openCount[0] == 1) {
+				if (isCameraLookingAtBox(positionOffset, viewOffset, wardrobePos - wardrobeSize, wardrobePos + wardrobeSize, 180.0f, 0.0f, 90.0f)
+					&& positionOffset.x < -30.0f) {
+					open[0] = false;
+					close[0] = true;
+					openCount[0]--;
+				}
 			}
-			if (key == GLFW_KEY_A) {
-				goLeft = true;
+			std::cout << "drawer\n";
+			//drawer animation trigger 
+			if (openCount[4] == 0) {
+				if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 100.0f, 0.0f, 20.0f)) {
+					close[4] = false;
+					open[4] = true;
+					openCount[4]++;
+					triggered[0] = true;
+				}
 			}
-		
-			if (key == GLFW_KEY_SPACE) {
-				/*if (!open[2]) {
+			else if (openCount[4] == 1) {
+				if ((isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 140.0f, 0.0f, 22.0f)
+					&& positionOffset.x > 30.0f && positionOffset.x < 90.0f)
+					|| (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 160.0f, 0.0f, 40.0f)
+						&& (positionOffset.x >= 90.0f && positionOffset.x < 140.0f || positionOffset.x > -10.0f && positionOffset.x <= 30.0f))) {
+					open[4] = false;
+					close[4] = true;
+					openCount[4]--;
+					triggered[0] = true;
+				}
+			}
+			std::cout << "cabinet\n";
+			//cabinet animation trigger
+			if (openCount[1] == 0 && !triggered[0]) {
+				if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 120.0f, 7.0f, 30.0f)) {
+					close[1] = false;
+					open[1] = true;
+					openCount[1]++;
+				}
+			}
+			else if (openCount[1] == 1 && !triggered[0]) {
+				if ((isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 180.0f, 7.0f, 20.0f)
+					|| isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 60.0f, 7.0f, 70.0f)
+					&& positionOffset.x > 30.0f && positionOffset.x < 900.0f)
+					|| (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 180.0f, 5.0f, 30.0f)
+						&& (positionOffset.x >= 90.0f && positionOffset.x < 140.0f || positionOffset.x > -10.0f && positionOffset.x <= 30.0f))) {
+					open[1] = false;
+					close[1] = true;
+					openCount[1]--;
+				}
+			}
+
+			//box1 animation trigger
+			if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + boxPos) - boxSize, (deskPos + boxPos) + boxSize, 100.0f, 0.0f, 10.0f)) {
+				if (openCount[2] == 0) {
 					close[2] = false;
 					open[2] = true;
+					openCount[2]++;
+					triggered[1] = true;
 				}
-				else {
+				else if (openCount[2] == 1) {
 					open[2] = false;
 					close[2] = true;
-				}*/
-
-				std::cout << positionOffset.x << " " << positionOffset.y << " " << positionOffset.z << "\n";
-
-				//wardrobe animation trigger
-				if (openCount[0] == 0) {
-					if (isCameraLookingAtBox(positionOffset, viewOffset, wardrobePos - wardrobeSize, wardrobePos + wardrobeSize, 120.0f, 0.0f, 70.0f)
-						&& positionOffset.x < -30.0f) {
-						close[0] = false;
-						open[0] = true;
-						openCount[0]++;
-
-					}
-				}
-				else if (openCount[0] == 1) {
-					if (isCameraLookingAtBox(positionOffset, viewOffset, wardrobePos - wardrobeSize, wardrobePos + wardrobeSize, 180.0f, 0.0f, 90.0f)
-						&& positionOffset.x < -30.0f) {
-						open[0] = false;
-						close[0] = true;
-						openCount[0]--;
-					}
-				}
-				std::cout << "drawer\n";
-				//drawer animation trigger 
-				if (openCount[4] == 0) {
-					if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 100.0f, 0.0f, 20.0f)) {
-						close[4] = false;
-						open[4] = true;
-						openCount[4]++;
-						triggered[0] = true;
-					}
-				}
-				else if (openCount[4] == 1) {
-					if ((isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 140.0f, 0.0f, 22.0f)
-						&& positionOffset.x > 30.0f && positionOffset.x < 90.0f)
-						|| (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 160.0f, 0.0f, 40.0f)
-							&& (positionOffset.x >= 90.0f && positionOffset.x < 140.0f || positionOffset.x > -10.0f && positionOffset.x <= 30.0f))) {
-						open[4] = false;
-						close[4] = true;
-						openCount[4]--;
-						triggered[0] = true;
-					}
-				}
-				std::cout << "cabinet\n";
-				//cabinet animation trigger
-				if (openCount[1] == 0 && !triggered[0]) {
-					if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 120.0f, 7.0f, 30.0f)) {
-						close[1] = false;
-						open[1] = true;
-						openCount[1]++;
-					}
-				}
-				else if (openCount[1] == 1 && !triggered[0]) {
-					if ((isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 180.0f, 7.0f, 20.0f)
-						|| isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 60.0f, 7.0f, 70.0f)
-						&& positionOffset.x > 30.0f && positionOffset.x < 900.0f)
-						|| (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos + cabinetPos) - cabinetSize, (deskPos + drawerPos + cabinetPos) + cabinetSize, 180.0f, 5.0f, 30.0f)
-							&& (positionOffset.x >= 90.0f && positionOffset.x < 140.0f || positionOffset.x > -10.0f && positionOffset.x <= 30.0f))) {
-						open[1] = false;
-						close[1] = true;
-						openCount[1]--;
-					}
-				}
-
-				//box1 animation trigger
-				if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + boxPos) - boxSize, (deskPos + boxPos) + boxSize, 100.0f, 0.0f, 10.0f)) {
-					if (openCount[2] == 0) {
-						close[2] = false;
-						open[2] = true;
-						openCount[2]++;
-						triggered[1] = true;
-					}
-					else if (openCount[2] == 1) {
-						open[2] = false;
-						close[2] = true;
-						openCount[2]--;
-						triggered[1] = true;
-					}
-				}
-
-				//box2 animation trigger
-				if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + glm::vec3(boxPos.x * 2 + 1 * 25.0f, boxPos.y, boxPos.z)) - boxSize, 
-					(deskPos + glm::vec3(boxPos.x * 2 + 1 * 25.0f, boxPos.y, boxPos.z)) + boxSize, 100.0f, 0.0f, 10.0f)) {
-					if (openCount[3] == 0 && !triggered[1]) {
-						close[3] = false;
-						open[3] = true;
-						openCount[3]++;
-					}
-					else if (openCount[3] == 1 && !triggered[1]) {
-						open[3] = false;
-						close[3] = true;
-						openCount[3]--;
-					}
+					openCount[2]--;
+					triggered[1] = true;
 				}
 			}
-			if (key == GLFW_KEY_ENTER) {
-				if (openCount[4] == 1 && isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + drawerPos) - drawerSize, (deskPos + drawerPos) + drawerSize, 120.0f, 0.0f, 70.0f)) {
-					std::cout << "taking the key\n";
-					visibleKey = false;
-				}
 
-				if (!visibleKey && openCount[0] == 1 && isCameraLookingAtBox(positionOffset, viewOffset, wardrobePos - wardrobeSize, wardrobePos + wardrobeSize, 120.0f, 0.0f, 70.0f)) {
-					std::cout << "opening the safe\n";
-					openSafe = true;
+			//box2 animation trigger
+			if (isCameraLookingAtBox(positionOffset, viewOffset, (deskPos + glm::vec3(boxPos.x * 2 + 1 * 25.0f, boxPos.y, boxPos.z)) - boxSize, 
+				(deskPos + glm::vec3(boxPos.x * 2 + 1 * 25.0f, boxPos.y, boxPos.z)) + boxSize, 100.0f, 0.0f, 10.0f)) {
+				if (openCount[3] == 0 && !triggered[1]) {
+					close[3] = false;
+					open[3] = true;
+					openCount[3]++;
+				}
+				else if (openCount[3] == 1 && !triggered[1]) {
+					open[3] = false;
+					close[3] = true;
+					openCount[3]--;
 				}
 			}
 		}
-		
 	}
 	if (action == GLFW_RELEASE) {
 		if (key == GLFW_KEY_W) {
@@ -316,7 +313,7 @@ GLuint readTexture(const char* filename) {
 void initOpenGLProgram(GLFWwindow* window) {
     
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glClearColor(0.7f, 0.4f, 0.2f, 1.0f);
+	glClearColor(0.58f, 0.88f, 0.92f, 0); //light blue/green for the sky/background
 	positionOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 	viewOffset = glm::vec3(0.0f, 0.0f, 100.0f);
 
@@ -333,6 +330,24 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[1] = readTexture("textures/marble2.png");
 	tex[2] = readTexture("textures/marble2_specular.png");
 
+	texKey = readTexture("textures/metal.png");
+
+	texBlackEye = readTexture("textures/black-eye.png");
+	texBlanket = readTexture("textures/blanket.png");
+	texBlanketInterior = readTexture("textures/blanket-interior.png");
+	texBlueWalls = readTexture("textures/blue-walls.png");
+	texMarblePot = readTexture("textures/marble-pot.png");
+	texOrangeBeak = readTexture("textures/orange-beak.png");
+	texPinkBow = readTexture("textures/pink-bow.png");
+	texRedFlower = readTexture("textures/red-flower.png");
+	texSilver = readTexture("textures/silver.png");
+	texSoil = readTexture("textures/soil.png");
+	texWhiteEye = readTexture("textures/white-eye.png");
+	texYellowDuck = readTexture("textures/yellow-duck.png");
+	//texBackground = readTexture("textures/marble2.png");
+	texGreenFlower = readTexture("textures/green-flower.png");
+	texFur = readTexture("textures/fur.png");
+
 	tex[3] = readTexture("textures/floor.png");
 	tex[4] = readTexture("textures/floor_specular.png");
 
@@ -341,30 +356,23 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[7] = readTexture("textures/bricks2_height.png");
 	tex[8] = readTexture("textures/ceiling_roughness.png");
 
-	
-
 	spFloor = new ShaderProgram("v_floor.glsl", NULL, "f_floor.glsl");
 	std::cout << "1\n";
-	spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
-	std::cout << "2\n";
+	//spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
+	//std::cout << "2\n";
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	std::cout << "3\n";
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 	std::cout << "4\n";
 
-	lampLightPos = glm::vec4(52.0f, -20.0f, 157.0f, 1.0f);
-	sunLightPos = glm::vec4(-0.6f, -0.9f, 0.0f, 0.0f);
-
-	sunLightColor = glm::vec3(0.7f, 0.7f, 0.7f);
+	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
+	sunLightPos = glm::vec4(100.0f, 10.0f, 0.0f, 0.0f); //kierunek, bez pozycji
+	sunLightColor = glm::vec3(0.7, 0.4, 0.2);
 
 	spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	spFur = new ShaderProgram("v_fur.glsl", NULL, "f_fur.glsl");
 
+	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 }
@@ -379,11 +387,29 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	}
 
 	// free shaders
-	delete spWood, spMarble, spFloor;
+	glDeleteTextures(1, &tex0);
+	glDeleteTextures(1, &tex1);
+	glDeleteTextures(1, &tex2);
+	glDeleteTextures(1, &texKey);
+	glDeleteTextures(1, &texBlanket);
+	glDeleteTextures(1, &texBlueWalls);
+	glDeleteTextures(1, &texMarblePot);
+	glDeleteTextures(1, &texOrangeBeak);
+	glDeleteTextures(1, &texPinkBow);
+	glDeleteTextures(1, &texRedFlower);
+	glDeleteTextures(1, &texSilver);
+	glDeleteTextures(1, &texSoil);
+	glDeleteTextures(1, &texYellowDuck);
+	glDeleteTextures(1, &texGreenFlower);
+	glDeleteTextures(1, &texWhiteEye);
+	glDeleteTextures(1, &texBlackEye);
+	glDeleteTextures(1, &texBlanketInterior);
+	glDeleteTextures(1, &texFur);
+	
+	delete spWood, spMarble, spFloor, spFur;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
-
 	if (forward) {
 		positionOffset += cameraspeed * deltaTime * viewOffset;
 	}
@@ -398,8 +424,6 @@ void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pok�
 	if (goRight) {
 		positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
 	}
-	//std::cout << positionOffset.x << " " << positionOffset.y << " " << positionOffset.y << "\n\n";
-
 	
 }
 
@@ -469,10 +493,6 @@ int main(void)
 			else if (close[i]) {
 				openAngle[i] -= openspeed * deltaTime;
 			}
-		}
-
-		if (openSafe) {
-			openSafeAnimation += openspeed * deltaTime;
 		}
 
 		if (open[4]) {
