@@ -294,7 +294,7 @@ GLuint readTexture(const char* filename) {
 void initOpenGLProgram(GLFWwindow* window) {
     
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glClearColor(0.58f, 0.88f, 0.92f, 0); //light blue/green for the sky/background
+	glClearColor(0.7f, 0.4f, 0.2f, 1.0f);
 	positionOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 	viewOffset = glm::vec3(0.0f, 0.0f, 100.0f);
 
@@ -321,8 +321,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	spFloor = new ShaderProgram("v_floor.glsl", NULL, "f_floor.glsl");
 	std::cout << "1\n";
-	//spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
-	//std::cout << "2\n";
+	spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
+	std::cout << "2\n";
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	std::cout << "3\n";
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
