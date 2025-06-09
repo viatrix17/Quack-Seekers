@@ -4,7 +4,7 @@
 
 extern GLuint texSilver;
 
-extern ShaderProgram* spMetal;
+extern ShaderProgram* spWood;
 
 unsigned int vertexCountHandle = 2880;
 
@@ -8661,21 +8661,21 @@ void drawHandle(glm::mat4 handle) {
 	
 	handle = glm::scale(handle, glm::vec3(10.0f, 10.0f, 10.0f));
 
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(handle));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(handle));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Handle);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Handle);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Handle);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Handle);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Handle);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Handle);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texSilver);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountHandle);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawHandleWardrobe(glm::mat4 desk, int whichDoor) {

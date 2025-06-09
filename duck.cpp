@@ -4,12 +4,12 @@
 
 extern GLuint texYellowDuck;
 extern GLuint texOrangeBeak;
-extern GLuint texPinkBow;
+extern GLuint texRedFlower;
 extern GLuint texBlackEye;
 extern GLuint texWhiteEye;
 extern GLuint texFur;
 
-extern ShaderProgram* spMetal;
+extern ShaderProgram* spWood;
 extern ShaderProgram* spFur;
 
 unsigned int vertexCountBody = 2880;
@@ -119240,13 +119240,13 @@ void drawDuckBody(glm::mat4 duck) {
 	glVertexAttribPointer(spFur->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Body);
 
 	glUniform1f(spFur->u("maxFurLength"), 0.1);
-	glUniform1f(spFur->u("maxLayer"), 100);
+	glUniform1f(spFur->u("maxLayer"), 50);
 	
 	glUniform1i(spFur->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texFur);
 
-	glUniform1i(spFur->u("textureMap1"), 0);
+	glUniform1i(spFur->u("textureMap1"), 1);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texYellowDuck);
 
@@ -119267,13 +119267,13 @@ void drawDuckHead(glm::mat4 duck) {
 	glVertexAttribPointer(spFur->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Head);
 
 	glUniform1f(spFur->u("maxFurLength"), 0.1);
-	glUniform1f(spFur->u("maxLayer"), 100);
+	glUniform1f(spFur->u("maxLayer"), 150);
 
 	glUniform1i(spFur->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texFur);
 
-	glUniform1i(spFur->u("textureMap1"), 0);
+	glUniform1i(spFur->u("textureMap1"), 1);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texYellowDuck);
 
@@ -119284,77 +119284,77 @@ void drawDuckHead(glm::mat4 duck) {
 }
 
 void drawDuckHeadDetails(glm::mat4 duck) {
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(duck));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Beak);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Beak);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Beak);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Beak);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Beak);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Beak);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texOrangeBeak);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountBeak);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_EyesWhite);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyesWhite);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyesWhite);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_EyesWhite);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyesWhite);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyesWhite);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texWhiteEye);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountEyesWhite);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_EyesBlack);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyesBlack);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyesBlack);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_EyesBlack);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_EyesBlack);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_EyesBlack);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texBlackEye);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountEyesBlack);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Lashes);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lashes);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lashes);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Lashes);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Lashes);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Lashes);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texBlackEye);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountLashes);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Bow);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Bow);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Bow);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Bow);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Bow);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Bow);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texPinkBow);
+	glBindTexture(GL_TEXTURE_2D, texRedFlower);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountBow);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawDuckWingRight(glm::mat4 duck) {
@@ -119368,13 +119368,13 @@ void drawDuckWingRight(glm::mat4 duck) {
 	glVertexAttribPointer(spFur->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_WingR);
 
 	glUniform1f(spFur->u("maxFurLength"), 0.1);
-	glUniform1f(spFur->u("maxLayer"), 100);
+	glUniform1f(spFur->u("maxLayer"), 50);
 
 	glUniform1i(spFur->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texFur);
 
-	glUniform1i(spFur->u("textureMap1"), 0);
+	glUniform1i(spFur->u("textureMap1"), 1);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texYellowDuck);
 
@@ -119395,13 +119395,13 @@ void drawDuckWingLeft(glm::mat4 duck) {
 	glVertexAttribPointer(spFur->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_WingL);
 
 	glUniform1f(spFur->u("maxFurLength"), 0.1);
-	glUniform1f(spFur->u("maxLayer"), 100);
+	glUniform1f(spFur->u("maxLayer"), 50);
 
 	glUniform1i(spFur->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texFur);
 
-	glUniform1i(spFur->u("textureMap1"), 0);
+	glUniform1i(spFur->u("textureMap1"), 1);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texYellowDuck);
 
@@ -119412,109 +119412,109 @@ void drawDuckWingLeft(glm::mat4 duck) {
 }
 
 void drawDuckLegLeftUp(glm::mat4 duck) {
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(duck));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg2L);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg2L);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg2L);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg2L);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg2L);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg2L);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texOrangeBeak);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg2L);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawDuckLegLeftDown(glm::mat4 duck) {
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(duck));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg1L);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg1L);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg1L);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg1L);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg1L);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg1L);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texOrangeBeak);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg1L);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawDuckFootLeft(glm::mat4 duck) {
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(duck));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_FootL);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_FootL);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_FootL);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_FootL);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_FootL);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_FootL);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texOrangeBeak);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountFootL);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawDuckLegRightUp(glm::mat4 duck) {
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(duck));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg2R);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg2R);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg2R);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg2R);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg2R);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg2R);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texOrangeBeak);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg2R);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawDuckLegRightDown(glm::mat4 duck) {
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(duck));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg1R);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg1R);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg1R);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Leg1R);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Leg1R);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Leg1R);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texOrangeBeak);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountLeg1R);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawDuckFootRight(glm::mat4 duck) {
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(duck));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(duck));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_FootR);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_FootR);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_FootR);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_FootR);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_FootR);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_FootR);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texOrangeBeak);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountFootR);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }

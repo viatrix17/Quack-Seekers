@@ -156,6 +156,8 @@ void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 	for (int i = 0; i < 2; i++) {
 		glm::mat4 lowerPart = desk;
 		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
+		drawBoxLockPartDown(lowerPart);
+		drawHingeDown(lowerPart);
 		
 		glm::mat4 upperPart = desk;
 		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.05f, boxPos.z));

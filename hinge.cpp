@@ -4,7 +4,7 @@
 
 extern GLuint texSilver;
 
-extern ShaderProgram* spMetal;
+extern ShaderProgram* spWood;
 
 unsigned int vertexCountHinge = 1188;
 
@@ -3586,21 +3586,21 @@ void drawHinge(glm::mat4 partDown) {
 	partDown = glm::rotate(partDown, 180 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 	partDown = glm::scale(partDown, glm::vec3(4.0f, 4.0f, 4.0f));
 
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(partDown));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(partDown));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Hinge);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Hinge);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Hinge);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Hinge);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Hinge);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Hinge);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texSilver);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountHinge);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
 
 void drawHingeDown(glm::mat4 box) {
