@@ -23,21 +23,21 @@ extern bool close[10];
 extern float openAngle[10];
 extern glm::vec3 drawerOffset;
 
-void drawWardrobe(glm::mat4 room) { //lekko do przesuniecia
+void drawWardrobe(glm::mat4 room, Renderer woodRenderer) { //lekko do przesuniecia
 
 	glm::mat4 wardrobe = room;
 	wardrobe = glm::translate(wardrobe, wardrobePos);
 
 	glm::mat4 back = wardrobe;
 	back = glm::translate(back, glm::vec3(0.0f, 0.0f, 25.0f));
-	drawCubeWood(back, std::tuple<float, float, float> (68.0f, 100.0f, 1.0f));
+	woodRenderer.draw(back, std::tuple<float, float, float> (68.0f, 100.0f, 1.0f), positionOffset,0);
 	
 	// top and 
 	for (float i = -1; i <= 1; i += 2) {
 		glm::mat4 board = wardrobe;
 		board = glm::translate(board, glm::vec3(0.0f, 101.0f*i, 1.0f));
 		board = glm::rotate(board, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		drawCubeWood(board, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f));
+		woodRenderer.draw(board, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f), positionOffset,0);
 	}
 
 	// sides
@@ -45,7 +45,7 @@ void drawWardrobe(glm::mat4 room) { //lekko do przesuniecia
 		glm::mat4 side = wardrobe;
 		side = glm::translate(side, glm::vec3(69.0f*i, 0.0f, 1.0f));
 		side = glm::rotate(side, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-		drawCubeWood(side, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f));
+		woodRenderer.draw(side, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), positionOffset,0);
 	}
 
 	// front aka door  maja sie obracac 
@@ -56,7 +56,7 @@ void drawWardrobe(glm::mat4 room) { //lekko do przesuniecia
 		doorWing = glm::translate(doorWing, glm::vec3(34.5f*i, 0.0f, 0.0f));
 		doorWing = glm::rotate(doorWing, openAngle[0]*i, glm::vec3(0.0f, -1.0f, 0.0f));
 		doorWing = glm::translate(doorWing, glm::vec3(-34.5f*i, 0.0f, 0.0f));
-		drawCubeWood(doorWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f));
+		woodRenderer.draw(doorWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f), positionOffset,0);
 	}
 	
 	//shelves
@@ -64,7 +64,7 @@ void drawWardrobe(glm::mat4 room) { //lekko do przesuniecia
 		glm::mat4 shelf = wardrobe;
 		shelf = glm::translate(shelf, glm::vec3(0.0f, -101.0f+38.0f*i, 1.0f));
 		shelf = glm::rotate(shelf, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		drawCubeWood(shelf, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f));
+		woodRenderer.draw(shelf, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f), positionOffset,0);
 	}
 }
 
@@ -121,14 +121,14 @@ void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 	}
 }
 
-void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
+void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRenderer) {
 
 	glm::mat4 desk = room;
 	desk = glm::translate(desk, deskPos);
 
 	glm::mat4 board = desk;
 	board = glm::rotate(desk, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-	drawCubeWood(board, std::tuple<float, float, float>(72.0f, 27.0f, 1.0f));
+	woodRenderer.draw(board, std::tuple<float, float, float>(72.0f, 27.0f, 1.0f), positionOffset,0);
 
 	//140cmx50cmx75cm
 
@@ -137,7 +137,7 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 		glm::mat4 deskSide = desk;
 		deskSide = glm::translate(deskSide, glm::vec3(69.0f * i, -38.5f, 0.0f));
 		deskSide = glm::rotate(deskSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-		drawCubeWood(deskSide, std::tuple<float, float, float>(25.0f, 37.5f, 1.0f));
+		woodRenderer.draw(deskSide, std::tuple<float, float, float>(25.0f, 37.5f, 1.0f), positionOffset,0);
 	}
 
 	//the drawer
@@ -148,21 +148,21 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 		glm::mat4 drawerSide = drawer;
 		drawerSide = glm::translate(drawerSide, glm::vec3(17.0f*i, 0.0f, -1.0f));
 		drawerSide = glm::rotate(drawerSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-		drawCubeWood(drawerSide, std::tuple<float, float, float>(20.0f, 10.0f, 1.0f));
+		woodRenderer.draw(drawerSide, std::tuple<float, float, float>(20.0f, 10.0f, 1.0f), positionOffset,0);
 	}
 	
 	glm::mat4 drawerFront = drawer;
 	drawerFront = glm::translate(drawerFront, glm::vec3(0.0f, 0.0f, -22.0f));
-	drawCubeWood(drawerFront, std::tuple<float, float, float>(21.0f, 12.0f, 1.0f));
+	woodRenderer.draw(drawerFront, std::tuple<float, float, float>(21.0f, 12.0f, 1.0f), positionOffset,0);
 
 	glm::mat4 drawerBack = drawer;
 	drawerBack = glm::translate(drawerBack, glm::vec3(0.0f, 0.0f, 20.0f));
-	drawCubeWood(drawerBack, std::tuple<float, float, float>(18.0f, 10.0f, 1.0f));
+	woodRenderer.draw(drawerBack, std::tuple<float, float, float>(18.0f, 10.0f, 1.0f), positionOffset,0);
 	
 	glm::mat4 drawerBottom = drawer;
 	drawerBottom = glm::translate(drawerBottom, glm::vec3(0.0f, -11.0f, 0.0f));
 	drawerBottom = glm::rotate(drawerBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-	drawCubeWood(drawerBottom, std::tuple<float, float, float>(18.0f, 21.0f, 1.0f));
+	woodRenderer.draw(drawerBottom, std::tuple<float, float, float>(18.0f, 21.0f, 1.0f), positionOffset,0);
 
 	//the cabinet
 	glm::mat4 cabinet = desk;
@@ -171,7 +171,7 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	glm::mat4 cabinetSide = cabinet;
 	cabinetSide = glm::translate(cabinetSide, glm::vec3(20.0f, 12.0f, 0.0f));
 	cabinetSide = glm::rotate(cabinetSide, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	drawCubeWood(cabinetSide, std::tuple<float, float, float>(21.0f, 35.0f, 1.0f));
+	woodRenderer.draw(cabinetSide, std::tuple<float, float, float>(21.0f, 35.0f, 1.0f), positionOffset,0);
 	
 	glm::mat4 cabinetFront = cabinet;
 	cabinetFront = glm::translate(cabinetFront, glm::vec3(0.0f, -1.0f, -22.0f));
@@ -179,23 +179,23 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	cabinetFront = glm::translate(cabinetFront, glm::vec3(-21.0f, 0.0f, 0.0f));
 	cabinetFront = glm::rotate(cabinetFront, openAngle[1], glm::vec3(0.0f, 1.0f, 0.0f));
 	cabinetFront = glm::translate(cabinetFront, glm::vec3(21.f, 0.0f, 0.0f));
-	drawCubeWood(cabinetFront, std::tuple<float, float, float>(21.0f, 23.0f, 1.0f));
+	woodRenderer.draw(cabinetFront, std::tuple<float, float, float>(21.0f, 23.0f, 1.0f), positionOffset,0);
 
 	glm::mat4 cabinetBack = cabinet;
 	cabinetBack = glm::translate(cabinetBack, glm::vec3(-0.2f, 12.0f, 22.0f));
-	drawCubeWood(cabinetBack, std::tuple<float, float, float>(21.1f, 36.0f, 1.0f));
+	woodRenderer.draw(cabinetBack, std::tuple<float, float, float>(21.1f, 36.0f, 1.0f), positionOffset,0);
 
 	for (float i = 0; i <= 1; i++) {
 		glm::mat4 cabinetBottom = cabinet;
 		cabinetBottom = glm::translate(cabinetBottom, glm::vec3(0.0f-2.0f*(1-i), 0.0f - i * (23.0f), 0.0f));
 		cabinetBottom = glm::rotate(cabinetBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-		drawCubeWood(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f));
+		woodRenderer.draw(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f), positionOffset,0);
 	}
 
 	drawBoxes(desk, P, V);
 }
 
-void drawBed(glm::mat4 room) {
+void drawBed(glm::mat4 room, Renderer woodRenderer) {
 	
 	glm::mat4 bed = room;
 	bed = glm::translate(bed, bedPos);
@@ -204,19 +204,19 @@ void drawBed(glm::mat4 room) {
 	// frames
 	glm::mat4 frame = bed;
 	frame = glm::translate(frame, glm::vec3(0.0f, 0.0f, 38.0f));
-	drawCubeWood(frame, std::tuple<float, float, float>(bedSize.x, 5.0f, 1.0f));
+	woodRenderer.draw(frame, std::tuple<float, float, float>(bedSize.x, 5.0f, 1.0f), positionOffset,0);
 
 	for (float i = 0; i < 2; i++) {
 		glm::mat4 backFrame = bed;
 		backFrame = glm::translate(backFrame, glm::vec3(0.0f, i*20.0f, -38.0f));
-		drawCubeWood(backFrame, std::tuple<float, float, float>(bedSize.x, 5.0f, 1.0f));
+		woodRenderer.draw(backFrame, std::tuple<float, float, float>(bedSize.x, 5.0f, 1.0f),positionOffset,0);
 	}
 	for (float i = -1; i <= 1; i+=2) {
 		for (float j = 0; j < 2; j++) {
 			glm::mat4 frame = bed;
 			frame = glm::translate(frame, glm::vec3(102.0f * i, j*20.0f, 0.0f));
 			frame = glm::rotate(frame, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-			drawCubeWood(frame, std::tuple<float, float, float>(33.0f, 5.0f, 1.0f));
+			woodRenderer.draw(frame, std::tuple<float, float, float>(33.0f, 5.0f, 1.0f), positionOffset, 0);
 		}
 	}
 
@@ -231,8 +231,6 @@ void drawBed(glm::mat4 room) {
 }
 
 void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
-
-	std::tuple<float, float, float> furnitureColor(0.3f, 0.17f, 0.12f); //brown color for the furniture
 
 	for (int i = 0; i < 4; i++) {
 		if (open[i]) {
@@ -260,11 +258,14 @@ void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 		}
 	}
 
-	//spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
-		
-	drawBed(room);
-	drawWardrobe(room);
-	drawDesk(room, P, V);
+	spWood->use();
+	spWood->setUniforms(P, V, lampLightPos);
+	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+	Renderer woodRenderer(spWood, vertices, normals, texCoords, vertexCount);
+
+	drawBed(room, woodRenderer);
+	drawWardrobe(room, woodRenderer);
+	drawDesk(room, P, V, woodRenderer);
 
 	
 }

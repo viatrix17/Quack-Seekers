@@ -25,12 +25,14 @@ void main(void) {
 
 	float nl = clamp(dot(mn, ml), 0, 1);
 	float rv = pow(clamp(dot(mr, mv), 0.0, 1.0), shininess);
-	rv = max(rv - 0.1, 0.0); // cut off small highlights
+	//rv = max(rv - 0.1, 0.0); // cut off small highlights
 
 	float specIntensity = rv * ks.r * 0.05;
+	float distance = length(l);  // Odleg³oœæ od œwiat³a
+	float attenuation = 1.0 / (1.0 + 0.1 * distance + 0.1 * distance * distance);
 
 	vec3 specular = vec3(1.0) * specIntensity; // neutral white specular
 
-	pixelColor = vec4(nl * kd.rgb, kd.a) + vec4(specular * rv * 0.03, 0) + vec4(kd.rgb * ambientColor.rgb, kd.a);
+	pixelColor = attenuation * (vec4(nl * kd.rgb, kd.a) + vec4(specular * rv, 0)) + vec4(kd.rgb * ambientColor.rgb, kd.a);
 
 }

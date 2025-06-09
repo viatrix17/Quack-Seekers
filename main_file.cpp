@@ -34,8 +34,8 @@ ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling;
 
 glm::vec4 lampLightPos, sunLightPos; 
 
-float cameraSpeed = 25.0f;
-float rotateSpeed = 0.25f;
+float cameraspeed = 25.0f;
+float rotatespeed = 0.25f;
 bool forward = false, back = false, goRight = false, goLeft = false; //movement
 
 glm::vec3 positionOffset;
@@ -70,8 +70,8 @@ int openCount[5]; //0 - wardrobe, 1 - cabinet, 2 - box1, 3 - box3
 float openAngle[5];
 glm::vec3 drawerOffset;
 
-float openSpeed = 1.0f;
-float drawSpeed = 15.0f;
+float openspeed = 1.0f;
+float drawspeed = 15.0f;
 
 bool triggered[2]; // 0 - drawer and cabinet, 1 - boxes
 
@@ -313,16 +313,16 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[4] = readTexture("textures/floor_specular.png");
 
 	tex[5] = readTexture("textures/ceiling_diffuse.png");
-	tex[6] = readTexture("textures/ceiling_normal.png");
-	tex[7] = readTexture("textures/ceiling_height.png");
-	//tex[8] = readTexture("textures/ceiling_roughness.png");
+	tex[6] = readTexture("textures/bricks2_normal.png");
+	tex[7] = readTexture("textures/bricks2_height.png");
+	tex[8] = readTexture("textures/ceiling_roughness.png");
 
 	spFloor = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
 	spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 
-	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
+	lampLightPos = glm::vec4(160.0f, 0.0f, -180.0f, 1.0f);
 	sunLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 0.0f); //kierunek, bez pozycji
 
 	glEnable(GL_DEPTH_TEST);
@@ -345,18 +345,18 @@ void freeOpenGLProgram(GLFWwindow* window) {
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
 	if (forward) {
-		positionOffset += cameraSpeed * deltaTime * viewOffset;
+		positionOffset += cameraspeed * deltaTime * viewOffset;
 	}
 	if (back) {
-		positionOffset -= cameraSpeed * deltaTime * viewOffset;
+		positionOffset -= cameraspeed * deltaTime * viewOffset;
 	}
 
 	// left/right movement
 	if (goLeft) {
-		positionOffset -= glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed * deltaTime;
+		positionOffset -= glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
 	}
 	if (goRight) {
-		positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed * deltaTime;
+		positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
 	}
 	
 }
@@ -422,18 +422,18 @@ int main(void)
 		
 		for (int i = 0; i < 4; i++) {
 			if (open[i]) {
-				openAngle[i] += openSpeed * deltaTime;
+				openAngle[i] += openspeed * deltaTime;
 			}
 			else if (close[i]) {
-				openAngle[i] -= openSpeed * deltaTime;
+				openAngle[i] -= openspeed * deltaTime;
 			}
 		}
 
 		if (open[4]) {
-			drawerOffset.z -= drawSpeed * deltaTime; 
+			drawerOffset.z -= drawspeed * deltaTime; 
 		}
 		else if (close[4]) {
-			drawerOffset.z += drawSpeed * deltaTime;
+			drawerOffset.z += drawspeed * deltaTime;
 		}
 		
 		cameraMovement();

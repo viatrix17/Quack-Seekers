@@ -37,7 +37,7 @@ void main(void) {
 
 	vec4 ml = normalize(l);
 	vec4 mv = normalize(v);
-	vec2 nt = parallaxTexCoords(mv, iTexCoord0, 0.1,10); // ewentualnie potem zmieniæ
+	vec2 nt = parallaxTexCoords(mv, iTexCoord0, 0.1,40);
 
 	//Znormalizowane interpolowane wektory
 	vec4 mn = normalize(vec4(texture(textureMap1, nt).rgb*2-1,0));
@@ -49,12 +49,10 @@ void main(void) {
 	vec4 kd = texture(textureMap0, iTexCoord0); 
 	vec4 ks = texture(textureMap1, iTexCoord0);
 
-	vec4 ambientColor = vec4(0.3,0.3,0.3,1);
-
 	//Obliczenie modelu oœwietlenia
 	float nl = clamp(dot(mn, ml), 0, 1);
 	float rv = pow(clamp(dot(mr, mv), 0, 1),25);
-	pixelColor= vec4(kd.rgb * nl, kd.a);// + vec4(kd.rgb*ambientColor.rgb,kd.a);// + vec4(ks.rgb*rv, 0);
+	pixelColor= vec4(kd.rgb * nl, kd.a) + vec4(ks.rgb*rv, 0);
 }
 
 

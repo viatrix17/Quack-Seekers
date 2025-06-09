@@ -101,15 +101,19 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	ceiling = glm::translate(ceiling, glm::vec3(0.0f, 132.0f, 0.0f));
 	ceiling = glm::rotate(ceiling, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	spCeiling->use();
-	spCeiling->setUniforms(P, V, lampLightPos);
-	spCeiling->bindTexture(GL_TEXTURE0, tex[5], "textureMap0");
-	spCeiling->bindTexture(GL_TEXTURE1, tex[6], "textureMap1");
-	spCeiling->bindTexture(GL_TEXTURE2, tex[7], "textureMap2");
-	//spCeiling->bindTexture(GL_TEXTURE3, tex[8], "textureMap3");
-	Renderer ceilingRenderer(spCeiling, vertices, normals, texCoords, vertexCount, c1, c2, c3);
-	ceilingRenderer.draw(ceiling, floorAndCeilingScale, positionOffset,1);
 
+	//spCeiling->use();
+	//spCeiling->setUniforms(P, V, lampLightPos);
+	//spCeiling->bindTexture(GL_TEXTURE0, tex[5], "textureMap0");
+	//spCeiling->bindTexture(GL_TEXTURE1, tex[6], "textureMap1");
+	//spCeiling->bindTexture(GL_TEXTURE2, tex[7], "textureMap2");
+	////spCeiling->bindTexture(GL_TEXTURE3, tex[8], "textureMap3");
+	//Renderer ceilingRenderer(spCeiling, vertices, normals, texCoords, vertexCount, c1, c2, c3);
+	spFloor->bindTexture(GL_TEXTURE0, tex[5], "textureMap0");
+	spFloor->bindTexture(GL_TEXTURE1, tex[8], "textureMap1");
+	floorRenderer.draw(ceiling, floorAndCeilingScale, positionOffset,0);
+
+	
 
 	//tu na sciany teksture dac
 	spWood->use();
