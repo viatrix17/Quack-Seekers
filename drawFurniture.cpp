@@ -2,6 +2,16 @@
 #include "drawRoom.h"
 #include "shaderprogram.h"
 #include "renderer.h"
+#include "boxLock.h"
+#include "flower.h"
+#include "lamp.h"
+#include "hinge.h"
+#include "key.h"
+#include "handle.h"
+#include "safe.h"
+#include "duck.h"
+#include "mattress.h"
+#include "pillow.h"
 
 extern ShaderProgram* spWood; //woodish??
 extern ShaderProgram* spMarble;
@@ -24,12 +34,14 @@ extern bool open[10];
 extern bool close[10];
 extern float openAngle[10];
 extern glm::vec3 drawerOffset;
+extern ShaderProgram* spFur;
+extern ShaderProgram* spMetal;
 
 void drawWardrobe(glm::mat4 room, Renderer woodRenderer) { //lekko do przesuniecia
 
 	glm::mat4 wardrobe = room;
 	wardrobe = glm::translate(wardrobe, wardrobePos);
-
+	
 	glm::mat4 back = wardrobe;
 	back = glm::translate(back, glm::vec3(0.0f, 0.0f, 25.0f));
 	woodRenderer.draw(back, std::tuple<float, float, float> (68.0f, 100.0f, 1.0f), positionOffset,0);
@@ -49,7 +61,7 @@ void drawWardrobe(glm::mat4 room, Renderer woodRenderer) { //lekko do przesuniec
 		side = glm::rotate(side, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 		woodRenderer.draw(side, std::tuple<float, float, float>(25.0f, 100.0f, 1.0f), positionOffset,0);
 	}
-
+	
 	// front aka door  maja sie obracac 
 	for (float i = -1; i <= 1; i += 2) {
 		glm::mat4 doorWing = wardrobe;
@@ -83,6 +95,7 @@ void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 	for (int i = 0; i < 2; i++) {
 		glm::mat4 lowerPart = desk;
 		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
+		
 		glm::mat4 upperPart = desk;
 		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.05f, boxPos.z));
 		//animation

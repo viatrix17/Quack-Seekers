@@ -26,15 +26,34 @@ should I delete it? xDD
 #include "drawRoom.h"
 #include "drawFurniture.h"
 #include "myCube.h"
+#include "boxLock.h"
+#include "flower.h"
+#include "lamp.h"
 
 
 GLuint tex[9];
 
-ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling;
+ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling, *spFur, *spMetal;
 
 glm::vec4 lampLightPos, sunLightPos; 
 glm::vec3 sunLightColor;
 
+GLuint texKey;
+GLuint texBlackEye;
+GLuint texBlanket;
+GLuint texBlanketInterior;
+GLuint texBlueWalls;
+GLuint texMarblePot;
+GLuint texOrangeBeak;
+GLuint texPinkBow;
+GLuint texRedFlower;
+GLuint texSilver;
+GLuint texSoil;
+GLuint texWhiteEye;
+GLuint texYellowDuck;
+GLuint texBackground;
+GLuint texGreenFlower;
+GLuint texFur;
 
 float cameraspeed = 25.0f;
 float rotatespeed = 0.25f;
@@ -311,6 +330,24 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[1] = readTexture("textures/marble2.png");
 	tex[2] = readTexture("textures/marble2_specular.png");
 
+	texKey = readTexture("textures/metal.png");
+
+	texBlackEye = readTexture("textures/black-eye.png");
+	texBlanket = readTexture("textures/blanket.png");
+	texBlanketInterior = readTexture("textures/blanket-interior.png");
+	texBlueWalls = readTexture("textures/blue-walls.png");
+	texMarblePot = readTexture("textures/marble-pot.png");
+	texOrangeBeak = readTexture("textures/orange-beak.png");
+	texPinkBow = readTexture("textures/pink-bow.png");
+	texRedFlower = readTexture("textures/red-flower.png");
+	texSilver = readTexture("textures/silver.png");
+	texSoil = readTexture("textures/soil.png");
+	texWhiteEye = readTexture("textures/white-eye.png");
+	texYellowDuck = readTexture("textures/yellow-duck.png");
+	//texBackground = readTexture("textures/marble2.png");
+	texGreenFlower = readTexture("textures/green-flower.png");
+	texFur = readTexture("textures/fur.png");
+
 	tex[3] = readTexture("textures/floor.png");
 	tex[4] = readTexture("textures/floor_specular.png");
 
@@ -333,6 +370,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	sunLightColor = glm::vec3(0.7f, 0.7f, 0.7f);
 
+	spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
+	spFur = new ShaderProgram("v_fur.glsl", NULL, "f_fur.glsl");
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -349,7 +388,23 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	}
 
 	// free shaders
-	delete spWood, spMarble, spFloor;
+	glDeleteTextures(1, &texKey);
+	glDeleteTextures(1, &texBlanket);
+	glDeleteTextures(1, &texBlueWalls);
+	glDeleteTextures(1, &texMarblePot);
+	glDeleteTextures(1, &texOrangeBeak);
+	glDeleteTextures(1, &texPinkBow);
+	glDeleteTextures(1, &texRedFlower);
+	glDeleteTextures(1, &texSilver);
+	glDeleteTextures(1, &texSoil);
+	glDeleteTextures(1, &texYellowDuck);
+	glDeleteTextures(1, &texGreenFlower);
+	glDeleteTextures(1, &texWhiteEye);
+	glDeleteTextures(1, &texBlackEye);
+	glDeleteTextures(1, &texBlanketInterior);
+	glDeleteTextures(1, &texFur);
+	
+	delete spWood, spMarble, spFloor, spFur;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
