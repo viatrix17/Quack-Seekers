@@ -6,7 +6,7 @@ extern GLuint texWhiteEye;
 extern GLuint texBlanket;
 extern GLuint texBlanketInterior;
 
-extern ShaderProgram* spMetal;
+extern ShaderProgram* spWood;
 
 unsigned int vertexCountMattress = 8100;
 
@@ -29369,47 +29369,47 @@ void drawMattress(glm::mat4 bed) {
 	//mattress = glm::rotate(mattress, 225 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 	mattress = glm::scale(mattress, glm::vec3(0.95f, 0.95f, 0.95f));
 
-	glUniformMatrix4fv(spMetal->u("M"), 1, false, glm::value_ptr(mattress));
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(mattress));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Mattress);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Mattress);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Mattress);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Mattress);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Mattress);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Mattress);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texWhiteEye);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountMattress);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Blanket);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Blanket);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Blanket);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Blanket);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_Blanket);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_Blanket);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texBlanket);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountBlanket);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 
-	glEnableVertexAttribArray(spMetal->a("vertex"));
-	glVertexAttribPointer(spMetal->a("vertex"), 4, GL_FLOAT, false, 0, vertices_BlanketInterior);
-	glEnableVertexAttribArray(spMetal->a("normal"));
-	glVertexAttribPointer(spMetal->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_BlanketInterior);
-	glEnableVertexAttribArray(spMetal->a("texCoord0"));
-	glVertexAttribPointer(spMetal->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_BlanketInterior);
-	glUniform1i(spMetal->u("textureMap0"), 0);
+	glEnableVertexAttribArray(spWood->a("vertex"));
+	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_BlanketInterior);
+	glEnableVertexAttribArray(spWood->a("normal"));
+	glVertexAttribPointer(spWood->a("normal"), 4, GL_FLOAT, false, 0, vertexNormals_BlanketInterior);
+	glEnableVertexAttribArray(spWood->a("texCoord0"));
+	glVertexAttribPointer(spWood->a("texCoord0"), 2, GL_FLOAT, false, 0, texCoords_BlanketInterior);
+	glUniform1i(spWood->u("textureMap0"), 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texBlanketInterior);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCountBlanketInterior);
-	glDisableVertexAttribArray(spMetal->a("vertex"));
-	glDisableVertexAttribArray(spMetal->a("normal"));
-	glDisableVertexAttribArray(spMetal->a("texCoord0"));
+	glDisableVertexAttribArray(spWood->a("vertex"));
+	glDisableVertexAttribArray(spWood->a("normal"));
+	glDisableVertexAttribArray(spWood->a("texCoord0"));
 }
