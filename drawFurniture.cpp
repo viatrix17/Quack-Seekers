@@ -25,7 +25,13 @@ extern bool close[10];
 extern float openAngle[10];
 extern glm::vec3 drawerOffset;
 
-void drawWardrobe(glm::mat4 room, Renderer woodRenderer) { //lekko do przesuniecia
+extern bool visibleKey;
+extern bool openSafe;
+extern bool end;
+
+extern float openSafeAnimation;
+
+void drawWardrobe(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRenderer) { //lekko do przesuniecia
 
 	glm::mat4 wardrobe = room;
 	wardrobe = glm::translate(wardrobe, wardrobePos);
@@ -58,7 +64,13 @@ void drawWardrobe(glm::mat4 room, Renderer woodRenderer) { //lekko do przesuniec
 		doorWing = glm::translate(doorWing, glm::vec3(34.5f*i, 0.0f, 0.0f));
 		doorWing = glm::rotate(doorWing, openAngle[0]*i, glm::vec3(0.0f, -1.0f, 0.0f));
 		doorWing = glm::translate(doorWing, glm::vec3(-34.5f*i, 0.0f, 0.0f));
+
+		drawHandleWardrobe(doorWing, i);
+
+		spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+
 		woodRenderer.draw(doorWing, std::tuple<float, float, float>(34.0f, 100.0f, 1.0f), positionOffset,0);
+		
 	}
 	
 	//shelves
@@ -68,14 +80,63 @@ void drawWardrobe(glm::mat4 room, Renderer woodRenderer) { //lekko do przesuniec
 		shelf = glm::rotate(shelf, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 		woodRenderer.draw(shelf, std::tuple<float, float, float>(70.0f, 25.0f, 1.0f), positionOffset,0);
 	}
+
+	glm::mat4 safe = wardrobe;
+	safe = glm::translate(safe, glm::vec3(50.0f, -101.5f, 0.0f));
+	safe = glm::rotate(safe, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	drawSafe(safe);
+
+
+	glm::mat4 safeDoor = safe;
+
+	safeDoor = glm::translate(safeDoor, glm::vec3(15.0f, 0.0f, 14.0f));
+	safeDoor = glm::rotate(safeDoor, openSafeAnimation, glm::vec3(0.0f, -1.0f, 0.0f));
+	safeDoor = glm::translate(safeDoor, glm::vec3(-15.0f, 0.0f, -14.0f));
+	drawSafeDoor(safeDoor);
+
+
+	glm::mat4 duck0 = safe;
+
+	//do poprawy -> animacja?
+	duck0 = glm::translate(duck0, glm::vec3(0.0f, 5.0f, 0.0f));
+	duck0 = glm::rotate(duck0, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	duck0 = glm::scale(duck0, glm::vec3(4.0f, 4.0f, 4.0f));
+	glm::mat4 duck1 = duck0;
+	glm::mat4 duck2 = duck1;
+	glm::mat4 duck3 = duck2;
+	glm::mat4 duck4 = duck3;
+	glm::mat4 duck5 = duck4;
+	glm::mat4 duck6 = duck5;
+	glm::mat4 duck7 = duck6;
+	glm::mat4 duck8 = duck7;
+	glm::mat4 duck9 = duck8;
+
+	spFur->use();
+	glUniformMatrix4fv(spFur->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spFur->u("V"), 1, false, glm::value_ptr(V));
+
+	drawDuckBody(duck0);
+	drawDuckHead(duck1);
+	drawDuckWingLeft(duck8);
+	drawDuckWingRight(duck9);
+
+	spWood->use();
+	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
+
+	drawDuckHeadDetails(duck1);
+	drawDuckLegLeftUp(duck2);
+	drawDuckLegLeftDown(duck3);
+	drawDuckLegRightUp(duck4);
+	drawDuckLegRightDown(duck5);
+	drawDuckFootLeft(duck6);
+	drawDuckFootRight(duck7);
 }
 
 void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 
 	spMarble->use();
 	spMarble->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
-	spMarble->bindTexture(GL_TEXTURE0, tex[1], "textureMap0");
-	spMarble->bindTexture(GL_TEXTURE1, tex[2], "textureMap1");
 
 	Renderer marbleRenderer(spMarble, vertices, normals, texCoords, vertexCount);
 	
@@ -83,13 +144,20 @@ void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 	for (int i = 0; i < 2; i++) {
 		glm::mat4 lowerPart = desk;
 		lowerPart = glm::translate(lowerPart, glm::vec3(boxPos.x*(1+i)+i*25.0f, boxPos.y, boxPos.z));
+		drawBoxLockPartDown(lowerPart);
+		drawHingeDown(lowerPart);
+		
 		glm::mat4 upperPart = desk;
 		upperPart = glm::translate(upperPart, glm::vec3(boxPos.x * (1 + i) + i * 25.0f, boxPos.y+7.05f, boxPos.z));
 		//animation
 		upperPart = glm::translate(upperPart, glm::vec3(0.0f, -1.0f, boxSize.z+0.5f));
 		upperPart = glm::rotate(upperPart, openAngle[2+i], glm::vec3(1.0f, 0.0f, 0.0f));
 		upperPart = glm::translate(upperPart, glm::vec3(0.0f, 1.0f, -(boxSize.z+0.5f)));
+		drawBoxLockPartUp(upperPart);
 		
+		spMarble->bindTexture(GL_TEXTURE0, tex[1], "textureMap0");
+		spMarble->bindTexture(GL_TEXTURE1, tex[2], "textureMap1");
+
 		for (int i = -1; i <= 1; i+=2) {
 			glm::mat4 lowerVer = lowerPart;
 			lowerVer = glm::translate(lowerVer, glm::vec3(0.0f, 0.0f, i * boxSize.z));
@@ -155,7 +223,13 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRenderer) {
 	
 	glm::mat4 drawerFront = drawer;
 	drawerFront = glm::translate(drawerFront, glm::vec3(0.0f, 0.0f, -22.0f));
+
+	drawHandleDeskDrawer(drawerFront);
+
+	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+
 	woodRenderer.draw(drawerFront, std::tuple<float, float, float>(21.0f, 12.0f, 1.0f), positionOffset,0);
+	
 
 	glm::mat4 drawerBack = drawer;
 	drawerBack = glm::translate(drawerBack, glm::vec3(0.0f, 0.0f, 20.0f));
@@ -165,6 +239,11 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRenderer) {
 	drawerBottom = glm::translate(drawerBottom, glm::vec3(0.0f, -11.0f, 0.0f));
 	drawerBottom = glm::rotate(drawerBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 	woodRenderer.draw(drawerBottom, std::tuple<float, float, float>(18.0f, 21.0f, 1.0f), positionOffset,0);
+
+	if (visibleKey)
+		drawKey(drawerBottom);
+
+	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
 
 	//the cabinet
 	glm::mat4 cabinet = desk;
@@ -185,7 +264,13 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRenderer) {
 
 	glm::mat4 cabinetBack = cabinet;
 	cabinetBack = glm::translate(cabinetBack, glm::vec3(-0.2f, 12.0f, 22.0f));
+
+	drawHandleDeskCabinet(cabinetFront);
+
+	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+
 	woodRenderer.draw(cabinetBack, std::tuple<float, float, float>(21.1f, 36.0f, 1.0f), positionOffset,0);
+	
 
 	for (float i = 0; i <= 1; i++) {
 		glm::mat4 cabinetBottom = cabinet;
@@ -193,8 +278,9 @@ void drawDesk(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRenderer) {
 		cabinetBottom = glm::rotate(cabinetBottom, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 		woodRenderer.draw(cabinetBottom, std::tuple<float, float, float>(21.0f, 21.0f, 1.0f), positionOffset,0);
 	}
-
+	
 	drawBoxes(desk, P, V);
+	drawLamp(desk);
 }
 
 void drawBed(glm::mat4 room, Renderer woodRenderer) {
@@ -230,6 +316,9 @@ void drawBed(glm::mat4 room, Renderer woodRenderer) {
 			drawCubeWood(leg, std::tuple<float, float, float>(5.0f, 30.0f, 5.0f));
 		}
 	}
+
+	drawMattress(bed);
+	drawPillow(bed);
 }
 
 void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
@@ -244,6 +333,13 @@ void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 			if (openAngle[i] <= 0 * PI / 180) {
 				close[i] = false;
 			}
+		}
+	}
+
+	if (openSafe) {
+		if (openSafeAnimation >= 90 * PI / 180) {
+			openSafe = false;
+			//end = true;
 		}
 	}
 	
@@ -266,8 +362,23 @@ void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	Renderer woodRenderer(spWood, vertices, normals, texCoords, vertexCount);
 
 	drawBed(room, woodRenderer);
-	drawWardrobe(room, woodRenderer);
+
+	spWood->use();
+	spWood->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
+	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+
+	drawWardrobe(room, P, V, woodRenderer);
+
+	spWood->use();
+	spWood->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
+	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+
 	drawDesk(room, P, V, woodRenderer);
 
+	spWood->use();
+	spWood->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
+	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
+
+	drawFlower(room);
 	
 }
