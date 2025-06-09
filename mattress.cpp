@@ -1,6 +1,6 @@
 #include "mattress.h" 
-#include<iostream>
 #include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texWhiteEye;
 extern GLuint texBlanket;

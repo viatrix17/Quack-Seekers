@@ -4,10 +4,6 @@
 
 extern GLuint texSilver;
 
-extern ShaderProgram* spWood;
-
-extern GLuint texSilver;
-
 extern ShaderProgram* spMetal;
 
 unsigned int vertexCountDown1 = 1350;

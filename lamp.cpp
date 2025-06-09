@@ -1,6 +1,6 @@
 #include "lamp.h" 
-#include<iostream>
 #include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texMarblePot;
 extern GLuint texWhiteEye;

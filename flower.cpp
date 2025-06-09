@@ -1,6 +1,6 @@
 #include "flower.h"
-#include<iostream>
 #include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texYellowDuck;
 extern GLuint texRedFlower;

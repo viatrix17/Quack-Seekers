@@ -1,4 +1,6 @@
 #include "duck.h"
+#include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texYellowDuck;
 extern GLuint texOrangeBeak;

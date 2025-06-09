@@ -33,7 +33,7 @@ should I delete it? xDD
 
 GLuint tex[9];
 
-ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling, *spFur;
+ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling, *spFur, *spMetal;
 
 glm::vec4 lampLightPos, sunLightPos; 
 glm::vec3 sunLightColor;
@@ -387,9 +387,6 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	}
 
 	// free shaders
-	glDeleteTextures(1, &tex0);
-	glDeleteTextures(1, &tex1);
-	glDeleteTextures(1, &tex2);
 	glDeleteTextures(1, &texKey);
 	glDeleteTextures(1, &texBlanket);
 	glDeleteTextures(1, &texBlueWalls);
