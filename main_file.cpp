@@ -46,10 +46,12 @@ GLuint texWhiteEye;
 GLuint texYellowDuck;
 GLuint texBackground;
 GLuint texGreenFlower;
+GLuint texFur;
 
 ShaderProgram* spWood; //woodish??
 ShaderProgram* spMarble;
 ShaderProgram* spMetal;
+ShaderProgram* spFur;
 
 float cameraSpeed = 25.0f;
 float rotateSpeed = 0.25f;
@@ -331,11 +333,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 	texYellowDuck = readTexture("textures/yellow-duck.png");
 	//texBackground = readTexture("textures/marble2.png");
 	texGreenFlower = readTexture("textures/green-flower.png");
-
+	texFur = readTexture("textures/fur.png");
 
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 	spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
+	spFur = new ShaderProgram("v_fur.glsl", NULL, "f_fur.glsl");
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);
@@ -364,8 +367,9 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &texWhiteEye);
 	glDeleteTextures(1, &texBlackEye);
 	glDeleteTextures(1, &texBlanketInterior);
+	glDeleteTextures(1, &texFur);
 
-	delete spWood, spMarble, spMetal;
+	delete spWood, spMarble, spMetal, spFur;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
@@ -402,12 +406,23 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::vec4 lightPosEye = V * lightPosWorld; // przekształcenie do przestrzeni oka
 	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lightPosEye));
 
+	//spMarble->use();
+	//glUniformMatrix4fv(spMarble->u("P"), 1, false, glm::value_ptr(P));
+	//glUniformMatrix4fv(spMarble->u("V"), 1, false, glm::value_ptr(V));
+
+	//spMetal->use();
+	//glUniformMatrix4fv(spMetal->u("P"), 1, false, glm::value_ptr(P));
+	//glUniformMatrix4fv(spMetal->u("V"), 1, false, glm::value_ptr(V));
+
+	//spFur->use();
+	//glUniformMatrix4fv(spFur->u("P"), 1, false, glm::value_ptr(P));
+	//glUniformMatrix4fv(spFur->u("V"), 1, false, glm::value_ptr(V));
 
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);
 
 	drawRoom(room);
-	drawFurniture(room);
+	drawFurniture(room, P, V);
 	
 	
 	glfwSwapBuffers(window);

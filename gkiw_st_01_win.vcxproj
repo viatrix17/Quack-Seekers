@@ -57,8 +57,10 @@
     <ClCompile Include="shaderprogram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="f_fur.glsl" />
     <None Include="f_metal.glsl" />
     <None Include="f_wood.glsl" />
+    <None Include="v_fur.glsl" />
     <None Include="v_metal.glsl" />
     <None Include="v_wood.glsl" />
     <None Include="f_marble.glsl" />

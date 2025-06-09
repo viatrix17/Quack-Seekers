@@ -16,7 +16,10 @@ extern bool close[10];
 extern float openAngle[10];
 extern glm::vec3 drawerOffset;
 
-void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
+extern ShaderProgram* spFur;
+extern ShaderProgram* spMetal;
+
+void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color, glm::mat4 P, glm::mat4 V) {
 
 	glm::mat4 wardrobe = room;
 	wardrobe = glm::translate(wardrobe, wardrobePos);
@@ -71,6 +74,8 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 	drawSafeDoor(safeDoor);
 
 	glm::mat4 duck0 = safe;
+
+	//do poprawy -> animacja?
 	duck0 = glm::translate(duck0, glm::vec3(0.0f, 5.0f, 0.0f));
 	duck0 = glm::rotate(duck0, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 	duck0 = glm::scale(duck0, glm::vec3(4.0f, 4.0f, 4.0f));
@@ -83,16 +88,28 @@ void drawWardrobe(glm::mat4 room, std::tuple<float, float, float> color) {
 	glm::mat4 duck7 = duck6;
 	glm::mat4 duck8 = duck7;
 	glm::mat4 duck9 = duck8;
+
+	spFur->use();
+	glUniformMatrix4fv(spFur->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spFur->u("V"), 1, false, glm::value_ptr(V));
+
 	drawDuckBody(duck0);
 	drawDuckHead(duck1);
+	drawDuckWingLeft(duck8);
+	drawDuckWingRight(duck9);
+
+	spMetal->use();
+	glUniformMatrix4fv(spMetal->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(spMetal->u("V"), 1, false, glm::value_ptr(V));
+
+	drawDuckHeadDetails(duck1);
 	drawDuckLegLeftUp(duck2);
 	drawDuckLegLeftDown(duck3);
 	drawDuckLegRightUp(duck4);
 	drawDuckLegRightDown(duck5);
 	drawDuckFootLeft(duck6);
 	drawDuckFootRight(duck7);
-	drawDuckWingLeft(duck8);
-	drawDuckWingRight(duck9);
+	
 }
 
 void drawBoxes(glm::mat4 desk) {
@@ -260,7 +277,7 @@ void drawBed(glm::mat4 room, std::tuple<float, float, float> color) {
 	drawMattress(bed);
 	drawPillow(bed);
 }
-void drawFurniture(glm::mat4 room) {
+void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 
 	std::tuple<float, float, float> furnitureColor(0.3f, 0.17f, 0.12f); //brown color for the furniture
 
@@ -290,8 +307,9 @@ void drawFurniture(glm::mat4 room) {
 		}
 	}
 
-	drawWardrobe(room, furnitureColor);
+	
 	drawDesk(room, furnitureColor);
 	drawBed(room, furnitureColor);
+	drawWardrobe(room, furnitureColor, P, V);
 	drawFlower(room);
 }

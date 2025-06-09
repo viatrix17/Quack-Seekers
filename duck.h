@@ -6,6 +6,8 @@ void drawDuckBody(glm::mat4 duck);
 
 void drawDuckHead(glm::mat4 duck);
 
+void drawDuckHeadDetails(glm::mat4 duck);
+
 void drawDuckLegLeftUp(glm::mat4 duck);
 
 void drawDuckLegLeftDown(glm::mat4 duck);

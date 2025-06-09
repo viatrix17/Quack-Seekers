@@ -121,5 +121,7 @@
     <None Include="v_marble.glsl" />
     <None Include="f_metal.glsl" />
     <None Include="v_metal.glsl" />
+    <None Include="f_fur.glsl" />
+    <None Include="v_fur.glsl" />
   </ItemGroup>
 </Project>
