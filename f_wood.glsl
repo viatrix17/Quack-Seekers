@@ -32,11 +32,7 @@ void main(void) {
 	float lamp_rv = pow(clamp(dot(lamp_mr, mv), 0, 1), 25); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
 	float sun_rv = pow(clamp(dot(sun_mr, mv), 0, 1), 25); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
 
-	//pixelColor = (vec4(lamp_nl * kd.rgb, kd.a) + vec4(ks.rgb*lamp_rv,0));// + vec4(kd.rgb*ambientColor.rgb,kd.a);
 	pixelColor = vec4(sunLightColor * sun_nl * kd.rgb, kd.a) + attenuation * vec4(lamp_nl * kd.rgb, kd.a) + vec4(sunLightColor * ks.rgb * sun_rv, 0) + attenuation * vec4(ks.rgb * lamp_rv, 0) + vec4(kd.rgb*ambientColor.rgb,kd.a);;
-
-	// + vec4(kd.rgb * ambientColor.rgb, kd.a);     
-
 
 }
 
