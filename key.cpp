@@ -1,6 +1,6 @@
 #include "key.h"
-#include<iostream>
 #include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texKey;
 

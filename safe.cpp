@@ -1,6 +1,6 @@
 #include "safe.h" 
-#include<iostream>
 #include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texSilver;
 

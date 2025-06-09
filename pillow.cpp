@@ -1,6 +1,6 @@
 #include "pillow.h"
-#include<iostream>
 #include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texBlanket;
 

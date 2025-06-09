@@ -1,5 +1,6 @@
 #include "boxLock.h"
 #include "config.h"
+#include "shaderprogram.h"
 
 extern GLuint texSilver;
 
