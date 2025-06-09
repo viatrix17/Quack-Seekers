@@ -406,23 +406,11 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	glm::vec4 lightPosEye = V * lightPosWorld; // przekształcenie do przestrzeni oka
 	glUniform4fv(spWood->u("lp"), 1, glm::value_ptr(lightPosEye));
 
-	//spMarble->use();
-	//glUniformMatrix4fv(spMarble->u("P"), 1, false, glm::value_ptr(P));
-	//glUniformMatrix4fv(spMarble->u("V"), 1, false, glm::value_ptr(V));
-
-	//spMetal->use();
-	//glUniformMatrix4fv(spMetal->u("P"), 1, false, glm::value_ptr(P));
-	//glUniformMatrix4fv(spMetal->u("V"), 1, false, glm::value_ptr(V));
-
-	//spFur->use();
-	//glUniformMatrix4fv(spFur->u("P"), 1, false, glm::value_ptr(P));
-	//glUniformMatrix4fv(spFur->u("V"), 1, false, glm::value_ptr(V));
-
 	//drawBackyard(); idk where to put this tbh xdd
 	glm::mat4 room = glm::mat4(1.0f);
 
 	drawRoom(room);
-	drawFurniture(room, P, V);
+	drawFurniture(room);
 	
 	
 	glfwSwapBuffers(window);
