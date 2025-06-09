@@ -40,7 +40,7 @@ public:
 	GLuint a(const char* variableName); //Pobiera numer slotu związanego z danym atrybutem
 
 	void bindTexture(GLenum textureUnit, GLuint textureID, const std::string& uniformName);
-	void setUniforms(const glm::mat4& P, const glm::mat4& V, const glm::vec4& lampLightPos);
+	void setUniforms(const glm::mat4& P, const glm::mat4& V, const glm::vec4& lampLightPos, const glm::vec4& sunLightPos, const glm::vec3& sunLightColor);
 };
 
 

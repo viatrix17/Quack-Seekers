@@ -3,14 +3,16 @@
 uniform mat4 P;
 uniform mat4 V;
 uniform mat4 M;
-uniform vec4 lp;
+uniform vec4 lamp;
+uniform vec4 sun;
 uniform vec3 cameraWorldPos;
 
 in vec4 vertex;
 in vec4 normal;
 in vec2 texCoord0;
 
-out vec3 l;
+out vec3 sun_l;
+out vec3 lamp_l;
 out vec3 n;
 out vec3 v;
 
@@ -23,7 +25,8 @@ void main(void) {
     vec3 fragNorm = normalMatrix * normal.xyz;
 
     // Vectors in eye space
-    l = normalize(vec3( lp) - fragPos.xyz); // light direction
+    lamp_l = normalize(vec3(lamp) - fragPos.xyz); // lamp light direction
+    sun_l = normalize(vec3(sun) - fragPos.xyz); // syn light direction
     n = normalize(fragNorm);                   // normal
     v = normalize(cameraWorldPos-fragPos.xyz);               // view direction
 

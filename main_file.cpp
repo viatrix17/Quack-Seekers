@@ -33,6 +33,8 @@ GLuint tex[9];
 ShaderProgram* spWood, * spMarble, * spFloor, *spCeiling;
 
 glm::vec4 lampLightPos, sunLightPos; 
+glm::vec3 sunLightColor;
+
 
 float cameraspeed = 25.0f;
 float rotatespeed = 0.25f;
@@ -317,13 +319,19 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex[7] = readTexture("textures/bricks2_height.png");
 	tex[8] = readTexture("textures/ceiling_roughness.png");
 
-	spFloor = new ShaderProgram("v_wood.glsl", NULL, "f_floor.glsl");
-	spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
+	spFloor = new ShaderProgram("v_floor.glsl", NULL, "f_floor.glsl");
+	std::cout << "1\n";
+	//spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
+	//std::cout << "2\n";
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
+	std::cout << "3\n";
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
+	std::cout << "4\n";
 
-	lampLightPos = glm::vec4(160.0f, 0.0f, -180.0f, 1.0f);
-	sunLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 0.0f); //kierunek, bez pozycji
+	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
+	sunLightPos = glm::vec4(100.0f, 10.0f, 0.0f, 0.0f); //kierunek, bez pozycji
+	sunLightColor = glm::vec3(0.7, 0.4, 0.2);
+
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetKeyCallback(window, key_callback);

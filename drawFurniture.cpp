@@ -9,6 +9,8 @@ extern ShaderProgram* spMarble;
 extern GLuint tex[9];
 
 extern glm::vec4 lampLightPos;
+extern glm::vec4 sunLightPos;
+extern glm::vec3 sunLightColor;
 
 extern glm::vec3 positionOffset;
 
@@ -71,7 +73,7 @@ void drawWardrobe(glm::mat4 room, Renderer woodRenderer) { //lekko do przesuniec
 void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
 
 	spMarble->use();
-	spMarble->setUniforms(P, V, lampLightPos);
+	spMarble->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
 	spMarble->bindTexture(GL_TEXTURE0, tex[1], "textureMap0");
 	spMarble->bindTexture(GL_TEXTURE1, tex[2], "textureMap1");
 
@@ -259,7 +261,7 @@ void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	}
 
 	spWood->use();
-	spWood->setUniforms(P, V, lampLightPos);
+	spWood->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
 	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
 	Renderer woodRenderer(spWood, vertices, normals, texCoords, vertexCount);
 

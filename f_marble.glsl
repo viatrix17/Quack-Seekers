@@ -25,6 +25,6 @@ void main(void) {
 	float nl = clamp(dot(mn, ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.
 	float rv = pow(clamp(dot(mr, mv), 0, 1), 5); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
 
-	pixelColor = attenuation * (vec4(nl * kd.rgb, kd.a) + vec4(ks.rgb*rv,0) + vec4(kd.rgb*ambientColor.rgb,kd.a);
+	pixelColor = attenuation * (vec4(nl * kd.rgb, kd.a) + vec4(ks.rgb*rv,0)) + vec4(kd.rgb*ambientColor.rgb,kd.a);
 	
 }

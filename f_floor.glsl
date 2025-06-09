@@ -5,17 +5,20 @@ uniform sampler2D textureMap1;
 
 out vec4 pixelColor; //Zmienna wyjsciowa fragment shadera. Zapisuje sie do niej ostateczny (prawie) kolor piksela
 
-in vec3 l;
+in vec3 lamp_l;
+in vec3 sun_l;
 in vec3 n;
 in vec3 v;
 in vec2 iTexCoord0;
 
 void main(void) {
 
-	vec3 ml = normalize(l);
+	vec3 lamp_ml = normalize(lamp_l);
+	vec3 sun_ml = normalize(sun_l);
 	vec3 mn = normalize(n);
 	vec3 mv = normalize(v);
-	vec3 mr = reflect(-ml, mn);
+	vec3 lamp_mr = reflect(-lamp_ml, mn);
+	vec3 sun_mr = reflect(-sun_ml, mn);
 
 	vec4 kd = texture(textureMap0, iTexCoord0);
 	vec4 ks = texture(textureMap1, iTexCoord0);
@@ -23,16 +26,20 @@ void main(void) {
 	float shininess = 0.25;
 	vec4 ambientColor = vec4(0.3, 0.3, 0.3, 1);
 
-	float nl = clamp(dot(mn, ml), 0, 1);
-	float rv = pow(clamp(dot(mr, mv), 0.0, 1.0), shininess);
+	float lamp_nl = clamp(dot(mn, lamp_ml), 0, 1);
+	float sun_nl = clamp(dot(mn, sun_ml), 0, 1);
+	float lamp_rv = pow(clamp(dot(lamp_mr, mv), 0.0, 1.0), shininess);
+	float sun_rv = pow(clamp(dot(sun_mr, mv), 0.0, 1.0), shininess);
 	//rv = max(rv - 0.1, 0.0); // cut off small highlights
 
-	float specIntensity = rv * ks.r * 0.05;
-	float distance = length(l);  // Odleg³oœæ od œwiat³a
+	float lamp_specIntensity = lamp_rv * ks.r * 0.05;
+	float sun_specIntensity = sun_rv * ks.r * 0.05;
+	float distance = length(lamp_l);  // Odleg³oœæ od œwiat³a ale tylko dla lampy
 	float attenuation = 1.0 / (1.0 + 0.1 * distance + 0.1 * distance * distance);
 
-	vec3 specular = vec3(1.0) * specIntensity; // neutral white specular
+	vec3 lamp_specular = vec3(1.0) * lamp_specIntensity; // neutral white specular
+	vec3 sun_specular = vec3(1.0) * sun_specIntensity; // neutral white specular
 
-	pixelColor = attenuation * (vec4(nl * kd.rgb, kd.a) + vec4(specular * rv, 0)) + vec4(kd.rgb * ambientColor.rgb, kd.a);
+	pixelColor = vec4(sun_nl * kd.rgb, kd.a) + vec4(lamp_nl * kd.rbg, kd.a) + vec4(sun_specular * sun_rv, 0) + vec4(lamp_specular * lamp_rv, 0); // + vec4(kd.rgb * ambientColor.rgb, kd.a);
 
 }

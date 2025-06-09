@@ -11,6 +11,8 @@ extern ShaderProgram* spCeiling;
 extern GLuint tex[9];
 
 extern glm::vec4 lampLightPos;
+extern glm::vec4 sunLightPos;
+extern glm::vec3 sunLightColor;
 
 extern glm::vec3 positionOffset;
 
@@ -74,7 +76,6 @@ void drawWallWithWindow(glm::mat4 wall, std::tuple<float, float, float>, Rendere
 
 void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 
-
 	std::tuple<float, float, float> black(0.0f, 0.0f, 0.0f); //troche nie dosiega do konca jak sie zrobi z zewnatrz
 
 	// drawing the non-window walls
@@ -90,7 +91,7 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	floor = glm::rotate(floor, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	spFloor->use();
-	spFloor->setUniforms(P, V, lampLightPos);
+	spFloor->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
 	spFloor->bindTexture(GL_TEXTURE0, tex[3], "textureMap0");
 	spFloor->bindTexture(GL_TEXTURE1, tex[4], "textureMap1");
 	Renderer floorRenderer(spFloor, vertices, normals, texCoords, vertexCount);
@@ -117,7 +118,7 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 
 	//tu na sciany teksture dac
 	spWood->use();
-	spWood->setUniforms(P, V, lampLightPos);
+	spWood->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
 	
 	spWood->bindTexture(GL_TEXTURE0, tex[0], "textureMap0");
 

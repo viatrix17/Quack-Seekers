@@ -164,8 +164,10 @@ void ShaderProgram::bindTexture(GLenum textureUnit, GLuint textureID, const std:
 	}
 }
 
-void ShaderProgram::setUniforms(const glm::mat4& P, const glm::mat4& V, const glm::vec4& lampLightPos) {
+void ShaderProgram::setUniforms(const glm::mat4& P, const glm::mat4& V, const glm::vec4& lampLightPos, const glm::vec4& sunLightPos, const glm::vec3& sunLightColor) {
 	glUniformMatrix4fv(u("P"), 1, GL_FALSE, glm::value_ptr(P));
 	glUniformMatrix4fv(u("V"), 1, GL_FALSE, glm::value_ptr(V));
-	glUniform4fv(u("lp"), 1, glm::value_ptr(lampLightPos));
+	glUniform4fv(u("lamp"), 1, glm::value_ptr(lampLightPos));
+	glUniform4fv(u("sun"), 1, glm::value_ptr(sunLightPos));
+	glUniform3fv(u("sunLightColor"), 1, glm::value_ptr(sunLightColor));
 }
