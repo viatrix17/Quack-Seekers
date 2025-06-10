@@ -67,12 +67,12 @@ void drawWallWithWindow(glm::mat4 wall, std::tuple<float, float, float>, Rendere
 	glm::mat4 downPart = wall;
 	downPart = glm::translate(downPart, glm::vec3(200.0f, -90.0f, 0.0f));
 	downPart = glm::rotate(downPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	renderer.draw(downPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f), positionOffset,0);
+	renderer.draw(downPart, std::tuple <float, float, float>(200.0f-120.0f, 35.0f, 5.0f), positionOffset,0);
 
 	glm::mat4 upPart = wall;
 	upPart = glm::translate(upPart, glm::vec3(200.0f, 90.0f, 0.0f));
 	upPart = glm::rotate(upPart, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	renderer.draw(upPart, std::tuple <float, float, float>(200.0f, 35.0f, 5.0f), positionOffset,0);
+	renderer.draw(upPart, std::tuple <float, float, float>(200.0f-120.0f, 35.0f, 5.0f), positionOffset,0);
 }
 
 void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
