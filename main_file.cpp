@@ -446,20 +446,55 @@ glm::vec3 lerp(const glm::vec3& start, const glm::vec3& end, float t) {
 	return start + t * (end - start);
 }
 
+bool possibleMove(glm::vec3 position, int move, glm::vec3 viewOffset, float deltaTime, float cameraspeed) {
+	float minX = -178.064f;
+	float maxX = 175.84f;
+	float minY = -111.264f;
+	float maxY = 31.0487f;
+	float minZ = -95.7271f;
+	float maxZ = 116.207f;
+
+	glm::vec3 movement;
+
+	switch (move) {
+	case 1: // forward
+		movement = viewOffset;
+		break;
+	case 2: // back
+		movement = -viewOffset;
+		break;
+	case 3: // left
+		movement = -glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f)));
+		break;
+	case 4: // right
+		movement = glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f)));
+		break;
+	default:
+		return true;
+	}
+
+	glm::vec3 newPos = position + movement * cameraspeed * deltaTime;
+
+	return (
+		newPos.x >= minX && newPos.x <= maxX &&
+		newPos.y >= minY && newPos.y <= maxY &&
+		newPos.z >= minZ && newPos.z <= maxZ
+		);
+}
+
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
 	if (!end && !openSafe) {
-		if (forward) {
+		if (forward && possibleMove(positionOffset, 1, viewOffset, deltaTime, cameraspeed)) {
 			positionOffset += cameraspeed * deltaTime * viewOffset;
 		}
-		if (back) {
+		if (back && possibleMove(positionOffset, 2, viewOffset, deltaTime, cameraspeed)) {
 			positionOffset -= cameraspeed * deltaTime * viewOffset;
 		}
 
-		// left/right movement
-		if (goLeft) {
+		if (goLeft && possibleMove(positionOffset, 3, viewOffset, deltaTime, cameraspeed)) {
 			positionOffset -= glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
 		}
-		if (goRight) {
+		if (goRight && possibleMove(positionOffset, 4, viewOffset, deltaTime, cameraspeed)) {
 			positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
 		}
 	}
