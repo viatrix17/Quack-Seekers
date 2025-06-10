@@ -152,8 +152,8 @@ GLuint ShaderProgram::a(const char* variableName) {
 }
 
 void ShaderProgram::bindTexture(GLenum textureUnit, GLuint textureID, const std::string& uniformName) {
-	glActiveTexture(textureUnit);               // e.g. GL_TEXTURE0 + n
-	glBindTexture(GL_TEXTURE_2D, textureID);   // Bind your texture
+	glActiveTexture(textureUnit);               
+	glBindTexture(GL_TEXTURE_2D, textureID);   
 
 	GLint loc = glGetUniformLocation(shaderProgram, uniformName.c_str());
 	if (loc != -1) {

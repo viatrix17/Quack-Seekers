@@ -335,7 +335,7 @@ GLuint readTexture(const char* filename) {
 void initOpenGLProgram(GLFWwindow* window) {
     
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glClearColor(0.58f, 0.88f, 0.92f, 0); //light blue/green for the sky/background
+	glClearColor(0.7f, 0.4f, 0.2f, 1.0f);
 	positionOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 	viewOffset = glm::vec3(0.0f, 0.0f, 100.0f);
 
@@ -382,16 +382,17 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	spFloor = new ShaderProgram("v_floor.glsl", NULL, "f_floor.glsl");
 	std::cout << "1\n";
-	//spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
-	//std::cout << "2\n";
+	spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
+	std::cout << "2\n";
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
 	std::cout << "3\n";
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
 	std::cout << "4\n";
 
-	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
-	sunLightPos = glm::vec4(100.0f, 10.0f, 0.0f, 0.0f); //kierunek, bez pozycji
-	sunLightColor = glm::vec3(0.7, 0.4, 0.2);
+	lampLightPos = glm::vec4(52.0f, -20.0f, 157.0f, 1.0f);
+	sunLightPos = glm::vec4(-0.6f, -0.9f, 0.0f, 0.0f);
+
+	sunLightColor = glm::vec3(0.7f, 0.7f, 0.7f);
 
 	spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
 
@@ -435,6 +436,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
+
 	if (forward) {
 		positionOffset += cameraspeed * deltaTime * viewOffset;
 	}
@@ -449,6 +451,8 @@ void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pok�
 	if (goRight) {
 		positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
 	}
+	//std::cout << positionOffset.x << " " << positionOffset.y << " " << positionOffset.y << "\n\n";
+
 	
 }
 
