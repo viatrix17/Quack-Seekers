@@ -29,7 +29,7 @@ void main(void) {
 	vec4 ambientColor = vec4(0.3,0.3,0.3,1);
 	float lamp_nl = clamp(dot(mn, lamp_ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.
 	float sun_nl = clamp(dot(mn, sun_ml), 0, 1); //Kosinus k¹ta pomiêdzy wektorami n i l.
-	float lamp_rv = pow(clamp(dot(lamp_mr, mv), 0, 1), 25); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
+	float lamp_rv = pow(clamp(dot(lamp_mr, mv), 0, 1), 5); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
 	float sun_rv = pow(clamp(dot(sun_mr, mv), 0, 1), 25); // Kosinus k¹ta pomiêdzy wektorami r i v podniesiony do 25 potêgi
 
 	pixelColor = vec4(sunLightColor * sun_nl * kd.rgb, kd.a) + attenuation * vec4(lamp_nl * kd.rgb, kd.a) + vec4(sunLightColor * ks.rgb * sun_rv, 0) + attenuation * vec4(ks.rgb * lamp_rv, 0) + vec4(kd.rgb*ambientColor.rgb,kd.a);;
