@@ -41,6 +41,9 @@ extern bool visibleKey;
 extern bool openSafe;
 extern bool end;
 
+extern bool animationDuck[3]; // 0 - moveBody, 1 - moveWings, 2 - moveHead
+extern float animationDuckFloat[3];
+
 extern float openSafeAnimation;
 
 void drawWardrobe(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRenderer) { //lekko do przesuniecia
@@ -104,45 +107,63 @@ void drawWardrobe(glm::mat4 room, glm::mat4 P, glm::mat4 V, Renderer woodRendere
 	safeDoor = glm::translate(safeDoor, glm::vec3(15.0f, 0.0f, 14.0f));
 	safeDoor = glm::rotate(safeDoor, openSafeAnimation, glm::vec3(0.0f, -1.0f, 0.0f));
 	safeDoor = glm::translate(safeDoor, glm::vec3(-15.0f, 0.0f, -14.0f));
+	if (openSafe) {
+		drawKeySafe(safeDoor);
+	}
 	drawSafeDoor(safeDoor);
 
+	// DANCING DUCK ANIMATION 
 
-	glm::mat4 duck0 = safe;
+	glm::mat4 duck = safe;
 
-	//do poprawy -> animacja?
-	duck0 = glm::translate(duck0, glm::vec3(0.0f, 5.0f, 0.0f));
-	duck0 = glm::rotate(duck0, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
-	duck0 = glm::scale(duck0, glm::vec3(4.0f, 4.0f, 4.0f));
-	glm::mat4 duck1 = duck0;
-	glm::mat4 duck2 = duck1;
-	glm::mat4 duck3 = duck2;
-	glm::mat4 duck4 = duck3;
-	glm::mat4 duck5 = duck4;
-	glm::mat4 duck6 = duck5;
-	glm::mat4 duck7 = duck6;
-	glm::mat4 duck8 = duck7;
-	glm::mat4 duck9 = duck8;
+	duck = glm::translate(duck, glm::vec3(0.0f, 5.0f, 0.0f));
+	duck = glm::rotate(duck, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	duck = glm::scale(duck, glm::vec3(4.0f, 4.0f, 4.0f));
+
+	glm::mat4 duckBody = duck;
+	if (end) {
+		duckBody = glm::rotate(duckBody, animationDuckFloat[0], glm::vec3(0.0f, 1.0f, 0.0f));
+	}
+	glm::mat4 duckWings = duckBody;
+	glm::mat4 duckHead = duckBody;
+	glm::mat4 duckWingLeft = duckWings;
+	duckWingLeft = glm::translate(duckWingLeft, glm::vec3(-0.2f, 0.0f, 0.0f));
+	glm::mat4 duckWingRight = duckWings;
+	duckWingRight = glm::translate(duckWingRight, glm::vec3(0.2f, 0.0f, 0.0f));
+	if (end) {
+		duckWingLeft = glm::rotate(duckWingLeft, animationDuckFloat[1], glm::vec3(0.0f, 1.0f, 0.0f));
+		duckWingRight = glm::rotate(duckWingRight, animationDuckFloat[1], glm::vec3(0.0f, -1.0f, 0.0f));
+		duckHead = glm::rotate(duckHead, animationDuckFloat[2], glm::vec3(1.0f, 0.0f, 0.0f));
+	}
+
+	glm::mat4 duckLl1 = duckBody;
+	glm::mat4 duckLl2 = duckBody;
+	glm::mat4 duckLr1 = duckBody;
+	glm::mat4 duckLr2 = duckBody;
+	glm::mat4 duckFl = duckBody;
+	glm::mat4 duckFr = duckBody;
+	glm::mat4 duckHDetails = duckHead;
 
 	spFur->use();
 	glUniformMatrix4fv(spFur->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spFur->u("V"), 1, false, glm::value_ptr(V));
 
-	drawDuckBody(duck0);
-	drawDuckHead(duck1);
-	drawDuckWingLeft(duck8);
-	drawDuckWingRight(duck9);
+	drawDuckBody(duckBody);
+	drawDuckHead(duckHead);
+	drawDuckWingLeft(duckWingLeft);
+	drawDuckWingRight(duckWingRight);
 
 	spWood->use();
 	glUniformMatrix4fv(spWood->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spWood->u("V"), 1, false, glm::value_ptr(V));
 
-	drawDuckHeadDetails(duck1);
-	drawDuckLegLeftUp(duck2);
-	drawDuckLegLeftDown(duck3);
-	drawDuckLegRightUp(duck4);
-	drawDuckLegRightDown(duck5);
-	drawDuckFootLeft(duck6);
-	drawDuckFootRight(duck7);
+	drawDuckHeadDetails(duckHDetails);
+	drawDuckLegLeftUp(duckLl1);
+	drawDuckLegLeftDown(duckLl2);
+	drawDuckLegRightUp(duckLr1);
+	drawDuckLegRightDown(duckLr2);
+	drawDuckFootLeft(duckFl);
+	drawDuckFootRight(duckFr);
 }
 
 void drawBoxes(glm::mat4 desk, glm::mat4 P, glm::mat4 V) {
@@ -351,7 +372,36 @@ void drawFurniture(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	if (openSafe) {
 		if (openSafeAnimation >= 90 * PI / 180) {
 			openSafe = false;
-			//end = true;
+			end = true;
+		}
+	}
+
+	if (end) {
+		if (animationDuck[0]) {
+			if (animationDuckFloat[0] >= 45 * PI / 180)
+				animationDuck[0] = false;
+		}
+		else {
+			if (animationDuckFloat[0] <= -45 * PI / 180)
+				animationDuck[0] = true;
+		}
+
+		if (animationDuck[1]) {
+			if (animationDuckFloat[1] >= 35 * PI / 180)
+				animationDuck[1] = false;
+		}
+		else {
+			if (animationDuckFloat[1] <= -35 * PI / 180)
+				animationDuck[1] = true;
+		}
+
+		if (animationDuck[2]) {
+			if (animationDuckFloat[2] >= 5 * PI / 180)
+				animationDuck[2] = false;
+		}
+		else {
+			if (animationDuckFloat[2] <= -5 * PI / 180)
+				animationDuck[2] = true;
 		}
 	}
 	

@@ -9,7 +9,7 @@ extern ShaderProgram* spFloor;
 extern ShaderProgram* spCeiling;
 
 extern GLuint tex[9];
-extern GLuint texBlueWalls;
+extern GLuint texPinkBow;
 
 extern glm::vec4 lampLightPos;
 extern glm::vec4 sunLightPos;
@@ -117,7 +117,7 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	spWood->use();
 	spWood->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
 	
-	spWood->bindTexture(GL_TEXTURE0, texBlueWalls, "textureMap0");
+	spWood->bindTexture(GL_TEXTURE0, texPinkBow, "textureMap0");
 
 	Renderer woodRenderer(spWood, vertices, normals, texCoords, vertexCount);
 

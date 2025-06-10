@@ -18233,16 +18233,7 @@ float texCoords_Key[] = {
 0.313381, 0.688381,
 };
 
-void drawKey(glm::mat4 sth) {
-	glm::mat4 key = sth;
-	// data for drawer
-	key = glm::translate(key, glm::vec3(0.0f, 0.0f, -5.0f));
-	key = glm::rotate(key, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-	
-	key = glm::scale(key, glm::vec3(5.0f, 5.0f, 5.0f));
-
-	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(key));
-
+void Key() {
 	glEnableVertexAttribArray(spWood->a("vertex"));
 	glVertexAttribPointer(spWood->a("vertex"), 4, GL_FLOAT, false, 0, vertices_Key);
 	glEnableVertexAttribArray(spWood->a("normal"));
@@ -18256,4 +18247,30 @@ void drawKey(glm::mat4 sth) {
 	glDisableVertexAttribArray(spWood->a("vertex"));
 	glDisableVertexAttribArray(spWood->a("normal"));
 	glDisableVertexAttribArray(spWood->a("texCoord0"));
+}
+
+void drawKey(glm::mat4 sth) {
+	glm::mat4 key = sth;
+	// data for drawer
+	key = glm::translate(key, glm::vec3(0.0f, 0.0f, -5.0f));
+	key = glm::rotate(key, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	key = glm::scale(key, glm::vec3(5.0f, 5.0f, 5.0f));
+
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(key));
+
+	Key();
+}
+
+void drawKeySafe(glm::mat4 sth) {
+	glm::mat4 key = sth;
+	key = glm::translate(key, glm::vec3(25.0f, 20.0f, -12.0f));
+	key = glm::rotate(key, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
+	key = glm::rotate(key, 90 * PI / 180, glm::vec3(0.0f, 0.0f, -1.0f));
+
+	key = glm::scale(key, glm::vec3(5.0f, 5.0f, 5.0f));
+
+	glUniformMatrix4fv(spWood->u("M"), 1, false, glm::value_ptr(key));
+
+	Key();
 }

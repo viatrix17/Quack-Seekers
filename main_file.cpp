@@ -65,6 +65,9 @@ bool end = false;
 
 float openSafeAnimation = 0.0f;
 
+bool animationDuck[3]; // 0 - moveBody, 1 - moveWings, 2 - moveHead
+float animationDuckFloat[3];
+
 glm::vec3 positionOffset;
 glm::vec3 viewOffset;
 float cameraAngle = 0;
@@ -344,6 +347,10 @@ void initOpenGLProgram(GLFWwindow* window) {
 		close[i] = false;
 		openCount[i] = 0;
 		openAngle[i] = 0.0f;
+		if (i < 3) {
+			animationDuck[i] = false;
+			animationDuckFloat[i] = 0.0f;
+		}
 	}
 	drawerOffset = glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -435,25 +442,36 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	delete spWood, spMarble, spFloor, spFur;
 }
 
+glm::vec3 lerp(const glm::vec3& start, const glm::vec3& end, float t) {
+	return start + t * (end - start);
+}
+
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
+	if (!end && !openSafe) {
+		if (forward) {
+			positionOffset += cameraspeed * deltaTime * viewOffset;
+		}
+		if (back) {
+			positionOffset -= cameraspeed * deltaTime * viewOffset;
+		}
 
-	if (forward) {
-		positionOffset += cameraspeed * deltaTime * viewOffset;
+		// left/right movement
+		if (goLeft) {
+			positionOffset -= glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
+		}
+		if (goRight) {
+			positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
+		}
 	}
-	if (back) {
-		positionOffset -= cameraspeed * deltaTime * viewOffset;
-	}
+	else {
+		glm::vec3 targetPosition = glm::vec3(-64.0f, -102.0f, 96.0f);
 
-	// left/right movement
-	if (goLeft) {
-		positionOffset -= glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
+		if (glm::distance(positionOffset, targetPosition) > 0.01f) {
+			float speed = 2.0f;
+			float t = speed * deltaTime;
+			positionOffset = lerp(positionOffset, targetPosition, t);
+		}
 	}
-	if (goRight) {
-		positionOffset += glm::normalize(glm::cross(viewOffset, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraspeed * deltaTime;
-	}
-	//std::cout << positionOffset.x << " " << positionOffset.y << " " << positionOffset.y << "\n\n";
-
-	
 }
 
 // drawing a scene
@@ -526,6 +544,29 @@ int main(void)
 
 		if (openSafe) {
 			openSafeAnimation += openspeed * deltaTime;
+		}
+
+		if (end) {
+			if (animationDuck[0]) {
+				animationDuckFloat[0] += openspeed * deltaTime;
+			}
+			else {
+				animationDuckFloat[0] -= openspeed * deltaTime;
+			}
+
+			if (animationDuck[1]) {
+				animationDuckFloat[1] += openspeed * deltaTime * 2;
+			}
+			else {
+				animationDuckFloat[1] -= openspeed * deltaTime * 2;
+			}
+
+			if (animationDuck[2]) {
+				animationDuckFloat[2] += openspeed * deltaTime / 4;
+			}
+			else {
+				animationDuckFloat[2] -= openspeed * deltaTime / 4;
+			}
 		}
 
 		if (open[4]) {
