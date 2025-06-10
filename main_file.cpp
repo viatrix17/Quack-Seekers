@@ -381,17 +381,14 @@ void initOpenGLProgram(GLFWwindow* window) {
 	
 
 	spFloor = new ShaderProgram("v_floor.glsl", NULL, "f_floor.glsl");
-	std::cout << "1\n";
-	//spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
-	//std::cout << "2\n";
+	spCeiling = new ShaderProgram("v_ceiling.glsl", NULL, "f_ceiling.glsl");
 	spWood = new ShaderProgram("v_wood.glsl", NULL, "f_wood.glsl");
-	std::cout << "3\n";
 	spMarble = new ShaderProgram("v_marble.glsl", NULL, "f_marble.glsl");
-	std::cout << "4\n";
 
-	lampLightPos = glm::vec4(160.0f, 0.0f, 180.0f, 1.0f);
-	sunLightPos = glm::vec4(100.0f, 10.0f, 0.0f, 0.0f); //kierunek, bez pozycji
-	sunLightColor = glm::vec3(0.7, 0.4, 0.2);
+	lampLightPos = glm::vec4(52.0f, -20.0f, 157.0f, 1.0f);
+	sunLightPos = glm::vec4(-0.6f, -0.9f, 0.0f, 0.0f);
+
+	sunLightColor = glm::vec3(0.7f, 0.7f, 0.7f);
 
 	spMetal = new ShaderProgram("v_metal.glsl", NULL, "f_metal.glsl");
 
@@ -431,7 +428,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &texBlanketInterior);
 	glDeleteTextures(1, &texFur);
 	
-	delete spWood, spMarble, spFloor, spFur;
+	delete spWood, spMarble, spFloor, spCeiling, spFur, spMetal;
 }
 
 void cameraMovement() { //dać ograniczenia na movement, bo nam schodzi pod pokój XDDD
@@ -462,7 +459,7 @@ void drawScene(GLFWwindow* window, glm::vec3 positionOffset, glm::vec3 viewOffse
 	
 	glm::mat4 room = glm::mat4(1.0f);
 	
-
+	
 	drawRoom(room, P, V);
 	drawFurniture(room, P, V);
 	

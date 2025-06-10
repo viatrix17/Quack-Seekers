@@ -1,11 +1,5 @@
-﻿  main_file.cpp
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(242,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(243,11): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(248,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(249,16): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(250,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(251,10): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(405,35): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(405,28): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\main_file.cpp(431,33): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+﻿  drawRoom.cpp
+  shaderprogram.cpp
+C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\shaderprogram.cpp(37,15): warning C4267: "inicjowanie": konwersja z "size_t" do "int", możliwa utrata danych
+  Generowanie kodu...
   gkiw_st_01_win.vcxproj -> C:\Users\OEM\OneDrive\Dokumenty\GitHub\Quack-Seekers\x64\Debug\gkiw_st_01_win.exe

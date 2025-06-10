@@ -103,20 +103,21 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	ceiling = glm::translate(ceiling, glm::vec3(0.0f, 132.0f, 0.0f));
 	ceiling = glm::rotate(ceiling, 90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 
-
+	
 	spCeiling->use();
+	std::cout << "ceiling1\n";
 	spCeiling->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
+	std::cout << "ceiling2\n";
 	spCeiling->bindTexture(GL_TEXTURE0, tex[5], "textureMap0");
+	std::cout << "ceiling3\n";
 	spCeiling->bindTexture(GL_TEXTURE1, tex[8], "textureMap1");
 	Renderer ceilingRenderer(spCeiling, vertices, normals, texCoords, vertexCount, c1, c2, c3);;
 	ceilingRenderer.draw(ceiling, floorAndCeilingScale, positionOffset,0);
-
 	
 
 	//tu na sciany teksture dac
 	spWood->use();
 	spWood->setUniforms(P, V, lampLightPos, sunLightPos, sunLightColor);
-	
 	spWood->bindTexture(GL_TEXTURE0, texBlueWalls, "textureMap0");
 
 	Renderer woodRenderer(spWood, vertices, normals, texCoords, vertexCount);
@@ -133,6 +134,7 @@ void drawRoom(glm::mat4 room, glm::mat4 P, glm::mat4 V) {
 	rightWall = glm::translate(rightWall, glm::vec3(-200.0f + 10.0f, 0.0f, 0.0f));
 	rightWall = glm::rotate(rightWall, 90 * PI / 180, glm::vec3(0.0f, 1.0f, 0.0f));
 	woodRenderer.draw(rightWall, wallScale, positionOffset,0);
+	std::cout << "walls\n";
 
 	glm::mat4 leftWall = room;
 	drawWallWithWindow(leftWall, wallColor, woodRenderer);
